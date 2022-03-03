@@ -4,11 +4,60 @@
     <head>
         <title>Form</title>
         <link rel="stylesheet" href="./form.css">
-        <script src="form.js"></script>
+        <!-- <script src="form.js"></script> -->
+
+        
     </head>
 
     <body>
-        <form method="post" >
+      <table>
+        <tr>
+          <tr >
+            <p align="center" class="cord">Click the button to get your coordinates.</p>
+
+        <button id="btn" align="center" onclick="getLocation()">Try It</button>
+        
+        <p id="demo" align="center" class="cord"></p>
+        
+        <script>
+        var x = document.getElementById("demo");
+        
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else { 
+            x.innerHTML = "Geolocation is not supported by this browser.";
+          }
+        }
+        
+        function showPosition(position) {
+          x.innerHTML = "Latitude: " + position.coords.latitude + 
+          "<br>Longitude: " + position.coords.longitude;
+        }
+        </script>
+          </tr>
+
+
+          <tr>
+            <!-- <h1 align="center" >Show a Date and Time Control</h1> -->
+            <!-- <form  action="/action_page.php">
+              <label class="date" for="birthdaytime">Birthday (date and time):</label><br>
+              <input id="date" type="datetime-local" id="birthdaytime" name="birthdaytime">
+              <input  type="submit">
+            </form> -->
+            <p >  <h1 align="center" >Current Date and Time is</h1> <span id='date-time'></span>.</p>
+            <script>
+              var dt = new Date();
+              document.getElementById('date-time').innerHTML=dt;
+
+              </script>
+            
+            
+          </tr>
+
+
+          <tr>
+        <form  action="geo/ruteplanlag.php" method="get" >
             <table align="center">
               <tr>
                   <th id="thtop"><h2>First Name</h2>
@@ -30,10 +79,7 @@
                 <input class="box" placeholder="Enter Your Email"type="text" name="email"></th>
                 
               </tr>
-              <tr>
-                <button onclick="getLocation()">Try It</button>
-                
-              </tr>
+            
               <tr>
                 <th> <h2>Gender &nbsp&nbsp
                     <input type="checkbox" name="Male" >Male &nbsp&nbsp
@@ -45,7 +91,11 @@
 
 
             </table>
-        </form>
+           
+        </form> </tr></table>
+
+        
+        
 
 
     </body>

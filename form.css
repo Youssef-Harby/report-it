@@ -31,3 +31,23 @@ margin: 10px;color: white;text-align: left;
 #thbottom{
     padding-bottom: 50px;
 }
+
+
+#btn{
+    margin-left: 430px; width: 120px; height: 20px; 
+}
+
+.cord{
+    color: aliceblue;
+}
+
+.date{
+     color: aliceblue; margin-left: 400px;
+}
+#date{
+    margin-left: 350px;
+}
+
+#date-time{
+    color: aliceblue; margin-left: 250px;
+}
