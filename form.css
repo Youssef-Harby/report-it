@@ -45,9 +45,18 @@ margin: 10px;color: white;text-align: left;
      color: aliceblue; margin-left: 400px;
 }
 #date{
-    margin-left: 400px;
+    margin-left: 700px;
 }
 
 #date-time{
     color: aliceblue; margin-left: 500px;
 }
+
+.results {
+    width: 90vw;
+    max-width: 550px;
+    margin: 8vh auto;
+  }
+
+
+

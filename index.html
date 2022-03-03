@@ -4,60 +4,78 @@
     <head>
         <title>Form</title>
         <link rel="stylesheet" href="./form.css">
-        <!-- <script src="form.js"></script> -->
+        <script src="form.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-        
+       
+
     </head>
 
     <body>
+  
+      <div id="map"></div>
+
+      
+        
+
       <table>
         <tr>
+          <!-- ------------------------LAT/LONG---------------------- -->
           <tr >
-            <p align="center" class="cord">Click the button to get your coordinates.</p>
+              <p align="center" class="cord">Click the button to get your coordinates.</p>
 
-        <button id="btn" align="center" onclick="getLocation()">Try It</button>
-        
-        <p id="demo" align="center" class="cord"></p>
-        
-        <script>
-        var x = document.getElementById("demo");
-        
-        function getLocation() {
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-          } else { 
-            x.innerHTML = "Geolocation is not supported by this browser.";
-          }
-        }
-        
-        function showPosition(position) {
-          x.innerHTML = "Latitude: " + position.coords.latitude + 
-          "<br>Longitude: " + position.coords.longitude;
-        }
-        </script>
+              <button id="btn" align="center" onclick="getLocation()">Try It</button>
+              
+              <p id="demo" align="center" class="cord"></p>
+              
+              <script>
+              var x = document.getElementById("demo");
+              
+              function getLocation() {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(showPosition);
+                } else { 
+                  x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+              }
+              
+              function showPosition(position) {
+                x.innerHTML = "Latitude: " + position.coords.latitude + 
+                "<br>Longitude: " + position.coords.longitude;
+                
+              }
+              function jsonLocation(position){
+                location={
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                          "type": "Point",
+                          "coordinates": [
+                          position.coords.latitude,
+                          position.coords.longitude
+                          ]
+                        }
+                      }
+              }
+              
+              
+              </script>
           </tr>
 
 
+          <!-- ----------------------DATE/TIME----------------- -->
           <tr>
-            <!-- <h1 align="center" >Show a Date and Time Control</h1> -->
-            <!-- <form  action="/action_page.php">
-              <label class="date" for="birthdaytime">Birthday (date and time):</label><br>
-              <input id="date" type="datetime-local" id="birthdaytime" name="birthdaytime">
-              <input  type="submit">
-            </form> -->
             <p >  <h1 align="center" >Current Date and Time is</h1> <span id='date-time'></span>.</p>
             <script>
               var dt = new Date();
               document.getElementById('date-time').innerHTML=dt;
-
-              </script>
-            
-            
+            </script>
           </tr>
-
-
+          
+          <!-- -------------------------FORM------------------- -->
           <tr>
-        <form  action="geo/ruteplanlag.php" method="get" >
+        <form  method="post" onsubmit='return onSubmit(this)' >
+          
             <table align="center">
               <tr>
                   <th id="thtop"><h2>First Name</h2>
@@ -85,16 +103,19 @@
                     <input type="checkbox" name="Male" >Male &nbsp&nbsp
                     <input type="checkbox" name="Male" >Female</th>
               </tr>
+
               <tr>
                 <th id="thbottom"> <input id="submit" type="submit" value="Submit"></th>
               </tr>
+
+
+            
 
 
             </table>
            
         </form> </tr></table>
 
-        
         
 
 
