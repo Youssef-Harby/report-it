@@ -34,7 +34,7 @@ margin: 10px;color: white;text-align: left;
 
 
 #btn{
-    margin-left: 430px; width: 120px; height: 20px; 
+    margin-left: 685px; width: 120px; height: 20px; 
 }
 
 .cord{
@@ -45,9 +45,9 @@ margin: 10px;color: white;text-align: left;
      color: aliceblue; margin-left: 400px;
 }
 #date{
-    margin-left: 350px;
+    margin-left: 400px;
 }
 
 #date-time{
-    color: aliceblue; margin-left: 251px;
+    color: aliceblue; margin-left: 500px;
 }
