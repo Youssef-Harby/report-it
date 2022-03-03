@@ -1,0 +1,33 @@
+body{
+    background-image: url(./cover.jpg);
+}
+
+table{
+    margin-top: 25px;margin-bottom: 25px;background-color: rgba(0, 0, 0, 0.329);
+}
+
+th{
+    padding-left:130px;padding-right: 130px;
+}
+
+#thtop{
+    padding-top: 40px;
+}
+
+
+h2{
+margin: 10px;color: white;text-align: left;
+}
+
+
+.box{
+    height: 35px;width: 500px;background-color: lightgrey;
+}
+
+#submit{
+    height: 60px;width:500px ;font-size: 30px;background-color: rgb(75, 70, 70);color: white;
+}
+
+#thbottom{
+    padding-bottom: 50px;
+}
