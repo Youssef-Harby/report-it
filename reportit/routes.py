@@ -1,7 +1,7 @@
 from flask import render_template, request
 from reportit import app
-from reportit.models import *
 
-@app.route('/')
+
+@app.route('/form')
 def index():
     return render_template('form.html')
