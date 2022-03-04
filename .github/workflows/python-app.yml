@@ -5,9 +5,9 @@ name: reportitApp
 
 on:
   push:
-    branches: [ main ]
+    branches: [ back-end ]
   pull_request:
-    branches: [ main ]
+    branches: [ back-end ]
 
 jobs:
   build:
