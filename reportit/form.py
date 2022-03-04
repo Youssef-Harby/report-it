@@ -1,13 +1,11 @@
-print("F1")
-from reportit import *
-from reportit import Base
+from reportit import Base, engine
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
 
-class Form(Base):
+class FormToDB(Base):
     __tablename__ = 'water1'
     
     fid = Column(Integer, primary_key=True)
@@ -28,4 +26,7 @@ class Form(Base):
     def get_point(self):
         return to_shape(self.geometry)
 
-Form.__table__.create(engine)
+# Run once table created
+# FormToDB.__table__.create(engine)
+
+FormToDB(1,"Test",31.1,29.1)
