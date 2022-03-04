@@ -1,4 +1,4 @@
-from reportit import Base, engine
+from reportit import Base, engine,session
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
@@ -29,4 +29,5 @@ class FormToDB(Base):
 # Run once table created
 # FormToDB.__table__.create(engine)
 
-FormToDB(1,"Test",31.1,29.1)
+session.add(FormToDB(1,"Test",31.1,29.1))
+session.commit()
