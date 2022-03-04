@@ -1,3 +1,4 @@
+from flask import request
 from reportit import Base, engine,session
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from geoalchemy2.shape import to_shape, from_shape
@@ -25,6 +26,14 @@ class FormToDB(Base):
 
     def get_point(self):
         return to_shape(self.geometry)
+
+    def get_current_weather(self):
+        url = f"https://api.weather.gov/points/{self.lat},{self.lon}"
+        r = request.get_json(url)
+        if not r.ok:
+            return None
+        # r = request.get(r.json()['properties']['forecast'])
+        # return r.json()['properties']['periods'][0] if 'properties' in r.json() else None
 
 # Run once table created
 FormToDB.__table__.create(engine, checkfirst=True)
