@@ -38,5 +38,5 @@ class FormToDB(Base):
 # Run once table created
 FormToDB.__table__.create(engine, checkfirst=True)
 
-# session.add(FormToDB(1,"Test 2",31.1,29.1))
+# session.add(FormToDB(3,"Test 4",27.1783, 31.1859))
 # session.commit()
