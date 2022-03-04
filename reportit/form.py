@@ -27,7 +27,7 @@ class FormToDB(Base):
         return to_shape(self.geometry)
 
 # Run once table created
-# FormToDB.__table__.create(engine)
+FormToDB.__table__.create(engine, checkfirst=True)
 
-session.add(FormToDB(1,"Test",31.1,29.1))
-session.commit()
+# session.add(FormToDB(1,"Test 2",31.1,29.1))
+# session.commit()
