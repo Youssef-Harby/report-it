@@ -40,3 +40,4 @@ FormToDB.__table__.create(engine,checkfirst=True)
 
 # session.add(FormToDB(1,"Test 4",27.1, 31.1))
 # session.commit()
+# Print
