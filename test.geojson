@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "fid": 1, "Description": "Test 2", "lat": 31.1, "lon": 29.1, "timestamp": "2022-03-04T13:45:43.464" }, "geometry": { "type": "Point", "coordinates": [ 29.1, 31.1 ] } },
+{ "type": "Feature", "properties": { "fid": 2, "Description": "Test 3", "lat": 30.0444, "lon": 31.2357, "timestamp": "2022-03-04T19:38:13.357" }, "geometry": { "type": "Point", "coordinates": [ 31.2357, 30.0444 ] } },
+{ "type": "Feature", "properties": { "fid": 3, "Description": "Test 4", "lat": 27.1783, "lon": 31.1859, "timestamp": "2022-03-04T19:41:24.399" }, "geometry": { "type": "Point", "coordinates": [ 31.1859, 27.1783 ] } }
+]
+}
