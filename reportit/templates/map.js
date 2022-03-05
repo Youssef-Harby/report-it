@@ -12,36 +12,36 @@ myBaseMap.addTo(map)
 
 //------------------------------------------------------------
 
-map.on("click", function (event) {
-    console.log(  event.latlng.toString());
-    L.marker(event.latlng).addTo(map)
-    alert('Your Cordinates is: '  + event.latlng.toString());
+// map.on("click", function (event) {
+//     console.log(  event.latlng.toString());
+//     L.marker(event.latlng).addTo(map)
+//     alert('Your Cordinates is: '  + event.latlng.toString());
     
 
      
-     y={
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            event.latlng.toString()
-          ]
-        }
-      }
+//      y={
+//         "type": "Feature",
+//         "properties": {},
+//         "geometry": {
+//           "type": "Point",
+//           "coordinates": [
+//             event.latlng.toString()
+//           ]
+//         }
+//       }
 
 
-     console.log({
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": "Point",
-          "coordinates": [
-            event.latlng.toString()
-          ]
-        }
-      })
-  });
+//      console.log({
+//         "type": "Feature",
+//         "properties": {},
+//         "geometry": {
+//           "type": "Point",
+//           "coordinates": [
+//             event.latlng.toString()
+//           ]
+//         }
+//       })
+//   });
 
 
 
@@ -51,6 +51,8 @@ map.on("click", function (event) {
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (p) {
         var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+
+    
         
         cordJson=(JSON.stringify({
             "type": "Feature",
@@ -73,16 +75,9 @@ if (navigator.geolocation) {
 } 
 
   
-// -------------------------------------------
 
+map.locate({setView: true, maxZoom: 100});
 
-
-
-
-//-------------------------------------------
-
-
-  map.locate({setView: true, maxZoom: 100});
 
 
 function onLocationFound(e) {
@@ -95,5 +90,17 @@ function onLocationFound(e) {
   
   map.on('locationfound', onLocationFound);
   map.locate({setView: true,  maxZoom: 100});
+
+
+
+// -------------------------------------------
+
+  
+   
+
+
+
+
+//-------------------------------------------
 
 
