@@ -1,5 +1,5 @@
 from flask import render_template, request
-from reportit import app, df
+from reportit import app
 import folium
 from folium import plugins
 import geopandas
@@ -8,10 +8,15 @@ from reportit.form import *
 
 @app.route('/')
 def index():
+    return render_template('index.html',projectName='Report-it')
+
+@app.route('/form')
+def formPage():
     return render_template('form.html')
 
 @app.route('/folium')
 def maptest():
+    from reportit.postgis import df
     # print(df.info())
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(df[['fid','Description', 'lat', 'lon', 'timestamp']], geometry=geometry)
@@ -29,6 +34,7 @@ def maptest():
 
 @app.route('/leafmap')
 def leafmapTest():
+    from reportit.postgis import df
     m = leafmap.Map(center=[30.0444, 31.2357], zoom=6, height=600, widescreen=False)
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(df[['fid','Description', 'lat', 'lon']], geometry=geometry)
