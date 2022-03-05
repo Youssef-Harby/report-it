@@ -1,5 +1,5 @@
 FROM python:3.8.12-bullseye
-LABEL maintainer="geoyee@yeah.net"
+LABEL maintainer="youssef_harby@yahoo.com"
 
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app

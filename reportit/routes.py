@@ -1,5 +1,5 @@
 import json
-from flask import render_template, request
+from flask import jsonify, render_template, request
 from reportit import app
 import folium
 from folium import plugins
@@ -43,9 +43,8 @@ def leafmapTest():
     # m.to_html(outfile='./reportit/templates/leafmap.html')
     return m._repr_html_()
 
-@app.route('/jsontest/<string:jsonTest>', methods=['POST'])
-def jsontestpost(jsonTest):
-    recJson = json.loads(jsonTest)
-    print("########################################################")
-    print(recJson)
-    return 'Thank YOUUUUUUUUUUU'
+@app.route('/jsontest', methods=['POST'])
+def jsontestpost():
+    data = request.get_json()
+    print(data)
+    return jsonify({'result':'Success'})
