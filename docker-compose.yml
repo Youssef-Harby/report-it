@@ -1,0 +1,18 @@
+version: "3"
+
+services: 
+  reportit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reportit:0.0.1
+    container_name: "reportit-backend"
+    volumes:
+      - .:/usr/src/app
+    tty: true
+    ports:
+      - 5000:5000
+    environment:
+      - FLASK_ENV=development
+    # command: tail -f /bin/bash
+    # command: bash -c "python run.py"
