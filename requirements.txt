@@ -2,7 +2,9 @@ Flask==2.0.3
 folium==0.12.1.post1
 GeoAlchemy2==0.10.2
 geopandas==0.10.2
+keplergl
 leafmap==0.8.2
 Shapely==1.8.1.post1
 SQLAlchemy==1.4.31
+psycopg2
 gunicorn
