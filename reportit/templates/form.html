@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="form.js"></script>
 
     <title>Form</title>
 </head>
@@ -19,12 +20,36 @@
               <h2 class="fw-bold mb-0">Report</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <button class="btn btn-primary"  ><a href="./map.html" target="_blank"><label><b>Peter Parker</b></label></a></button>
-      
+            
+            
             <div class="modal-body p-5 pt-0">
-                <form>
-                    <div class="mb-3">
+
+                <form name="myform" action="" method="POST" >
+
+                    <div class="input-group">
+                        <span class="input-group-text">Your Name</span>
+                        <input type="text" class="form-control" placeholder="First name" required >
+                        <input type="text" class="form-control" placeholder="Last name" required >
+                    </div>
+
+                  <div class="input-group mt-2">
+                    <span class="input-group-text">Email</span>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" required >
+                </div>
+
+                  <div class="input-group mt-2">
+                    <span class="input-group-text">National Id</span>
+                    <input  class="form-control" type="tel" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits" required >
+                </div>
+
+                <div class="input-group mt-2">
+                    <span class="input-group-text">phone number</span>
+                    <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required>
+                </div>
+
+                
+
+                    <!-- <div class="mb-3">
                       <label for="validationTextarea" class="form-label">Select Problem Category</label>
                         <select class="form-select" required aria-label="select example">
                           <option value="Water">Water</option>
@@ -32,44 +57,116 @@
                           <option value="Road">Road</option>
                         </select>
                         <div class="invalid-feedback">Example invalid select feedback</div>
-                      </div>
-                        <label for="customRange3" class="form-label">Example range</label>
-                        <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3" required>
+                      </div> -->
+
+                      <!-- ------------------------------------------------------------------------------- -->
                   
-                    <div class="form-check mb-3">
-                      <input type="checkbox" class="form-check-input" id="validationFormCheck1" required>
-                      <label class="form-check-label" for="validationFormCheck1">Check this checkbox</label>
-                      <div class="invalid-feedback">Example invalid feedback text</div>
-                    </div>
+                      <!-- ------------------------------------------------------------------------------- -->
+                      <script type="text/javascript">
+                        var Water = ["Pipes","Cut","Polluted"];
+                        var Electricity = ["Wire","Cut","Lamppost"];
+                        var Road = ["Hole","Closed","Accident"];
+                        
+                        function updateTwo() {
+                            var  problem = document.getElementById("1");
+                            var subProblem = document.getElementById("2");
+                            var selected = problem.options[problem.selectedIndex].value;
+                            var i;
+                            for(i = subProblem.options.length - 1 ; i >= 0 ; i--) {
+                                subProblem.remove(i);
+                            }
+                            if(selected=="1"){
+                                for(var i = 0; i < Water.length; i++) {
+                                    addOption(subProblem,Water[i]);
+                                }
+                            } else if(selected=="2") {
+                                for(var j = 0; j < Electricity.length; j++) {
+                                    addOption(subProblem,Electricity[j]);
+                                }
+                            } else if(selected=="3") {
+                                for(var k = 0; k < Road.length; k++) {
+                                    addOption(subProblem,Road[k]);
+                                }
+                            }
+                        }
+                        
+                        updateThree = function() {
+                            var  subProblem = document.getElementById("2");
+                            var area = document.getElementById("3");
+                            var selected = subProblem.options[subProblem.selectedIndex].value;
+                            var i;
+                        
+                        }
+                        
+                        addOption = function(option, value) {
+                            var opt = document.createElement('option');
+                            opt.innerHTML = value;
+                            opt.value = value;
+                            option.appendChild(opt);
+                        }
+                        </script>
+                        </head>
+                        <body>
+                          <br/><p>
+                              <label for="validationTextarea" class="form-label">Select Problem Category</label>
+                                <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();">
+                                    <option value="0" selected="selected">Problem</option>
+                                    <option value="1">Water</option>
+                                    <option value="2">Electricity</option>
+                                    <option value="3">Road</option>
+                                </select>
+                            </p>
+                            <p>
+                                <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();"></select>
+                            </p>
+                        </body>
+                      <!-- ------------------------------------------------------------------------------- -->
+
+
+                        <label for="customRange3" class="form-label">How intense is this problem?</label>
+                        <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3" required><br/>
+                        
+                        
+                        <br/><div for="customRange3" class="form-label">Is this problem affecting everyone?</div>
+                        <div class="form-check form-check-inline">
+                          <input type="radio" class="form-check-input" name="customRadio" id="customRadio1">
+                          <label class="form-check-label" for="customRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input" name="customRadio" id="customRadio2" checked>
+                            <label class="form-check-label" for="customRadio2">No</label>
+                        </div>
+                    
+
+                    
+
+                      <br/><br/><div class="mb-3">
+                        <label for="validationTextarea" class="form-label" >Upload photo of the problem</label>
+                      <input type="file" class="form-control" aria-label="file example" required>
+                      <div class="invalid-feedback">Example invalid form file feedback</div>
+                    </div><br/>
                   
-                    <div class="form-check">
-                      <input type="radio" class="form-check-input" id="validationFormCheck2" name="radio-stacked" required>
-                      <label class="form-check-label" for="validationFormCheck2">Toggle this radio</label>
+                    <div class="mb-3" align="center">
+                       <button class="btn btn-info" required ><a href="./map.html" target="_blank" required><label style="color:rgb(7, 6, 6)" required>Click To Set Your Loaction</label></a></button>
                     </div>
-                    <div class="form-check mb-3">
-                      <input type="radio" class="form-check-input" id="validationFormCheck3" name="radio-stacked" required>
-                      <label class="form-check-label" for="validationFormCheck3">Or toggle this other radio</label>
-                      <div class="invalid-feedback">More example invalid feedback text</div>
-                    </div>
+
                     <div class="mb-3">
-                        <label for="validationTextarea" class="form-label">Text area</label>
-                        <textarea class="form-control" id="validationTextarea" placeholder="Required example textarea" ></textarea>
+                        <label for="validationTextarea" class="form-label" aria-label="file example" >Describe the problem</label>
+                        <textarea class="form-control" id="validationTextarea" placeholder="Required example textarea" required ></textarea>
                         <!-- <div class="invalid-feedback">
                           Please enter a message in the text area.
                         </div> -->
                       </div>
-                    <div class="mb-3">
-                      <input type="file" class="form-control" aria-label="file example" required>
-                      <div class="invalid-feedback">Example invalid form file feedback</div>
+                   
+                    <div class="mb-3" align="center">
+                      <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
                     </div>
-                  
-                    <div class="mb-3">
-                      <button class="btn btn-primary" type="submit" >Submit form</button>
-                    </div>
-                  </form>
-            </div>
-          </div>
-        </div>
-      </div>
+                    
+
+                    
+
+
+
+
 </body>
 </html>

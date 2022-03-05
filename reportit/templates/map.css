@@ -1,0 +1,44 @@
+#map { height: 600px;   }
+.container{
+    width: 1000px;
+}
+
+
+#locationList .card{
+    padding: 10px;
+}
+
+#toast-container{
+  top: 50%;
+  bottom: unset;
+}
+.toast{
+  background-color: rgba(0,0,0,.8);
+}
+.btn i{
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+@media only screen and (min-width: 768px){
+  .container{
+    width: 80%;
+      max-width: 800px;
+  }
+}
+
+
+/* ------------------------------------------------------------------------------------------------- */
+
+body{
+    background-color: #0b2849a8;
+}
+
+table{
+    margin-top: 25px;background-color: #24243b;width:85%;
+}
+
+
+
+
+
