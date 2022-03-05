@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 
 app = Flask(__name__)
 
-engine = create_engine("postgresql://docker:docker@192.168.1.104:5432/gis")
+engine = create_engine("postgresql://postgres:postgres@localhost:5432/GIS")
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
