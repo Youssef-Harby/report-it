@@ -36,7 +36,7 @@ class FormToDB(Base):
         # return r.json()['properties']['periods'][0] if 'properties' in r.json() else None
 
 # Run once table created
-FormToDB.__table__.create(engine, checkfirst=True)
+FormToDB.__table__.create(engine,checkfirst=True)
 
 # session.add(FormToDB(1,"Test 4",27.1, 31.1))
 # session.commit()
