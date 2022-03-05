@@ -1,4 +1,3 @@
-from crypt import methods
 import json
 from flask import render_template, request
 from reportit import app
