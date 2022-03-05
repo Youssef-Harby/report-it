@@ -1,3 +1,5 @@
+from crypt import methods
+import json
 from flask import render_template, request
 from reportit import app
 import folium
@@ -41,3 +43,10 @@ def leafmapTest():
     m.add_gdf(geo_df, layer_name="Points", fill_colors=["red", "green", "blue"])
     # m.to_html(outfile='./reportit/templates/leafmap.html')
     return m._repr_html_()
+
+@app.route('/jsontest/<string:jsonTest>', methods=['POST'])
+def jsontestpost(jsonTest):
+    recJson = json.loads(jsonTest)
+    print("########################################################")
+    print(recJson)
+    return 'Thank YOUUUUUUUUUUU'
