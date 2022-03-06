@@ -66,11 +66,12 @@ if (navigator.geolocation) {
           }))
 
         console.log(cordJson)
+
         const request = new XMLHttpRequest()
         request.open('POST','/processUserInfo/${cordJson}')
         request.send()
    
-        var map = new google.maps.Map(document.getElementById("dvMap"));
+        // var map = new google.maps.Map(document.getElementById("dvMap"));
     });
 } 
 
