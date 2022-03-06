@@ -67,15 +67,19 @@ myBaseMap.addTo(map)
 
 //         console.log(cordJson)
 
-//         const request = new XMLHttpRequest()
-//         request.open('POST','/jsontest')
-//         request.send()
+        // const request = new XMLHttpRequest()
+        // request.open('POST','/jsontest')
+        // request.send()
    
 //         // var map = new google.maps.Map(document.getElementById("dvMap"));
 //     });
 // } 
 
-  
+
+
+
+
+// --------------------------------------------- 
 
 map.locate({setView: true, maxZoom: 100});
 
@@ -96,7 +100,7 @@ function onLocationFound(e) {
 
 // -------------------------------------------
 
-  
+
 function geoFindMe() {
 
   const status = document.querySelector('#status');
@@ -145,8 +149,29 @@ function geoFindMe() {
 document.querySelector('#find-me').addEventListener('click', geoFindMe);
 
 
+//------------------------------------------------------------------
 
 
-//-------------------------------------------
+
+// -----------------------------------------------------------------
+
+function submitForm(event) {
+  // Prevent the form from submitting.
+  event.preventDefault();
+  // Set url for submission and collect data.
+  const url = "https://example.com/...";
+  const formData = new FormData(event.target);
+  // Build the data object.
+  const data = {};
+  formData.forEach((value, key) => (data[key] = value));
+  // Log the data.
+  console.log(data);
+}
 
 
+
+// ------------------------------------------------------------
+
+
+
+// -----------------------------------------------------------
