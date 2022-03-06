@@ -47,9 +47,9 @@ class Utility_table(Base):
     prop_id = Column('id', Integer, primary_key=True)
     type = Column('type', Integer)
     lat = Column('lat', Float)
-    long = Column('long', Float)
-    timeStamp = Column('Time_stamp', DateTime)
-    Geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
+    lon = Column('lon', Float)
+    timeStamp = Column('timestamp', DateTime)
+    geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
     effect = Column('Effect', Integer)
     description = Column('Description', String)
     img = Column('img', type_=String)
@@ -57,12 +57,12 @@ class Utility_table(Base):
     categories = relationship("Categories", backref="categories")
 
 
-    def __init__(self, type, lat, long, effect, description, img):
+    def __init__(self, type, lat, lon, effect, description, img):
         self.type = type
         self.lat = lat
-        self.long = long
-        self.timeStamp = str(datetime.utcnow())
-        self.Geometry = from_shape(Point(self.long, self.lat), srid=4326)
+        self.lon = lon
+        self.timestamp = str(datetime.utcnow())
+        self.geometry = from_shape(Point(self.lon, self.lat), srid=4326)
         self.effect = effect
         self.description = description
         self.img = img

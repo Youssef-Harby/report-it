@@ -23,7 +23,7 @@ def maptest():
     # print(df.info())
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['fid', 'Description', 'lat', 'lon', 'timestamp']], geometry=geometry)
+        df[['id', 'Description', 'lat', 'lon', 'timestamp']], geometry=geometry)
     # geo_df.head()
     # Create a geometry list from the GeoDataFrame
     geo_df_list = [[point.xy[1][0], point.xy[0][0]]
@@ -44,7 +44,7 @@ def leafmapTest():
                     height=600, widescreen=False)
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['fid', 'Description', 'lat', 'lon']], geometry=geometry)
+        df[['id', 'Description', 'lat', 'lon']], geometry=geometry)
     m.add_gdf(geo_df, layer_name="Points",
               fill_colors=["red", "green", "blue"])
     # m.to_html(outfile='./reportit/templates/leafmap.html')
