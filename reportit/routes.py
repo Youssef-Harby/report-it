@@ -63,7 +63,7 @@ def jsontestpost():
     lat = data['lat']
     lng = data['long']
     Description = data['Description']
-    session.add(FormToDB(str(Description), float(lat), float(lng)))
+    session.add(Utility_table(1, float(lat), float(lng), 5, str(Description), '123'))
     session.commit()
     return url_for('submission')
 
@@ -71,3 +71,4 @@ def jsontestpost():
 @app.route('/map')
 def maptesto():
     return render_template('map.html')
+
