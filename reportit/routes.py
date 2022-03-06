@@ -57,9 +57,6 @@ def leafmapTest():
 def submission():
     return render_template('submission.html')
 
-    tata = {'lat': '31.178925', 'long': '27.183465', 'First Name': 'fdgdfg', 'Last Name': 'dfgdfg', 'Email': 'dfgfdg@gfdg.dfg', 'National Id': '12345678901111',
-            'phone': '01289358027', 'Problem': 'Electricity', 'Sub Problem': 'Wire', 'Intensity Range': '5', 'effect': 'on', 'Image': {}, 'Description': 'fdfsf'}
-
 
 @app.route('/jsontest', methods=['POST'])
 def jsontestpost():
@@ -68,7 +65,7 @@ def jsontestpost():
     lat = data['lat']
     lng = data['long']
     Description = data['Description']
-    session.add(FormToDB(str(Description),float(lat),float(lng)))
+    session.add(FormToDB(str(Description), float(lat), float(lng)))
     session.commit()
     return url_for('submission')
 

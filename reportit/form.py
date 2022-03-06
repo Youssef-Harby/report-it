@@ -6,9 +6,10 @@ from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
 
+
 class FormToDB(Base):
     __tablename__ = 'water1'
-    
+
     fid = Column(Integer, primary_key=True)
     Description = Column(String)
     lat = Column(Float)
@@ -34,8 +35,9 @@ class FormToDB(Base):
         # r = request.get(r.json()['properties']['forecast'])
         # return r.json()['properties']['periods'][0] if 'properties' in r.json() else None
 
+
 # Run once table created
-FormToDB.__table__.create(engine,checkfirst=True)
+FormToDB.__table__.create(engine, checkfirst=True)
 
 # session.add(FormToDB("Test 4",27.1, 31.1))
 # session.commit()
