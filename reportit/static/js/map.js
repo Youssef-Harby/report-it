@@ -122,6 +122,8 @@ function submitForm(event) {
       // Response
       var response = this.responseText;
       console.log(response);
+      // window.location.href = "/submission";
+      window.location.href = response;
     }
   };
   xhttp.send(JSON.stringify(data));

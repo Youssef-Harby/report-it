@@ -1,5 +1,5 @@
 import json
-from flask import jsonify, render_template, request
+from flask import jsonify, redirect, render_template, request, url_for
 from reportit import app
 import folium
 from folium import plugins
@@ -43,11 +43,15 @@ def leafmapTest():
     # m.to_html(outfile='./reportit/templates/leafmap.html')
     return m._repr_html_()
 
+@app.route('/submission')
+def submission():
+    return render_template('submission.html')
+
 @app.route('/jsontest', methods=['POST'])
 def jsontestpost():
     data = request.get_json()
     print(data)
-    return jsonify({'result':'Success'})
+    return url_for('submission')
 
 
 @app.route('/map')
