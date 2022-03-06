@@ -43,7 +43,7 @@ function success(position) {
     properties: {},
     geometry: {
       type: "Point",
-      coordinates: [ position.coords.longitude, position.coords.latitude],
+      coordinates: [position.coords.longitude, position.coords.latitude],
     },
   });
 
@@ -106,11 +106,23 @@ function submitForm(event) {
   // Prevent the form from submitting.
   event.preventDefault();
   // Set url for submission and collect data.
-  const url = "https://example.com/...";
+  const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
   const data = { lat: myLng, long: myLat };
   formData.forEach((value, key) => (data[key] = value));
   // Log the data.
-  console.log(data);
+  console.log(JSON.stringify(data));
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("POST", "/jsontest", true);
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      // Response
+      var response = this.responseText;
+      console.log(response);
+    }
+  };
+  xhttp.send(JSON.stringify(data));
 }
