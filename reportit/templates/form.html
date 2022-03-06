@@ -8,6 +8,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="form.js"></script>
 
+    <!-- ------------------------------------------------------------ -->
+    <link rel="stylesheet" href="map.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- ////////////////------------------------------------------ -->
+
     <title>Form</title>
 </head>
 <body>
@@ -26,6 +40,7 @@
 
                 <form name="myform" action="" method="POST" >
 
+                    <hr/> <h4>Contact Info</h4>
                     <div class="input-group">
                         <span class="input-group-text">Your Name</span>
                         <input type="text" class="form-control" placeholder="First name" required >
@@ -45,7 +60,13 @@
                 <div class="input-group mt-2">
                     <span class="input-group-text">phone number</span>
                     <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required>
-                </div>
+                </div><hr/>
+
+                <!-- ---------------------------------------- -->
+                <div id="map" align="center"> </div>
+                  
+                <script src="./map.js"></script><hr/>
+              <!-- -------------------------------------- -->
 
                 
 
@@ -107,7 +128,8 @@
                         </script>
                         </head>
                         <body>
-                          <br/><p>
+                            <h4>Problem</h4>
+                          <p>
                               <label for="validationTextarea" class="form-label">Select Problem Category</label>
                                 <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();">
                                     <option value="0" selected="selected">Problem</option>
@@ -122,7 +144,8 @@
                         </body>
                       <!-- ------------------------------------------------------------------------------- -->
 
-
+                        
+                        <hr/><h4>Problem Description</h4>
                         <label for="customRange3" class="form-label">How intense is this problem?</label>
                         <input type="range" class="form-range" min="0" max="5" step="0.5" id="customRange3" required><br/>
                         
@@ -135,29 +158,31 @@
                         <div class="form-check form-check-inline">
                             <input type="radio" class="form-check-input" name="customRadio" id="customRadio2" checked>
                             <label class="form-check-label" for="customRadio2">No</label>
-                        </div>
+                        </div><hr/>
                     
 
                     
 
-                      <br/><br/><div class="mb-3">
+                      <div class="mb-3">
                         <label for="validationTextarea" class="form-label" >Upload photo of the problem</label>
                       <input type="file" class="form-control" aria-label="file example" required>
                       <div class="invalid-feedback">Example invalid form file feedback</div>
                     </div><br/>
                   
-                    <div class="mb-3" align="center">
+                    <!-- <div class="mb-3" align="center">
                        <button class="btn btn-info" required ><a href="./map.html" target="_blank" required><label style="color:rgb(7, 6, 6)" required>Click To Set Your Loaction</label></a></button>
-                    </div>
+                    </div> -->
 
                     <div class="mb-3">
-                        <label for="validationTextarea" class="form-label" aria-label="file example" >Describe the problem</label>
-                        <textarea class="form-control" id="validationTextarea" placeholder="Required example textarea" required ></textarea>
+                        <label for="validationTextarea" class="form-label" aria-label="file example"  >Describe the problem</label>
+                        <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6" required ></textarea>
                         <!-- <div class="invalid-feedback">
                           Please enter a message in the text area.
                         </div> -->
-                      </div>
+                      </div><hr/>
                    
+
+                      
                     <div class="mb-3" align="center">
                       <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
                     </div>
