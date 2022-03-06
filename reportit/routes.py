@@ -48,3 +48,8 @@ def jsontestpost():
     data = request.get_json()
     print(data)
     return jsonify({'result':'Success'})
+
+
+@app.route('/map')
+def maptesto():
+    return render_template('map.html')
