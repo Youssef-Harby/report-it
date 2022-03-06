@@ -9,8 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}">
 
     <!-- ------------------------------------------------------------ -->
-    
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
@@ -18,8 +16,7 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
-
-    <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <!-- ////////////////------------------------------------------ -->
 
     <title>Form</title>
@@ -38,54 +35,38 @@
             
             <div class="modal-body p-5 pt-0">
 
-                <form  onsubmit="submitForm(event)" >
+                <form method="POST"  onsubmit="submitForm(event)" >
 
                     <hr/> <h4>Contact Info</h4>
                     <div class="input-group">
                         <span class="input-group-text">Your Name</span>
-                        <input type="text" class="form-control" placeholder="First name" name="First Name" >
-                        <input type="text" class="form-control" placeholder="Last name" name="Last Name" >
+                        <input type="text" class="form-control" placeholder="First name" name="First Name" required >
+                        <input type="text" class="form-control" placeholder="Last name" name="Last Name" required >
                     </div>
 
                   <div class="input-group mt-2">
                     <span class="input-group-text">Email</span>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="Email"  >
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="Email" required  >
                 </div>
 
                   <div class="input-group mt-2">
                     <span class="input-group-text">National Id</span>
-                    <input  class="form-control" type="tel" name="National Id" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits"  >
+                    <input  class="form-control" type="tel" name="National Id" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits" required  >
                 </div>
 
                 <div class="input-group mt-2">
                     <span class="input-group-text">phone number</span>
-                    <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" >
+                    <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required >
                 </div><hr/>
 
-                <!-- ---------------------------------------- -->
-                <div id="map" align="center"> </div>
+                <!-- ---------------------------------------------------------------------------->
+                        <div id="map" align="center"> </div>
 
-                <br/><div align="center">
-                  <button  class="btn btn-primary"  id = "find-me" name="Location">Show my location</button><br/>
-                  <p id = "status"></p>
-                  <a id = "map-link" target="_blank"></a></div>
-                  
-                <script src="{{url_for('static', filename='js/map.js')}}"></script>
-              <!-- -------------------------------------- -->
-
-                
-
-                    <!-- <div class="mb-3">
-                      <label for="validationTextarea" class="form-label">Select Problem Category</label>
-                        <select class="form-select" required aria-label="select example">
-                          <option value="Water">Water</option>
-                          <option value="Electricity">Electricity</option>
-                          <option value="Road">Road</option>
-                        </select>
-                        <div class="invalid-feedback">Example invalid select feedback</div>
-                      </div> -->
-
-                      <!-- ------------------------------------------------------------------------------- -->
+                           <br/>
+                          <div align="center" id = "find-me" name="Location"><h3>Address</h3></div>
+                          <div align="center" id="demo"></div><hr/>
+                          
+                        <script src="{{url_for('static', filename='js/map.js')}}"></script>
                   
                       <!-- ------------------------------------------------------------------------------- -->
                       <script type="text/javascript">
@@ -136,7 +117,7 @@
                             <h4>Problem</h4>
                           <p>
                               <label for="validationTextarea" class="form-label">Select Problem Category</label>
-                                <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();" name="Problem">
+                                <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();" name="Problem" required>
                                     <option value="0" selected="selected">Problem</option>
                                     <option value="Water">Water</option>
                                     <option value="Electricity">Electricity</option>
@@ -144,7 +125,7 @@
                                 </select>
                             </p>
                             <p>
-                                <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem"></select>
+                                <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem" required></select>
                             </p>
                         </body>
                       <!-- ------------------------------------------------------------------------------- -->
@@ -152,7 +133,7 @@
                         
                         <hr/><h4>Problem Description</h4>
                         <label for="customRange3" class="form-label">How intense is this problem?</label>
-                        <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" name="Intensity Range" ><br/>
+                        <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" name="Intensity Range" required ><br/>
                         
                         
                         <br/><div for="customRange3" class="form-label">Is this problem affecting everyone?</div>
@@ -166,38 +147,23 @@
 
                       <div class="mb-3">
                         <label for="validationTextarea" class="form-label" >Upload photo of the problem</label>
-                      <input type="file" class="form-control" aria-label="file example" name="Image" >
+                      <input type="file" class="form-control" aria-label="file example" name="Image" required >
                       <div class="invalid-feedback">Example invalid form file feedback</div>
                     </div><br/>
                   
-                    <!-- <div class="mb-3" align="center">
-                       <button class="btn btn-info" required ><a href="./map.html" target="_blank" required><label style="color:rgb(7, 6, 6)" required>Click To Set Your Loaction</label></a></button>
-                    </div> -->
-
+                 
                     <div class="mb-3">
-                        <label for="validationTextarea" class="form-label" aria-label="file example"  >Describe the problem</label>
-                        <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6"  name="Description" ></textarea>
-                        <!-- <div class="invalid-feedback">
-                          Please enter a message in the text area.
-                        </div> -->
-                      </div><hr/>
+                        <label for="validationTextarea" class="form-label" aria-label="file example">Describe the problem</label>
+                        <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6"  name="Description" required ></textarea>
+                    </div><hr/>
                    
-
-
-                      <!-- ------------------------------------------------------------------------------- -->
-                     
-                      <!-- -------------------------------------------------------------------------------  -->
 
                       
                     <div class="mb-3" align="center">
                       <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
                     </div>
                     
-
                     
-
-
-
 
 </body>
 </html>
