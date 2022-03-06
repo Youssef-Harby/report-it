@@ -2,7 +2,7 @@
     <head>
         <title>Map</title>
         
-        <link rel="stylesheet" href="map.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}">
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -23,7 +23,7 @@
                     <th>
                     <div id="map" align="center"> </div>
                   </th>
-                    <script src="./map.js"></script>
+                  <script src="{{url_for('static', filename='js/map.js')}}"></script>
                   
                   </tr>      
  <!-------------------------------------------  -->

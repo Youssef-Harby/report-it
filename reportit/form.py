@@ -1,6 +1,6 @@
 from flask import request
 from reportit import Base, engine,session
-from sqlalchemy import Column, Integer, String, Float, Date
+from sqlalchemy import Column, Integer, String, Float, DateTime
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
@@ -13,11 +13,10 @@ class FormToDB(Base):
     Description = Column(String)
     lat = Column(Float)
     lon = Column(Float)
-    timestamp = Column(Date)
+    timestamp = Column(DateTime)
     geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
 
-    def __init__(self, fid, description, lat, lon):
-        self.fid = fid
+    def __init__(self, description, lat, lon):
         self.Description = description
         self.lat = lat
         self.lon = lon
@@ -38,6 +37,6 @@ class FormToDB(Base):
 # Run once table created
 FormToDB.__table__.create(engine,checkfirst=True)
 
-# session.add(FormToDB(1,"Test 4",27.1, 31.1))
+# session.add(FormToDB("Test 4",27.1, 31.1))
 # session.commit()
 # Print
