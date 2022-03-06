@@ -109,7 +109,7 @@ function submitForm(event) {
   const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
-  const data = { lat: myLng, long: myLat };
+  const data = { lat: myLat, long: myLng };
   formData.forEach((value, key) => (data[key] = value));
   // Log the data.
   console.log(JSON.stringify(data));

@@ -1,5 +1,5 @@
 from flask import request
-from reportit import Base, engine,session
+from reportit import Base, engine
 from sqlalchemy import Column, Integer, String, Float, DateTime
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
