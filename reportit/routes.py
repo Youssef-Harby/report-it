@@ -1,12 +1,10 @@
-import json
-from flask import jsonify, redirect, render_template, request, url_for
-from tables import Description
+from flask import render_template, request, url_for
 from reportit import app, session
 import folium
 from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
-from reportit.form import FormToDB
+from reportit.form import *
 
 
 @app.route('/')
