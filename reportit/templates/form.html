@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}">
 
     <!-- ------------------------------------------------------------ -->
-    <link rel="stylesheet" href="map.css">
+    
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -19,7 +19,7 @@
     crossorigin=""></script>
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
 
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
     <!-- ////////////////------------------------------------------ -->
 
     <title>Form</title>
@@ -64,6 +64,11 @@
 
                 <!-- ---------------------------------------- -->
                 <div id="map" align="center"> </div>
+
+                <div align="center">
+                  <button  class="btn btn-primary"  id = "find-me">Show my location</button><br/>
+                  <p id = "status"></p>
+                  <a id = "map-link" target="_blank"></a></div>
                   
                 <script src="{{url_for('static', filename='js/map.js')}}"></script>
               <!-- -------------------------------------- -->
