@@ -1,11 +1,9 @@
-from flask import request
-from reportit import Base, engine, session
+from reportit import Base, engine
 from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime
-from flask_sqlalchemy import SQLAlchemy
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
-from datetime import date, datetime
+from datetime import datetime
 from sqlalchemy.orm import backref, relationship
 
 ##USER TABLE##
