@@ -14,5 +14,7 @@ services:
       - 5000:5000
     environment:
       - FLASK_ENV=development
+      - SECRET_KEY=${SECRET_KEY}
+      - DB_URL=${DB_URL}
     # command: tail -f /bin/bash
     # command: bash -c "python run.py"

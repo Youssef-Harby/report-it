@@ -61,9 +61,9 @@ def submission():
 def jsontestpost():
     data = request.get_json()
     # print(data)
-    # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
-    # session.commit()
-    session.add(Utility(1, float(data['lat']), float(data['long']), int(data["Intensity Range"]), data['Description'],True,3))
+    session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
+    session.commit()
+    session.add(Utility(1, float(data['lat']), float(data['lng']), int(data["Intensity Range"]), data['Description'],True,3))
     session.commit()
     return url_for('submission')
 

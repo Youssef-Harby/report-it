@@ -1,11 +1,16 @@
+import os
+from dotenv import load_dotenv,find_dotenv
 from flask import Flask
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-app = Flask(__name__)
 
-engine = create_engine("postgresql://postgres:Report-It13245@db.fzhwhfsskyzuhcfjpzcf.supabase.co:5432/postgres")
+
+app = Flask(__name__)
+load_dotenv(find_dotenv())
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+engine = create_engine(os.getenv('DB_URL'))
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
