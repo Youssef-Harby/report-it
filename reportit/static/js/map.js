@@ -101,6 +101,17 @@ function addMarker(e) {
 }
 
 // -----------------------------------------------------------------
+// var z
+// var newData
+// z= function x(){
+//   newData=formData.forEach((value, key) => (data[key] = value));
+// if (newData.SubProblem=="Gas"){
+//  newData.SubProblem==1
+// }
+// console.log(newData)
+//  }
+// --------------------------------------------------------------
+
 
 function submitForm(event) {
   // Prevent the form from submitting.
@@ -110,9 +121,11 @@ function submitForm(event) {
   const formData = new FormData(event.target);
   // Build the data object.
   const data = { lat: myLat, long: myLng };
+ 
   formData.forEach((value, key) => (data[key] = value));
   // Log the data.
   console.log(JSON.stringify(data));
+  console.log(data)
 
   var xhttp = new XMLHttpRequest();
   xhttp.open("POST", "/jsontest", true);
@@ -128,6 +141,7 @@ function submitForm(event) {
   };
   xhttp.send(JSON.stringify(data));
 }
+
 
 
 // --------------------------Preview Image-----------------------------
