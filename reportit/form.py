@@ -1,5 +1,5 @@
-from reportit import Base, engine
-from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime,LargeBinary
+from reportit import Base, engine, session
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DateTime, LargeBinary
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
@@ -9,21 +9,22 @@ from sqlalchemy.orm import backref, relationship
 ##USER TABLE##
 
 
-class Users (Base):
-    __tablename__ = 'users'
+class User(Base):
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
     f_Name = Column(String)
     l_Name = Column(String)
     email = Column(String)
-    national_id = Column(Integer)
-    phone_num = Column(Integer)
+    national_id = Column(String)
+    phone_num = Column(String)
+    reports= relationship('Utility', backref='author', lazy=True)
 
     # initializing
-    def __ini__(self, f_Name, l_Name, email, National_ID, phone_num):
+    def __init__(self, f_Name, l_Name, email, national_id, phone_num):
         self.f_Name = f_Name
         self.l_Name = l_Name
         self.email = email
-        self.National_ID = National_ID
+        self.national_id = national_id
         self.phone_num = phone_num
 
 ##Categories ID##
@@ -35,7 +36,7 @@ class Categories (Base):
     cat_name = Column(String)
     id = Column(Integer, primary_key=True)
 
-    def __ini__(self, cat_name, cat_id):
+    def __init__(self, cat_name, cat_id):
         self.cat_name = cat_name
         self.id = cat_id
 
@@ -48,25 +49,25 @@ class Utility(Base):
     type = Column(Integer)
     lat = Column(Float)
     lon = Column(Float)
-    timestamp = Column(DateTime)
+    timestamp = Column(DateTime, default=datetime.utcnow)
     geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
     effect = Column(Integer)
     description = Column(String)
     img = Column(LargeBinary)
-    cat_id = Column(Integer, ForeignKey('categories.id'))
-    categories = relationship("Categories", backref="categories")
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    # categories = relationship("Categories", backref="categories")
 
 
-    def __init__(self, type, lat, lon, effect, description):
+    def __init__(self, type, lat, lon, effect, description,user_id):
         self.type = type
         self.lat = lat
         self.lon = lon
-        self.timestamp = str(datetime.utcnow())
+        # self.timestamp = str(datetime.utcnow())
         self.geometry = from_shape(Point(self.lon, self.lat), srid=4326)
         self.effect = effect
         self.description = description
         # self.img = img
-        #self.user_id = user_id
+        self.user_id = user_id
 
     def get_point(self):
         return to_shape(self.geometry)
@@ -74,6 +75,7 @@ class Utility(Base):
 ##Base.metadata.drop_all(engine, checkfirst=True)
 Base.metadata.create_all(engine, checkfirst=True)
 
+# session.add(User("f_Name", "l_Name", "email", 2225222, 1215187))
 
 ##
 

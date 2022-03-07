@@ -23,8 +23,8 @@ def maptest():
     # print(df.info())
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['id', 'Description', 'lat', 'lon', 'timestamp']], geometry=geometry)
-    # geo_df.head()
+        df[['id', 'description', 'lat', 'lon', 'timestamp']], geometry=geometry)
+    print(geo_df.head())
     # Create a geometry list from the GeoDataFrame
     geo_df_list = [[point.xy[1][0], point.xy[0][0]]
                    for point in geo_df.geometry]
@@ -44,7 +44,8 @@ def leafmapTest():
                     height=600, widescreen=False)
     geometry = geopandas.points_from_xy(df.lon, df.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['id', 'Description', 'lat', 'lon']], geometry=geometry)
+        df[['id', 'description', 'lat', 'lon']], geometry=geometry)
+    print(geo_df.head())
     m.add_gdf(geo_df, layer_name="Points",
               fill_colors=["red", "green", "blue"])
     # m.to_html(outfile='./reportit/templates/leafmap.html')
@@ -59,9 +60,10 @@ def submission():
 @app.route('/jsontest', methods=['POST'])
 def jsontestpost():
     data = request.get_json()
-    print(data)
-    # session.add(Users(str(data["First Name"]), str(data["Last Name"]), str(data["Email"]), int(data["National Id"]), int(data["phone"])))
-    session.add(Utility(1, float(data['lat']), float(data['long']), int(data["Intensity Range"]), str(data['Description'])))
+    # print(data)
+    # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
+    # session.commit()
+    session.add(Utility(1, float(data['lat']), float(data['long']), int(data["Intensity Range"]), data['Description'],3))
     session.commit()
     return url_for('submission')
 
