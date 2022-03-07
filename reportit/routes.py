@@ -19,11 +19,11 @@ def formPage():
 
 @app.route('/folium')
 def maptest():
-    from reportit.postgis import df
+    from reportit.postgis import df_utility
     # print(df.info())
-    geometry = geopandas.points_from_xy(df.lon, df.lat)
+    geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['id', 'description', 'lat', 'lon', 'timestamp']], geometry=geometry)
+        df_utility[['id', 'description', 'lat', 'lon', 'timestamp']], geometry=geometry)
     print(geo_df.head())
     # Create a geometry list from the GeoDataFrame
     geo_df_list = [[point.xy[1][0], point.xy[0][0]]
@@ -39,12 +39,12 @@ def maptest():
 
 @app.route('/leafmap')
 def leafmapTest():
-    from reportit.postgis import df
+    from reportit.postgis import df_utility
     m = leafmap.Map(center=[30.0444, 31.2357], zoom=6,
                     height=600, widescreen=False)
-    geometry = geopandas.points_from_xy(df.lon, df.lat)
+    geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
     geo_df = geopandas.GeoDataFrame(
-        df[['id', 'description', 'lat', 'lon']], geometry=geometry)
+        df_utility[['id', 'description', 'lat', 'lon']], geometry=geometry)
     print(geo_df.head())
     m.add_gdf(geo_df, layer_name="Points",
               fill_colors=["red", "green", "blue"])
