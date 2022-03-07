@@ -60,10 +60,8 @@ def submission():
 def jsontestpost():
     data = request.get_json()
     print(data)
-    lat = data['lat']
-    lng = data['long']
-    Description = data['Description']
-    session.add(Utility_table(1, float(lat), float(lng), 5, str(Description), '123'))
+    # session.add(Users(str(data["First Name"]), str(data["Last Name"]), str(data["Email"]), int(data["National Id"]), int(data["phone"])))
+    session.add(Utility(1, float(data['lat']), float(data['long']), int(data["Intensity Range"]), str(data['Description'])))
     session.commit()
     return url_for('submission')
 
