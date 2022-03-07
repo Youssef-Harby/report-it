@@ -96,7 +96,7 @@ class Fire(MyMixin, Base):
     pass
 
 #Dropping All Tables
-Base.metadata.drop_all(engine, checkfirst=True)
+# Base.metadata.drop_all(engine, checkfirst=True)
 
 #Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
