@@ -4,7 +4,7 @@ from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm import backref, relationship,declarative_mixin,declared_attr
 
 ##USER TABLE##
 
@@ -46,9 +46,15 @@ class Categories (Base):
 
 ## Reported problems Tables##
 
+@declarative_mixin
+class MyMixin:
 
-class Utility(Base):
-    __tablename__ = 'utility'
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    __mapper_args__= {'always_refresh': True}
+
     id = Column(Integer, primary_key=True)
     type = Column(Integer)
     lat = Column(Float)
@@ -58,34 +64,46 @@ class Utility(Base):
     effect = Column(Integer)
     description = Column(String)
     img = Column(LargeBinary)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    # categories = relationship("Categories", backref="categories")
 
-
-    def __init__(self, type, lat, lon, effect, description,user_id):
-        self.type = type
-        self.lat = lat
-        self.lon = lon
-        # self.timestamp = str(datetime.utcnow())
-        self.geometry = from_shape(Point(self.lon, self.lat), srid=4326)
-        self.effect = effect
-        self.description = description
-        # self.img = img
-        self.user_id = user_id
-    
-    def __repr__(self):
-        return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
 
     def get_point(self):
         return to_shape(self.geometry)
 
-# Dropping all the tables in the database.
-# Base.metadata.drop_all(engine, checkfirst=True)
+    
+    def __repr__(self):
+        return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
 
-# Creating all the tables in the database.
+
+class Utility(MyMixin, Base):
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    pass
+
+
+class Pollution(MyMixin, Base):
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    pass
+
+class Road(MyMixin, Base):
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    pass
+
+class Disaster(MyMixin, Base):
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    pass
+
+class Fire(MyMixin, Base):
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    pass
+
+#Dropping All Tables
+Base.metadata.drop_all(engine, checkfirst=True)
+
+#Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
 
-# print(session.query(User).all())
+
+
+print(session.query(User).all())
 
 # This is a query that is looking for the user with the national id of 12345678901111.
 # userr = session.query(User).filter_by(national_id='12345678901111').first()
