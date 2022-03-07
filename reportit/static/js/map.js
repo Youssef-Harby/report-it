@@ -111,7 +111,7 @@ function submitForm(event) {
   const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
-  const data = { lat: myLat, long: myLng, DateTime:dateTime };
+  const data = { lat: myLat, lng: myLng, DateTime: dateTime ,markerLat: markerLat, markerLng :markerLng };
  
   formData.forEach((value, key) => (data[key] = value));
   // Log the data.
@@ -175,3 +175,21 @@ window.onload = function() {
   dateTime=strDateTime
 };
 // ----------------------------------------------------------------------------------
+
+
+
+// --------------------------------------Marker Manually--------------------------
+var marker = null;
+var markerLat
+var markerLng
+map.on('click', function (e) {
+    if (marker !== null) {
+        map.removeLayer(marker);
+    }
+    marker = L.marker(e.latlng).addTo(map);
+    markerCord=e.latlng
+    lat="lat"
+    markerLat=markerCord[lat]
+    lng="lng"
+    markerLng=markerCord[lng]
+});
