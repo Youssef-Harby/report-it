@@ -193,3 +193,121 @@ map.on('click', function (e) {
     lng="lng"
     markerLng=markerCord[lng]
 });
+
+
+// <!-- --------------------------------Doamin/Subtype----------------------------------------------- -->
+              
+                var Utility = ["Gas","Water","Sewage","Electric","Telecommunication"];
+                var Poullution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
+                var Road = ["Accidents","Lamps","Hales","Barriers"];
+                var Disasters = ["Earthquakes","Flloods","Landslides","Torrnados"];
+
+                // --------------------------Sub subUtility-----------------------------
+                    var Water= ["Pipeline Break","Leakage","Poor Quality","Weak Pressure"];
+                    var Sewage = ["Leakage","Cover theft"]; 
+
+                // ---------------------------------------------------------------------
+                
+                function updateTwo() {
+                    var  problem = document.getElementById("1");
+                    var subProblem = document.getElementById("2");
+                    var selected = problem.options[problem.selectedIndex].value;
+                    var i;
+                    for(i = subProblem.options.length - 1 ; i >= 0 ; i--) {
+                        subProblem.remove(i);
+                    }
+                    if(selected=="Utility"){
+                        for(var i = 0; i < Utility.length; i++) {
+                            addOption(subProblem,Utility[i]);
+                        }
+                    } else if(selected=="Poullution") {
+                        for(var j = 0; j < Poullution.length; j++) {
+                            addOption(subProblem,Poullution[j]);
+                        }
+                    } else if(selected=="Road") {
+                        for(var k = 0; k < Road.length; k++) {
+                            addOption(subProblem,Road[k]);
+                        }
+
+                    } else if(selected=="Disasters") {
+                        for(var m = 0; m < Disasters.length; m++) {
+                            addOption(subProblem,Disasters[m]);
+                        }
+                    }
+
+
+                    var sub = document.getElementById("3");
+
+                                          for(i = problem.options.length - 1 ; i >= 0 ; i--) {
+                                                        
+                                                    }
+                                                    if(selected=="Poullution"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else if(selected=="Road"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else if(selected=="Disasters"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else{
+                                                        sub.style.display='block'
+                                                    }
+
+                                             
+                                       
+                }
+                
+                updateThree = function() {
+                    var  subProblem = document.getElementById("2");
+                    var subUtility = document.getElementById("3");
+                    var selected = subProblem.options[subProblem.selectedIndex].value;
+                    var i;
+
+                    // ---------------------------------Sub subUtility--------------------------------------
+                                for(i = subUtility.options.length - 1 ; i >= 0 ; i--) {
+                                        subUtility.remove(i);
+                                    }
+                                    if(selected=="Water"){
+                                        for(var i = 0; i < Water.length; i++) {
+                                            addOption(subUtility,Water[i]);
+                                        }
+                                    } else if(selected=="Sewage") {
+                                        for(var j = 0; j < Sewage.length; j++) {
+                                            addOption(subUtility,Sewage[j]);
+                                        }
+                                    } 
+                    
+
+                                     var sub = document.getElementById("3");
+
+                        
+
+                                   
+
+                                            for(i = subUtility.options.length - 1 ; i >= 0 ; i--) {
+                                                        
+                                                    }
+                                                    if(selected=="Gas"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else if(selected=="Electric"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else if(selected=="Telecommunication"){
+                                                        sub.style.display='none'
+                                                    }
+                                                    else{
+                                                        sub.style.display='block'
+                                                    }
+                                    }
+                    
+
+                addOption = function(option, value) {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = value;
+                    opt.value = value;
+                    option.appendChild(opt);
+                }
+                
+ // <!-- -------------------------------------------------------------------------------------------------- -->

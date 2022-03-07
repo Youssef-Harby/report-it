@@ -17,7 +17,7 @@
     crossorigin=""></script>
     <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
     
-    <!-- ////////////////------------------------------------------ -->
+    <!---------------------------------------------------------------- -->
 
     <title>Form</title>
 </head>
@@ -37,116 +37,42 @@
 
                 <form method="POST"  onsubmit="submitForm(event)" >
 
+
                     <hr/> <h4>Contact Info</h4>
                     <div class="input-group">
-                        <span class="input-group-text">Your Name</span>
-                        <input type="text" class="form-control" placeholder="First name" name="First Name" required >
-                        <input type="text" class="form-control" placeholder="Last name" name="Last Name" required >
+                            <span class="input-group-text">Your Name</span>
+                            <input type="text" class="form-control" placeholder="First name" name="First Name" required >
+                            <input type="text" class="form-control" placeholder="Last name" name="Last Name" required >
                     </div>
 
-                  <div class="input-group mt-2">
-                    <span class="input-group-text">Email</span>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="Email" required  >
-                </div>
+                    <div class="input-group mt-2">
+                        <span class="input-group-text">Email</span>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="Email" required  >
+                    </div>
 
-                  <div class="input-group mt-2">
-                    <span class="input-group-text">National Id</span>
-                    <input  class="form-control" type="tel" name="National Id" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits" required  >
-                </div>
+                    <div class="input-group mt-2">
+                        <span class="input-group-text">National Id</span>
+                        <input  class="form-control" type="tel" name="National Id" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits" required  >
+                    </div>
 
-                <div class="input-group mt-2">
-                    <span class="input-group-text">phone number</span>
-                    <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required >
-                </div><hr/>
+                    <div class="input-group mt-2">
+                        <span class="input-group-text">phone number</span>
+                        <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required >
+                    </div><hr/>
 
                 <!-- ------------------------------------Location Map---------------------------------------->
-                <h4>Location</h4>
-                <div id="map" align="center"> </div>
-
-                   <br/>
-                  <div align="center" id = "find-me" name="Location"><h3>Address</h3></div>
-                  <div align="center" id="demo"></div><hr/>
-                  
-                <script src="{{url_for('static', filename='js/map.js')}}"></script>
-          
-        <!-- ---------------------------------------------------------------------------- -->
-
-              <!-- --------------------------------Doamin/Subtype----------------------------------------------- -->
-              <script type="text/javascript">
-                var Utility = ["Gas","Water","Sewage","Electric","Telecommunication"];
-                var Poullution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
-                var Road = ["Accidents","Lamps","Hales","Barriers"];
-                var Disasters = ["Earthquakes","Flloods","Landslides","Torrnados"];
-
-                // --------------------------Sub subUtility-----------------------------
-                    var Water= ["Pipeline Break","Leakage","Poor Quality","Weak Pressure"];
-                    var Sewage = ["Leakage","Cover theft"]; 
-
-                // ---------------------------------------------------------------------
-
-                function updateTwo() {
-                    var  problem = document.getElementById("1");
-                    var subProblem = document.getElementById("2");
-                    var selected = problem.options[problem.selectedIndex].value;
-                    var i;
-                    for(i = subProblem.options.length - 1 ; i >= 0 ; i--) {
-                        subProblem.remove(i);
-                    }
-                    if(selected=="Utility"){
-                        for(var i = 0; i < Utility.length; i++) {
-                            addOption(subProblem,Utility[i]);
-                        }
-                    } else if(selected=="Poullution") {
-                        for(var j = 0; j < Poullution.length; j++) {
-                            addOption(subProblem,Poullution[j]);
-                        }
-                    } else if(selected=="Road") {
-                        for(var k = 0; k < Road.length; k++) {
-                            addOption(subProblem,Road[k]);
-                        }
-
-                    } else if(selected=="Disasters") {
-                        for(var m = 0; m < Disasters.length; m++) {
-                            addOption(subProblem,Disasters[m]);
-                        }
-                    }
-                }
-                
-                updateThree = function() {
-                    var  subProblem = document.getElementById("2");
-                    var subUtility = document.getElementById("3");
-                    var selected = subProblem.options[subProblem.selectedIndex].value;
-                    var i;
-
-                    // ---------------------------------Sub subUtility--------------------------------------
-                                for(i = subUtility.options.length - 1 ; i >= 0 ; i--) {
-                                        subUtility.remove(i);
-                                    }
-                                    if(selected=="Water"){
-                                        for(var i = 0; i < Water.length; i++) {
-                                            addOption(subUtility,Water[i]);
-                                        }
-                                    } else if(selected=="Sewage") {
-                                        for(var j = 0; j < Sewage.length; j++) {
-                                            addOption(subUtility,Sewage[j]);
-                                        }
-                                    } 
+                    <h4>Location</h4>
+                    <div id="map" align="center"> </div>
+                    <br/>
+                    <div align="center" id = "find-me" name="Location"><h3>Address</h3></div>
+                    <div align="center" id="demo"></div><hr/>
                     
-                        }
-                    // ---------------------------------------------------------------------
-                
-                
-                
-                addOption = function(option, value) {
-                    var opt = document.createElement('option');
-                    opt.innerHTML = value;
-                    opt.value = value;
-                    option.appendChild(opt);
-                }
-                </script>
+                    <script src="{{url_for('static', filename='js/map.js')}}"></script>
+          
+                    
                 <h4>Problem</h4>
-                   <p>
-                      <label for="validationTextarea" class="form-label">Select Problem Category</label>
+                <p>
+                    <label for="validationTextarea" class="form-label">Select Problem Category</label>
                         <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();" name="Problem" required>
                             <option value="0">Problem</option>
                             <option value="Utility">Utility</option>
@@ -154,7 +80,7 @@
                             <option value="Road">Road</option>
                             <option value="Disasters">Disasters</option>
                         </select>
-                    </p>
+                </p>
 
                     <p>
                         <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem" required>
@@ -162,10 +88,8 @@
                     </p>
 
                     <p>
-                        <select class="form-select" aria-label="select example" id="3" name="Sub Utility"></select>
+                        <select class="form-select" aria-label="select example" id="3" name="Sub Utility" ></select>
                     </p>
-
-
 
               <!-- ---------------------------------------------------------------------------------------------------------- -->
 
@@ -176,32 +100,32 @@
                 
                 
                 <br/><div for="customRange3" class="form-label">Is this problem affecting everyone?</div>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="switchDefault" name="effect">
-                  <label class="form-check-label" for="switchDefault">Yes</label>
-              </div><hr/>
+                    <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="switchDefault" name="effect">
+                    <label class="form-check-label" for="switchDefault">Yes</label>
+                </div><hr/>
             
 
             
 
-              <div class="mb-3">
-                <label for="validationTextarea" class="form-label" for="file" style="cursor: pointer;" >Upload photo of the problem</label>
-              <input type="file" class="form-control" aria-label="file example" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
-              <div class="invalid-feedback">Example invalid form file feedback</div>
-              <div id="imgPre" align="center"><img id="output"/></div >
-            </div>
+                <div class="mb-3">
+                    <label for="validationTextarea" class="form-label" for="file" style="cursor: pointer;" >Upload photo of the problem</label>
+                    <input type="file" class="form-control" aria-label="file example" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
+                    <div class="invalid-feedback">Example invalid form file feedback</div>
+                    <div id="imgPre" align="center"><img id="output"/></div >
+                </div>
                   
                  
-                    <div class="mb-3">
-                        <label for="validationTextarea" class="form-label" aria-label="file example">Describe the problem</label>
-                        <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6"  name="Description" required ></textarea>
-                    </div><hr/>
+                <div class="mb-3">
+                    <label for="validationTextarea" class="form-label" aria-label="file example">Describe the problem</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6"  name="Description" required ></textarea>
+                </div><hr/>
                    
 
                       
-                    <div class="mb-3" align="center">
-                      <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
-                    </div>
+                <div class="mb-3" align="center">
+                    <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
+                </div>
                     
                     
 
