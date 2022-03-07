@@ -15,6 +15,7 @@ class User(Base):
     f_Name = Column(String)
     l_Name = Column(String)
     email = Column(String)
+    # TODO: make National ID uniqe
     national_id = Column(String)
     phone_num = Column(String)
     reports= relationship('Utility', backref='author', lazy=True)
@@ -26,6 +27,9 @@ class User(Base):
         self.email = email
         self.national_id = national_id
         self.phone_num = phone_num
+
+    def __repr__(self):
+        return f"User('{self.f_Name}', '{self.l_Name}', '{self.email}'), '{self.national_id}'), '{self.phone_num}')"
 
 ##Categories ID##
 
@@ -68,50 +72,29 @@ class Utility(Base):
         self.description = description
         # self.img = img
         self.user_id = user_id
+    
+    def __repr__(self):
+        return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
 
     def get_point(self):
         return to_shape(self.geometry)
 
-##Base.metadata.drop_all(engine, checkfirst=True)
+# Dropping all the tables in the database.
+# Base.metadata.drop_all(engine, checkfirst=True)
+
+# Creating all the tables in the database.
 Base.metadata.create_all(engine, checkfirst=True)
 
-# session.add(User("f_Name", "l_Name", "email", 2225222, 1215187))
+# print(session.query(User).all())
 
-##
+# This is a query that is looking for the user with the national id of 12345678901111.
+# userr = session.query(User).filter_by(national_id='12345678901111').first()
 
-# class FormToDB(Base):
-#     __tablename__ = 'water1'
+# Getting the user with the id of 3.
+# userByGet = session.query(User).get(3)
+# print(userByGet)
 
-#     fid = Column(Integer, primary_key=True)
-#     Description = Column(String)
-#     lat = Column(Float)
-#     lon = Column(Float)
-#     timestamp = Column(Date)
-#     geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
+# print(userr.id)
 
-#     def __init__(self, fid, description, lat, lon):
-#         self.fid = fid
-#         self.Description = description
-#         self.lat = lat
-#         self.lon = lon
-#         self.timestamp = str(datetime.utcnow())
-#         self.geometry = from_shape(Point(self.lon, self.lat), srid=4326)
+# print(userByGet.reports)
 
-#     def get_point(self):
-#         return to_shape(self.geometry)
-
-#     def get_current_weather(self):
-#         url = f"https://api.weather.gov/points/{self.lat},{self.lon}"
-#         r = request.get_json(url)
-#         if not r.ok:
-#             return None
-#         # r = request.get(r.json()['properties']['forecast'])
-#         # return r.json()['properties']['periods'][0] if 'properties' in r.json() else None
-
-
-# # Run once table created
-# FormToDB.__table__.create(engine,checkfirst=True)
-
-# session.add(FormToDB(1,"Test 4",27.1, 31.1))
-# session.commit()
-# Print
