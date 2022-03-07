@@ -101,18 +101,9 @@ function addMarker(e) {
 }
 
 // -----------------------------------------------------------------
-// var z
-// var newData
-// z= function x(){
-//   newData=formData.forEach((value, key) => (data[key] = value));
-// if (newData.SubProblem=="Gas"){
-//  newData.SubProblem==1
-// }
-// console.log(newData)
-//  }
-// --------------------------------------------------------------
 
 
+// --------------------------Get Data Json ------------------------------------
 function submitForm(event) {
   // Prevent the form from submitting.
   event.preventDefault();
@@ -120,7 +111,7 @@ function submitForm(event) {
   const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
-  const data = { lat: myLat, long: myLng };
+  const data = { lat: myLat, long: myLng, DateTime:dateTime };
  
   formData.forEach((value, key) => (data[key] = value));
   // Log the data.
@@ -149,9 +140,9 @@ var loadFile = function(event) {
 	var image = document.getElementById('output');
 	image.src = URL.createObjectURL(event.target.files[0]);
 };
-// -------------------------------------------------------------------
 
 
+// ------------------------------base46-------------------------------------
 
 var y
 function encodeImageFileAsURL(element) {
@@ -167,3 +158,20 @@ function encodeImageFileAsURL(element) {
 }
 
 
+// --------------------------------date time------------------------------------
+var dateTime
+//Pad given value to the left with "0"
+function AddZero(num) {
+  return (num >= 0 && num < 10) ? "0" + num : num + "";
+}
+window.onload = function() {
+  var now = new Date();
+  var strDateTime = [[AddZero(now.getDate()), 
+      AddZero(now.getMonth() + 1), 
+      now.getFullYear()].join("/"), 
+      [AddZero(now.getHours()), 
+      AddZero(now.getMinutes())].join(":"), 
+      now.getHours() >= 12 ? "PM" : "AM"].join(" ");
+  dateTime=strDateTime
+};
+// ----------------------------------------------------------------------------------
