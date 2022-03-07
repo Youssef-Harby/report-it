@@ -47,7 +47,7 @@ function success(position) {
     },
   });
 
-  console.log(cordJson);
+ 
 
   var script = document.createElement("script");
   script.id = "nominatim";
@@ -128,3 +128,28 @@ function submitForm(event) {
   };
   xhttp.send(JSON.stringify(data));
 }
+
+
+// --------------------------Preview Image-----------------------------
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+};
+// -------------------------------------------------------------------
+
+
+
+var y
+function encodeImageFileAsURL(element) {
+  var image = document.getElementById('output');
+	image.src = URL.createObjectURL(event.target.files[0]);
+  var file = element.files[0];
+  var reader = new FileReader();
+  reader.onloadend = function() {
+    console.log(reader.result)
+    y = reader.result
+  }
+  reader.readAsDataURL(file);
+}
+
+
