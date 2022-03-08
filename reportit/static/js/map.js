@@ -197,7 +197,7 @@ map.on('click', function (e) {
 
 // <!-- --------------------------------Doamin/Subtype----------------------------------------------- -->
               
-                var Utility = ["Gas","Water","Sewage","Electric","Telecommunication"];
+                var Utility =["Gas","Water","Sewage","Electric","Telecommunication"];
                 var Poullution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
                 var Road = ["Accidents","Lamps","Hales","Barriers"];
                 var Disasters = ["Earthquakes","Flloods","Landslides","Torrnados"];
@@ -236,26 +236,16 @@ map.on('click', function (e) {
                     }
 
 
-                    var sub = document.getElementById("3");
+                    var dropdown = document.getElementById("1");
+                    var current_value = dropdown.options[dropdown.selectedIndex].value;
+                
+                        if (current_value == "Utility") {
+                            document.getElementById("3").style.display = "block";
+                        }
+                        else {
+                            document.getElementById("3").style.display = "none";
+                        }
 
-                                          for(i = problem.options.length - 1 ; i >= 0 ; i--) {
-                                                        
-                                                    }
-                                                    if(selected=="Poullution"){
-                                                        sub.style.display='none'
-                                                    }
-                                                    else if(selected=="Road"){
-                                                        sub.style.display='none'
-                                                    }
-                                                    else if(selected=="Disasters"){
-                                                        sub.style.display='none'
-                                                    }
-                                                    else{
-                                                        sub.style.display='block'
-                                                    }
-
-                                             
-                                       
                 }
                 
                 updateThree = function() {
@@ -265,41 +255,31 @@ map.on('click', function (e) {
                     var i;
 
                     // ---------------------------------Sub subUtility--------------------------------------
-                                for(i = subUtility.options.length - 1 ; i >= 0 ; i--) {
-                                        subUtility.remove(i);
-                                    }
-                                    if(selected=="Water"){
-                                        for(var i = 0; i < Water.length; i++) {
-                                            addOption(subUtility,Water[i]);
-                                        }
-                                    } else if(selected=="Sewage") {
-                                        for(var j = 0; j < Sewage.length; j++) {
-                                            addOption(subUtility,Sewage[j]);
-                                        }
-                                    } 
-                    
-
-                                     var sub = document.getElementById("3");
-
-                        
-
-                                   
-
                                             for(i = subUtility.options.length - 1 ; i >= 0 ; i--) {
-                                                        
+                                              subProblem.remove(i);
+                                                    subUtility.remove(i);
+                                                }
+                                                if(selected=="Water"){
+                                                    for(var i = 0; i < Water.length; i++) {
+                                                        addOption(subUtility,Water[i]);
                                                     }
-                                                    if(selected=="Gas"){
-                                                        sub.style.display='none'
+                                                } else if(selected=="Sewage") {
+                                                    for(var j = 0; j < Sewage.length; j++) {
+                                                        addOption(subUtility,Sewage[j]);
                                                     }
-                                                    else if(selected=="Electric"){
-                                                        sub.style.display='none'
-                                                    }
-                                                    else if(selected=="Telecommunication"){
-                                                        sub.style.display='none'
-                                                    }
-                                                    else{
-                                                        sub.style.display='block'
-                                                    }
+                                                } 
+                                
+
+                                            var dropdown = document.getElementById("2");
+                                            var current_value = dropdown.options[dropdown.selectedIndex].value;
+                                                
+                                                if (current_value == "Water" || current_value == "Sewage" ) {
+                                                  document.getElementById("3").style.display = "block";
+                                                }
+                                        
+                                                else {
+                                                    document.getElementById("3").style.display = "none";
+                                                }
                                     }
                     
 
@@ -310,4 +290,7 @@ map.on('click', function (e) {
                     option.appendChild(opt);
                 }
                 
+                window.onload = function() {
+                  updateTwo(),updateThree()
+                };
  // <!-- -------------------------------------------------------------------------------------------------- -->
