@@ -22,7 +22,7 @@
     <title>Form</title>
 </head>
 <body>
-  
+    
     <div class="modal modal-signin d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
         <div class="modal-dialog" role="document">
           <div class="modal-content rounded-5 shadow">
@@ -31,8 +31,8 @@
               <h2 class="fw-bold mb-0">Report</h2>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            
-            
+
+
             <div class="modal-body p-5 pt-0">
 
                 <form method="POST"  onsubmit="submitForm(event)" >
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="input-group mt-2">
-                        <span class="input-group-text">phone number</span>
+                        <span class="input-group-text">Phone Number</span>
                         <input class="form-control" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}" required >
                     </div><hr/>
 
@@ -84,6 +84,7 @@
 
                     <p>
                         <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem" required>
+                            <option value="0">Sub Problem</option>
                         </select>
                     </p>
 
