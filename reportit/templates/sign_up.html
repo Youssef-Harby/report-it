@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Registration Form</title>
+
+    <!-- Icons font CSS-->
+    <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sign_up.css')}}">
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Registration Form</h2>
+
+                    <form method="POST">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">first name</label>
+                                    <input class="input--style-4" type="text" placeholder="First name" name="first_name" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">last name</label>
+                                    <input class="input--style-4" type="text"  placeholder="Last name" name="last_name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">National Id</label>
+                                    <input  class="input--style-4"  type="tel" name="National Id" placeholder="29812345678912" pattern="[0-9]{14}" title="National Id must be 14 digits" name="national_id" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Phone Number</label>
+                                    <input class="input--style-4" type="tel" id="phone" name="phone" placeholder="01073294719" pattern="[0-9]{11}"  name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-1">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    <input class="input--style-4" id="inputEmail" placeholder="example@example.com" type="email" name="email" required>
+                                </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Username</label>
+                                    <input class="input--style-4" type="text"  placeholder="Enter username" name="user_name" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Password</label>
+                                    <input class="input--style-4" type="password"  pattern="[0-9]{8}" name="password"  placeholder="Enter 8 digit password" title="Password must be 8 digits" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div align="center" class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                        </div>
+                    </form>
+                   <br/><div align="center"><h4>Already have an Account? <a href="/login">Login Now!</h4></a></div>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
