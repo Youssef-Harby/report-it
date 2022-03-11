@@ -1,5 +1,4 @@
 from flask import render_template, request, url_for, flash, redirect
-from matplotlib.pyplot import title
 from reportit import app, session
 import folium
 from folium import plugins
@@ -37,12 +36,19 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('myreports'))
     return render_template('register.html', title='Register', form=form)
     
 @app.route('/login',methods=['GET','POST'])
 def login():
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'me@youssefharby.com' and form.password.data == '4EpGrxWT4uErY8i':
+            flash(f'You have been logged in!', 'success')
+            return redirect(url_for('myreports'))
+        else:
+            flash('Login Unsuccessful. Please check Email and Password!','danger')
+            
     return render_template('login.html', title='Login', form=form)
 
 @app.route('/myreports')
