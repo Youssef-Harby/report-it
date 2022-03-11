@@ -128,7 +128,7 @@ Base.metadata.create_all(engine, checkfirst=True)
 
 
 
-print(session.query(User).all())
+# print(session.query(User).all())
 
 # This is a query that is looking for the user with the national id of 12345678901111.
 # userr = session.query(User).filter_by(national_id='12345678901111').first()
