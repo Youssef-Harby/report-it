@@ -1,10 +1,12 @@
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, flash, redirect
+from matplotlib.pyplot import title
 from reportit import app, session
 import folium
 from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
 from reportit.form import *
+from reportit.newForm import RegistrationForm, LoginForm
 
 myReports = [
     {
@@ -27,17 +29,38 @@ myReports = [
 
 
 @app.route('/')
-def index():
-    return render_template('index.html', projectName='Report-it')
+def home():
+    return render_template('home.html')
+
+@app.route('/register', methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('home'))
+    return render_template('register.html', title='Register', form=form)
+    
+@app.route('/login',methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
+
+@app.route('/myreports')
+def myreports():
+    return render_template('myreports.html', reports=myReports, title='My Reports')
+
+@app.route('/about')
+def about():
+    return render_template('about.html',title='About')
 
 
-@app.route('/form')
-def formPage():
-    return render_template('form.html')
+@app.route('/report')
+def report():
+    return render_template('report.html')
 
 
 @app.route('/folium')
-def maptest():
+def foliumMap():
     from reportit.postgis import df_utility
     # print(df.info())
     geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
@@ -85,28 +108,3 @@ def jsontestpost():
     session.add(Utility(1, float(data['lat']), float(data['lng']), int(data["Intensity Range"]), data['Description'],True,3))
     session.commit()
     return url_for('submission')
-
-
-@app.route('/map')
-def maptesto():
-    return render_template('map.html')
-
-@app.route('/')
-def home():
-    return render_template('home.html')
-
-@app.route('/register')
-def register():
-    return render_template('register.html')
-    
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-@app.route('/myreports')
-def myreports():
-    return render_template('myreports.html', reports=myReports)
-
-@app.route('/about')
-def about():
-    return render_template('about.html', reports=myReports)
