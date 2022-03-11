@@ -85,6 +85,7 @@ def about():
 
 
 @app.route('/report')
+@login_required
 def report():
     return render_template('report.html')
 
