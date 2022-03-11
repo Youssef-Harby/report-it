@@ -1,3 +1,4 @@
+from atexit import register
 from reportit import Base, engine, session
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, DateTime, LargeBinary
 from geoalchemy2.shape import to_shape, from_shape
@@ -18,15 +19,18 @@ class User(Base):
     # TODO: make National ID uniqe
     national_id = Column(String)
     phone_num = Column(String)
+    password = Column(String,nullable=False)
+    register_time = Column(DateTime, default=datetime.utcnow)
     # reports= relationship('Utility', backref='author', lazy=True)
 
     # initializing
-    def __init__(self, f_Name, l_Name, email, national_id, phone_num):
+    def __init__(self, f_Name, l_Name, email, national_id, phone_num, password):
         self.f_Name = f_Name
         self.l_Name = l_Name
         self.email = email
         self.national_id = national_id
         self.phone_num = phone_num
+        self.password = password
 
     def __repr__(self):
         return f"User('{self.f_Name}', '{self.l_Name}', '{self.email}'), '{self.national_id}'), '{self.phone_num}')"

@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, flash, redirect
-from reportit import app, session
+from reportit import app, session, bcrypt
 import folium
 from folium import plugins
 import geopandas
@@ -35,6 +35,10 @@ def home():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User('Youssef','Harby','me@youssefharby.com',"29902678912345","012345678911",hashed_password)
+        session.add(user)
+        session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('myreports'))
     return render_template('register.html', title='Register', form=form)
@@ -48,7 +52,7 @@ def login():
             return redirect(url_for('myreports'))
         else:
             flash('Login Unsuccessful. Please check Email and Password!','danger')
-            
+
     return render_template('login.html', title='Login', form=form)
 
 @app.route('/myreports')
@@ -109,8 +113,8 @@ def submission():
 def jsontestpost():
     data = request.get_json()
     # print(data)
-    session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
-    session.commit()
+    # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
+    # session.commit()
     session.add(Utility(1, float(data['lat']), float(data['lng']), int(data["Intensity Range"]), data['Description'],True,3))
     session.commit()
     return url_for('submission')
