@@ -12,7 +12,7 @@ myReports = [
         'problem': 'Pipeline Break',
         'description': 'Description Test 1',
         'date_reported': '11-03-2022',
-        'status': 'Solved'
+        'status': True
 
     },
     {
@@ -20,7 +20,7 @@ myReports = [
         'problem': 'Noise Pollution',
         'description': 'Description Test 2',
         'date_reported': '10-03-2022',
-        'status': 'Not Solved Yet'
+        'status': False
 
     }
 ]

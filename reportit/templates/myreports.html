@@ -1,9 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for report in reports %}
-        <h1>{{ report.problem }}</h1>
-        <p>{{ report.author }} on {{ report.date_reported }}</p>
-        <p>{{ report.description }}</p>
-        <p>{{ report.status }}</p>
+        <article class="media content-section">
+            <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2" href="#">{{ report.author }}</a>
+                <small class="text-muted">{{ report.date_reported }}</small>
+            </div>
+                <h2><a class="article-title" href="#">{{ report.problem }}</a></h2>
+                <p class="article-content">{{ report.description }}</p>
+                <p>{{ report.status }} <i class="bi bi-check"> <i class="bi bi-x"></i></i></p>
+            </div>
+        </article>
     {% endfor %}
 {% endblock content %}
