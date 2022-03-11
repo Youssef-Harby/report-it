@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 app = Flask(__name__)
 load_dotenv(find_dotenv())
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-engine = create_engine(os.getenv('DB_URL'))
+engine = create_engine(os.getenv('DB_LOCAL'))
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()

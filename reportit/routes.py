@@ -6,6 +6,25 @@ import geopandas
 import leafmap.kepler as leafmap
 from reportit.form import *
 
+myReports = [
+    {
+        'author': 'Youssef Harby',
+        'problem': 'Pipeline Break',
+        'description': 'Description Test 1',
+        'date_reported': '11-03-2022',
+        'status': 'Solved'
+
+    },
+    {
+        'author': 'Khalid',
+        'problem': 'Noise Pollution',
+        'description': 'Description Test 2',
+        'date_reported': '10-03-2022',
+        'status': 'Not Solved Yet'
+
+    }
+]
+
 
 @app.route('/')
 def index():
@@ -76,10 +95,18 @@ def maptesto():
 def home():
     return render_template('home.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('sign_up.html')
+@app.route('/register')
+def register():
+    return render_template('register.html')
     
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+@app.route('/myreports')
+def myreports():
+    return render_template('myreports.html', reports=myReports)
+
+@app.route('/about')
+def about():
+    return render_template('about.html', reports=myReports)

@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for report in reports %}
+        <h1>{{ report.problem }}</h1>
+        <p>{{ report.author }} on {{ report.date_reported }}</p>
+        <p>{{ report.description }}</p>
+        <p>{{ report.status }}</p>
+    {% endfor %}
+{% endblock content %}
