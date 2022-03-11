@@ -2,6 +2,7 @@ Flask==2.0.3
 flask-wtf
 email_validator
 flask-bcrypt
+flask-login
 folium==0.12.1.post1
 GeoAlchemy2==0.10.2
 geopandas==0.10.2

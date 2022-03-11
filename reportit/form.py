@@ -1,24 +1,29 @@
 from atexit import register
-from reportit import Base, engine, session
+from reportit import Base, engine, session, login_manager
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, DateTime, LargeBinary
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
 from sqlalchemy.orm import backref, relationship,declarative_mixin,declared_attr,has_inherited_table
+from flask_login import UserMixin
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return session.query(User).get(int(user_id))
 
 ##USER TABLE##
 
-
-class User(Base):
+class User(Base,UserMixin):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    f_Name = Column(String)
-    l_Name = Column(String)
-    email = Column(String)
+    f_Name = Column(String,nullable=False)
+    l_Name = Column(String,nullable=False)
+    email = Column(String,unique=True,nullable=False)
     # TODO: make National ID uniqe
-    national_id = Column(String)
-    phone_num = Column(String)
+    national_id = Column(String,unique=True,nullable=False)
+    phone_num = Column(String,unique=True,nullable=False)
     password = Column(String,nullable=False)
     register_time = Column(DateTime, default=datetime.utcnow)
     # reports= relationship('Utility', backref='author', lazy=True)

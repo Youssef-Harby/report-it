@@ -1,4 +1,5 @@
 from flask import render_template, request, url_for, flash, redirect
+from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
 import folium
 from folium import plugins
@@ -33,29 +34,48 @@ def home():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User('Youssef','Harby','me@youssefharby.com',"29902678912345","012345678911",hashed_password)
+        user = User(form.fname.data,form.lname.data,form.email.data,form.nationalid.data,form.phonenumber.data,hashed_password)
         session.add(user)
         session.commit()
-        flash(f'Account created for {form.username.data}!', 'success')
+        flash(f'Account created for {form.fname.data}!', 'success')
         return redirect(url_for('myreports'))
     return render_template('register.html', title='Register', form=form)
-    
+    # 29912345678912
+    # 01212345678911
+    # 4EpGrxWT4uErY8i
 @app.route('/login',methods=['GET','POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'me@youssefharby.com' and form.password.data == '4EpGrxWT4uErY8i':
-            flash(f'You have been logged in!', 'success')
-            return redirect(url_for('myreports'))
+        user = session.query(User).filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful. Please check Email and Password!','danger')
+            flash('Login Unsuccessful. Please check email and password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+
+@app.route('/account')
+@login_required
+def account():
+    return render_template('account.html', title='My Account')
+
 @app.route('/myreports')
+@login_required
 def myreports():
     return render_template('myreports.html', reports=myReports, title='My Reports')
 
