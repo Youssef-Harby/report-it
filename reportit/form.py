@@ -33,7 +33,7 @@ class User(Base, UserMixin):
     password = Column(String, nullable=False)
     register_time = Column(DateTime, default=datetime.utcnow)
     access = Column(Integer, nullable=False)
-    reports= relationship('Utility', backref='test', lazy=True)
+    reports= relationship('Utility', backref='reporter', lazy=True)
 
     # initializing
     def __init__(self, f_Name, l_Name, email, national_id, phone_num, password, access=ACCESS['user']):
@@ -100,11 +100,14 @@ class MyMixin:
     @declared_attr
     def userid(cls):
         return Column(Integer, ForeignKey('user.id'), nullable=False)
+    
+    @declared_attr
+    def type(cls):
+        return Column(Integer, ForeignKey('categories.id'), nullable=False)
 
     __mapper_args__ = {'always_refresh': True}
 
     id = Column(Integer, primary_key=True)
-    type = Column(Integer)
     lat = Column(Float)
     lon = Column(Float)
     timestamp = Column(DateTime, default=datetime.utcnow)
