@@ -6,15 +6,15 @@ import folium
 from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
-from reportit.form import *
+from reportit.models import User,Categories,Utility,Pollution,Disaster,Road,Fire
 from reportit.newForm import RegistrationForm, LoginForm
 
 ACCESS = {
     'guest': 0,
     'user': 1,
-    'water': 2,
-    'gas': 3,
-    'utility': 4,
+    'waterORG': 2,
+    'gasORG': 3,
+    'utilityORG': 4,
     'admin': 666,
 }
 

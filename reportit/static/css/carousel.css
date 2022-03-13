@@ -1,13 +1,29 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
-
+#bgmain{
+  background-image: url("../assets/img/header-bg.jpg");
+  height: 100vh;
+  background-size: cover;
+  margin-bottom: 8vh;
+}
+#tex-cover{
+  padding-top: 60vmin;
+  padding-bottom: 20vmin;
+}
 body {
     padding-top: 0rem;
     padding-bottom: 3rem;
     color: #5a5a5a;
   }
   
+  main {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    color: #5a5a5a;
+    margin-top: 0rem !important;
+    
+  }
   
   /* CUSTOMIZE THE CAROUSEL
   -------------------------------------------------- */

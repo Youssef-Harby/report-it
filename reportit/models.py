@@ -4,15 +4,15 @@ from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
-from sqlalchemy.orm import backref, relationship, declarative_mixin, declared_attr, has_inherited_table
+from sqlalchemy.orm import backref, relationship, declarative_mixin, declared_attr
 from flask_login import UserMixin, AnonymousUserMixin, current_user
 
 ACCESS = {
     'guest': 0,
     'user': 1,
-    'water': 2,
-    'gas': 3,
-    'utility': 4,
+    'waterORG': 2,
+    'gasORG': 3,
+    'utilityORG': 4,
     'admin': 666,
 }
 
@@ -82,10 +82,14 @@ class Categories (Base):
 
     cat_name = Column(String)
     id = Column(Integer, primary_key=True)
+    type= relationship('Utility', backref='ptype', lazy=True)
 
     def __init__(self, cat_name, cat_id):
         self.cat_name = cat_name
         self.id = cat_id
+
+    def __repr__(self):
+        return f"Categories('{self.cat_name}', '{self.id}')"
 
 ## Reported problems Tables##
 
@@ -108,6 +112,8 @@ class MyMixin:
     __mapper_args__ = {'always_refresh': True}
 
     id = Column(Integer, primary_key=True)
+    type = type
+    sub_type = Column(String)
     lat = Column(Float)
     lon = Column(Float)
     timestamp = Column(DateTime, default=datetime.utcnow)
