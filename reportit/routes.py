@@ -1,4 +1,5 @@
-from flask import render_template, request, url_for, flash, redirect
+from functools import wraps
+from flask import abort, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
 import folium
@@ -7,6 +8,15 @@ import geopandas
 import leafmap.kepler as leafmap
 from reportit.form import *
 from reportit.newForm import RegistrationForm, LoginForm
+
+ACCESS = {
+    'guest': 0,
+    'user': 1,
+    'water': 2,
+    'gas': 3,
+    'utility': 4,
+    'admin': 666,
+}
 
 myReports = [
     {
@@ -28,18 +38,38 @@ myReports = [
 ]
 
 
+def requires_access_level(access_level):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if not current_user.is_authenticated:
+                flash('You do not have access to that page. Sorry!', 'danger')
+                return redirect(url_for('login'))
+            elif not current_user.access:
+                return redirect(url_for('login'))
+            elif not current_user.allowed(access_level):
+                flash('You do not have access to that page. Sorry!', 'danger')
+                return redirect(url_for('home'))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
+
 @app.route('/')
 def home():
     return render_template('home.html')
 
-@app.route('/register', methods=['GET','POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(form.fname.data,form.lname.data,form.email.data,form.nationalid.data,form.phonenumber.data,hashed_password)
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        user = User(form.fname.data, form.lname.data, form.email.data,
+                    form.nationalid.data, form.phonenumber.data, hashed_password)
         session.add(user)
         session.commit()
         flash(f'Account created for {form.fname.data}!', 'success')
@@ -48,7 +78,9 @@ def register():
     # 29912345678912
     # 01212345678911
     # 4EpGrxWT4uErY8i
-@app.route('/login',methods=['GET','POST'])
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -64,24 +96,32 @@ def login():
 
     return render_template('login.html', title='Login', form=form)
 
+
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
 
 @app.route('/account')
 @login_required
 def account():
     return render_template('account.html', title='My Account')
 
+
 @app.route('/myreports')
 @login_required
 def myreports():
     return render_template('myreports.html', reports=myReports, title='My Reports')
 
+
 @app.route('/about')
+@login_required
+@requires_access_level(ACCESS['admin'])
 def about():
-    return render_template('about.html',title='About')
+    print(ACCESS['admin'])
+    return render_template('about.html', title='About')
 
 
 @app.route('/report')
@@ -131,11 +171,13 @@ def submission():
 
 
 @app.route('/jsontest', methods=['POST'])
+@login_required
 def jsontestpost():
     data = request.get_json()
     # print(data)
     # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
     # session.commit()
-    session.add(Utility(1, float(data['lat']), float(data['lng']), int(data["Intensity Range"]), data['Description'],True,3))
+    session.add(Utility(1, float(data['lat']), float(data['lng']), int(
+        data["Intensity Range"]), data['Description'], False, 1))
     session.commit()
     return url_for('submission')

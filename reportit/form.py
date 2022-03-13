@@ -1,13 +1,20 @@
-from atexit import register
-from reportit import Base, engine, session, login_manager
+from reportit import Base, engine, session, login_manager, admin, ModelView
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, DateTime, LargeBinary
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
 from shapely.geometry import Point
 from datetime import datetime
-from sqlalchemy.orm import backref, relationship,declarative_mixin,declared_attr,has_inherited_table
-from flask_login import UserMixin
+from sqlalchemy.orm import backref, relationship, declarative_mixin, declared_attr, has_inherited_table
+from flask_login import UserMixin, AnonymousUserMixin, current_user
 
+ACCESS = {
+    'guest': 0,
+    'user': 1,
+    'water': 2,
+    'gas': 3,
+    'utility': 4,
+    'admin': 666,
+}
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -15,32 +22,61 @@ def load_user(user_id):
 
 ##USER TABLE##
 
-class User(Base,UserMixin):
+class User(Base, UserMixin):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
-    f_Name = Column(String,nullable=False)
-    l_Name = Column(String,nullable=False)
-    email = Column(String,unique=True,nullable=False)
+    f_Name = Column(String, nullable=False)
+    l_Name = Column(String, nullable=False)
+    email = Column(String, unique=True, nullable=False)
     # TODO: make National ID uniqe
-    national_id = Column(String,unique=True,nullable=False)
-    phone_num = Column(String,unique=True,nullable=False)
-    password = Column(String,nullable=False)
+    national_id = Column(String, unique=True, nullable=False)
+    phone_num = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
     register_time = Column(DateTime, default=datetime.utcnow)
-    # reports= relationship('Utility', backref='author', lazy=True)
+    access = Column(Integer, nullable=False)
+    # reports= relationship('MyMixin', backref='author', lazy=True)
 
     # initializing
-    def __init__(self, f_Name, l_Name, email, national_id, phone_num, password):
+    def __init__(self, f_Name, l_Name, email, national_id, phone_num, password, access=ACCESS['user']):
         self.f_Name = f_Name
         self.l_Name = l_Name
         self.email = email
         self.national_id = national_id
         self.phone_num = phone_num
         self.password = password
+        self.access = access
+        self.access = access
 
     def __repr__(self):
-        return f"User('{self.f_Name}', '{self.l_Name}', '{self.email}'), '{self.national_id}'), '{self.phone_num}')"
+        return f"User('{self.f_Name}', '{self.l_Name}', '{self.email}'), '{self.national_id}'), '{self.phone_num}'), '{self.access}'),"
+
+    def is_admin(self):
+        return self.access == ACCESS['admin']
+
+    def allowed(self, access_level):
+        return self.access == access_level
+
+    
+
+class Controller(ModelView):
+    def is_accessible(self):
+            return current_user.is_admin()
+    def not_auth(self):
+        return "Not Admin"
+
+class AnonymousUser(AnonymousUserMixin):
+    def allowed(self, access):
+            return False
+
+    def is_admin(self):
+            return False
+
+
+login_manager.anonymous_user = AnonymousUser
 
 ##Categories ID##
+
+catcat = ['water', 'sewage', 'gas', 'electric', 'telecom', 'utility']
 
 
 class Categories (Base):
@@ -54,6 +90,7 @@ class Categories (Base):
         self.id = cat_id
 
 ## Reported problems Tables##
+
 
 @declarative_mixin
 class MyMixin:
@@ -73,7 +110,7 @@ class MyMixin:
         else:
             return Column(Integer, primary_key=True)
 
-    __mapper_args__= {'always_refresh': True}
+    __mapper_args__ = {'always_refresh': True}
 
     id = Column(Integer, primary_key=True)
     type = Column(Integer)
@@ -84,15 +121,14 @@ class MyMixin:
     effect = Column(Integer)
     description = Column(String)
     img = Column(LargeBinary)
-    solved = Column(Boolean,unique=False,default=False)
+    solved = Column(Boolean, unique=False, default=False)
     solved_time = Column(DateTime)
     # user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-
 
     def get_point(self):
         return to_shape(self.geometry)
 
-    def __init__(self, type, lat, lon, effect, description,solved,user_id):
+    def __init__(self, type, lat, lon, effect, description, solved, user_id):
         self.type = type
         self.lat = lat
         self.lon = lon
@@ -104,7 +140,6 @@ class MyMixin:
         # self.solved_time = solved_time
         self.user_id = user_id
 
-    
     def __repr__(self):
         return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
 
@@ -116,21 +151,24 @@ class Utility(MyMixin, Base):
 class Pollution(MyMixin, Base):
     pass
 
+
 class Road(MyMixin, Base):
     pass
+
 
 class Disaster(MyMixin, Base):
     pass
 
+
 class Fire(MyMixin, Base):
     pass
 
-#Dropping All Tables
+# Dropping All Tables
 # Base.metadata.drop_all(engine, checkfirst=True)
 
-#Creating All Tables
+admin.add_views(Controller(User,session),Controller(Categories,session),Controller(Utility,session))
+# Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
-
 
 
 # print(session.query(User).all())
@@ -145,4 +183,3 @@ Base.metadata.create_all(engine, checkfirst=True)
 # print(userr.id)
 
 # print(userByGet.reports)
-
