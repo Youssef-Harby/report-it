@@ -4,6 +4,16 @@ body {
   margin-top: 5rem;
 }
 
+a {
+  color: #92700bec;
+}
+
+a:hover{
+  color: #ca9905ec;
+}
+
+
+
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
