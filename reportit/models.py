@@ -164,11 +164,11 @@ class Fire(MyMixin, Base):
 # Dropping All Tables
 # Base.metadata.drop_all(engine, checkfirst=True)
 
-admin.add_views(Controller(User,session),Controller(Categories,session),Controller(Utility,session))
+admin.add_views(Controller(User,session),Controller(Categories,session),Controller(Utility,session),Controller(Pollution,session))
 # Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
 
-# session.add(Pollution(1,30.2,31.1,5,'testoo',False,1))
+# session.add(Utility(1,30.2,31.1,5,'testoo',False,1))
 # session.commit()
 
 # print(session.query(User).all())
