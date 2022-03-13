@@ -178,6 +178,6 @@ def jsontestpost():
     # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
     # session.commit()
     session.add(Utility(1, float(data['lat']), float(data['lng']), int(
-        data["Intensity Range"]), data['Description'], False, 1))
+        data["Intensity Range"]), data['Description'], False, current_user.id))
     session.commit()
     return url_for('submission')
