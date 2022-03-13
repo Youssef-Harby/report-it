@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for report in reports %}
+<div class="container">
         <article class="media content-section">
             <div class="media-body">
             <div class="article-metadata">
@@ -12,5 +13,6 @@
                 <p>{{ report.status }} <i class="bi bi-check"> <i class="bi bi-x"></i></i></p>
             </div>
         </article>
+</div>
     {% endfor %}
 {% endblock content %}

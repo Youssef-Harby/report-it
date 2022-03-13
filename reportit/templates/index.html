@@ -1,19 +1,29 @@
 {% extends "layout.html" %}
 {% block content %}
+    <style>
+      body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: #5a5a5a;
+    margin-top: 0rem !important;
+    
+  }
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/carousel.css') }}">
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#myCarousel" data-slide-to="1"></li>
           <li data-target="#myCarousel" data-slide-to="2"></li>
         </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="first-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+        <div class="cover-container d-flex w-100 h-100 mx-auto flex-column">
+          <!-- <div class="carousel-item active"> -->
+            <img class="first-slide" src="{{ url_for('static', filename='assets/img/header-bg.jpg') }}" alt="First slide">
             <div class="container">
               <div class="carousel-caption text-left">
-                <h1>Example headline.</h1>
-                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                <h1 style="color: white;">Report-it Now, Solve-it Now</h1>
+                <p>By adding in the power of geospatial technology, powering innovation with location, GeoDecisions provides innovative, cohesive water management solutions to water utility managers, field operations staff and executives.</p>
+                <p><a class="btn btn-lg btn-warning" href="{{ url_for('report') }}" role="button">Report it</a></p>
               </div>
             </div>
           </div>
@@ -38,14 +48,14 @@
             </div>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
+        <!-- <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev"> -->
+          <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+          <!-- <span class="sr-only">Previous</span> -->
+        <!-- </a> -->
+        <!-- <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"> -->
+          <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+          <!-- <span class="sr-only">Next</span> -->
+        <!-- </a> -->
       </div>
 
 
@@ -126,6 +136,6 @@
       <!-- FOOTER -->
       <footer class="container">
         <p class="float-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2017-2018 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <p>&copy; 2022 Report-it, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
       </footer>
 {% endblock content %}

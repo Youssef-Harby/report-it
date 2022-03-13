@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>ThankYou!</h1>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-3">Thank You!</h1>
+    <p class="lead">Report-it Now, Solve-it Now.</p>
+    <hr>
+    <p>
+      Having trouble? <a href="">Contact us</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="{{ url_for('home') }}" role="button">Continue to homepage</a>
+    </p>
+  </div>
+{% endblock content %}
