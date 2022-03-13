@@ -1,7 +1,10 @@
-body {
+body{
+  background: #fafafa;
+}
+main {
   background: #fafafa;
   color: #333333;
-  margin-top: 5rem;
+  margin-top: 3rem;
 }
 
 a {
