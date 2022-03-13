@@ -28,13 +28,12 @@ class User(Base, UserMixin):
     f_Name = Column(String, nullable=False)
     l_Name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
-    # TODO: make National ID uniqe
     national_id = Column(String, unique=True, nullable=False)
     phone_num = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     register_time = Column(DateTime, default=datetime.utcnow)
     access = Column(Integer, nullable=False)
-    # reports= relationship('MyMixin', backref='author', lazy=True)
+    reports= relationship('Utility', backref='test', lazy=True)
 
     # initializing
     def __init__(self, f_Name, l_Name, email, national_id, phone_num, password, access=ACCESS['user']):
@@ -44,7 +43,6 @@ class User(Base, UserMixin):
         self.national_id = national_id
         self.phone_num = phone_num
         self.password = password
-        self.access = access
         self.access = access
 
     def __repr__(self):
@@ -99,16 +97,9 @@ class MyMixin:
     def __tablename__(cls):
         return cls.__name__.lower()
 
-    # @declared_attr
-    # def userid(cls):
-    #     return Column(Integer, ForeignKey('user.id'), nullable=False)
-
-    @declared_attr.cascading
-    def id(cls):
-        if has_inherited_table(cls):
-            return Column(ForeignKey('user.id'), primary_key=True)
-        else:
-            return Column(Integer, primary_key=True)
+    @declared_attr
+    def userid(cls):
+        return Column(Integer, ForeignKey('user.id'), nullable=False)
 
     __mapper_args__ = {'always_refresh': True}
 
@@ -123,12 +114,11 @@ class MyMixin:
     img = Column(LargeBinary)
     solved = Column(Boolean, unique=False, default=False)
     solved_time = Column(DateTime)
-    # user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
 
     def get_point(self):
         return to_shape(self.geometry)
 
-    def __init__(self, type, lat, lon, effect, description, solved, user_id):
+    def __init__(self, type, lat, lon, effect, description, solved,cuusid):
         self.type = type
         self.lat = lat
         self.lon = lon
@@ -137,8 +127,7 @@ class MyMixin:
         self.description = description
         # self.img = img
         self.solved = solved
-        # self.solved_time = solved_time
-        self.user_id = user_id
+        self.userid = cuusid
 
     def __repr__(self):
         return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
@@ -170,8 +159,13 @@ admin.add_views(Controller(User,session),Controller(Categories,session),Controll
 # Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
 
+# session.add(Pollution(1,30.2,31.1,5,'testoo',False,1))
+# session.commit()
 
 # print(session.query(User).all())
+# user = session.query(User).get(1)
+# print(user.reports)
+
 
 # This is a query that is looking for the user with the national id of 12345678901111.
 # userr = session.query(User).filter_by(national_id='12345678901111').first()
