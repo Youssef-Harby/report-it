@@ -124,7 +124,20 @@ def myreports():
 @requires_access_level(ACCESS['waterORG'])
 def tools():
     return render_template('tools.html', title='Tools')
+    
 
+@app.route('/postgis1')
+@login_required
+@requires_access_level(ACCESS['waterORG'])
+def postgis1():
+    con = leafmap.connect_postgis(database="gis", host="192.168.1.104", user="docker", password="docker")
+    sql = 'SELECT * FROM public.utility'
+    gdf = leafmap.read_postgis(sql, con, geom_col='geometry')
+    m = leafmap.Map()
+    m.add_gdf_from_postgis(sql, con,geom_col='geometry', layer_name="UTIL")
+    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
+    m.to_html(outfile='reportit/templates/postgis1.html')
+    return render_template('postgis1.html')
 
 @app.route('/report')
 @login_required
