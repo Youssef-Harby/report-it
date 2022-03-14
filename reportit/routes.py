@@ -121,9 +121,8 @@ def myreports():
 
 @app.route('/tools')
 @login_required
-@requires_access_level(ACCESS['admin'])
+@requires_access_level(ACCESS['waterORG'])
 def tools():
-    print(ACCESS['admin'])
     return render_template('tools.html', title='Tools')
 
 

@@ -52,7 +52,7 @@ class User(Base, UserMixin):
         return self.access == ACCESS['admin']
 
     def allowed(self, access_level):
-        return self.access == access_level
+        return self.access == access_level or self.access == ACCESS['admin']
 
     
 
