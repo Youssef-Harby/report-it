@@ -11,7 +11,7 @@ con = leafmap.connect_postgis(database=os.getenv('DATABASE'), host=os.getenv('DB
 
 # sql_user = 'SELECT * FROM public."user"'
 # df_user = geopandas.read_postgis(sql_utility, engine, geom_col='geometry')
-def postGIS_GDF(sqlQ):
-    # sql_water = 'SELECT * FROM public.utility'
-    gdf = leafmap.read_postgis(sqlQ, con, geom_col='geometry')
+def postGIS_GDF():
+    sql_water = 'SELECT * FROM public.utility'
+    gdf = leafmap.read_postgis(sql_water, con, geom_col='geometry')
     return gdf
