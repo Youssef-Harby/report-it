@@ -132,7 +132,7 @@ def tools():
 def postgis1():
     from reportit.analysis.sjoina import sJoinA
     gdf = sJoinA('SELECT * FROM public.utility')
-    admin_poly = geopandas.read_file("Data/Facilities/DemoCairo.gpkg", layer='NewCairoPolyDemo').to_crs("EPSG:3857") #Polygon
+    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
     m = leafmap.Map()
     m.add_gdf(gdf, layer_name="layer1")
     m.add_gdf(admin_poly, layer_name="layer2")
@@ -197,7 +197,6 @@ def jsontestpost():
     # print(data)
     # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
     # session.commit()
-    session.add(Utility(1, float(data['lat']), float(data['lng']), int(
-        data["Intensity Range"]), data['Description'], False, current_user.id))
+    session.add(Utility(1, float(data['lat']), float(data['lng']), int(5), data['Description'], False, current_user.id))
     session.commit()
     return url_for('submission')
