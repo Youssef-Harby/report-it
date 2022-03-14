@@ -119,12 +119,12 @@ def myreports():
     return render_template('myreports.html', reports=myReports, title='My Reports')
 
 
-@app.route('/about')
+@app.route('/tools')
 @login_required
 @requires_access_level(ACCESS['admin'])
-def about():
+def tools():
     print(ACCESS['admin'])
-    return render_template('about.html', title='About')
+    return render_template('tools.html', title='Tools')
 
 
 @app.route('/report')
