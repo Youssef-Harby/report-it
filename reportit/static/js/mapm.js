@@ -132,7 +132,7 @@ function submitForm(event) {
       window.location.href = response;
     }
   };
-  // xhttp.send(JSON.stringify(data));
+  xhttp.send(JSON.stringify(data));
 }
 
 
