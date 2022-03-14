@@ -1,7 +1,7 @@
 #mapm { height: 350px;
 }
 
-#map { height: 720px;  
+#map { height: 100vh;  
 }
 
 #locationList .card{
@@ -84,6 +84,6 @@ label{
     width:400px; 
     overflow-x:scroll; 
     position:relative;
-    height: 650px;
+    height: 85%;
 }
 

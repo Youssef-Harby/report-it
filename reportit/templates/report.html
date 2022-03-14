@@ -30,7 +30,9 @@
   <form method="POST"  onsubmit="submitForm(event)" >
                     
     <!-- ------------------------------------Location Map---------------------------------------->
-    <h4>Location</h4>
+    <h3 class="fw-bold mb-0">Hi, {{ current_user.f_Name }}</h3>
+    <h3 class="modal-title">Report Your Problem</h3>
+    <h5>Your Location Now is ?</h5>
     <div align="center" id="demo"></div><hr/>
     <script src="{{url_for('static', filename='js/map.js')}}"></script>
 

@@ -130,14 +130,14 @@ def tools():
 @login_required
 @requires_access_level(ACCESS['waterORG'])
 def postgis1():
-    con = leafmap.connect_postgis(database="gis", host="192.168.1.104", user="docker", password="docker")
-    sql = 'SELECT * FROM public.utility'
-    gdf = leafmap.read_postgis(sql, con, geom_col='geometry')
+    from reportit.analysis.sjoina import sJoinA
+    gdf = sJoinA('SELECT * FROM public.utility')
+    admin_poly = geopandas.read_file("Data/Facilities/DemoCairo.gpkg", layer='NewCairoPolyDemo').to_crs("EPSG:3857") #Polygon
     m = leafmap.Map()
-    m.add_gdf_from_postgis(sql, con,geom_col='geometry', layer_name="UTIL")
-    print("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
-    m.to_html(outfile='reportit/templates/postgis1.html')
-    return render_template('postgis1.html')
+    m.add_gdf(gdf, layer_name="layer1")
+    m.add_gdf(admin_poly, layer_name="layer2")
+    # m.to_html("reportit/templates/mymap.html")
+    return m._repr_html_()
 
 @app.route('/report')
 @login_required
