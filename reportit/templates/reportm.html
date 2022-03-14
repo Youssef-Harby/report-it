@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/map.css')}}">
+
+    <!-- ------------------------------------------------------------ -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+    
+
+    
+    <!---------------------------------------------------------------- -->
+
+    <title>Report</title>
+</head>
+<body>
+    
+    <div class="modal modal-signin d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content rounded-5 shadow">
+            <div class="p-5 pb-4 border-bottom-0">
+              <!-- <h5 class="modal-title">Modal title</h5> -->
+              <h2 class="fw-bold mb-0">Hi, {{ current_user.f_Name }}</h2>
+              <h2 class="modal-title">Report Your Problem</h2>
+              <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+
+
+            <div class="modal-body p-5 pt-0">
+
+                <form method="POST"  onsubmit="submitForm(event)" >
+                    
+                <!-- ------------------------------------Location Map---------------------------------------->
+                   <hr/> <h4>Location</h4>
+                    <div id="mapm" align="center"> </div>
+                    <br/>
+                    <div align="center" id = "find-me" name="Location"><h3>Address</h3></div>
+                    <div align="center" id="demo"></div><hr/>
+                    
+                    <script src="{{url_for('static', filename='js/mapm.js')}}"></script>
+          
+                    
+                <h4>Problem</h4>
+                <p>
+                    <label for="validationTextarea" class="form-label">Select Problem Category</label>
+                        <select class="form-select" required aria-label="select example" id="1" onchange="javaScript:updateTwo();" name="Problem" required>
+                            <option value="Water">Water</option>
+                            <option value="Sewage">Sewage</option>
+                            <option value="Gas">Gas</option>
+                            <option value="Electric">Electric</option>
+                            <option value="Telecom">Telecom</option>
+                            <option value="Poullution">Poullution</option>
+                            <option value="Road">Road</option>
+                            <option value="Disasters">Disasters</option>
+                        </select>
+                </p>
+
+                    <p>
+                        <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem" required>
+                            <option value="0">Sub Problem</option>
+                        </select>
+                    </p>
+
+                   
+
+              <!-- ---------------------------------------------------------------------------------------------------------- -->
+
+
+                <hr/><h4>Problem Description</h4>
+                <label for="customRange3" class="form-label">How intense is this problem?</label>
+                <input type="range" class="form-range" min="0" max="10" step="1" id="customRange3" name="Intensity Range" required ><br/>
+                
+                
+                <br/><div for="customRange3" class="form-label">Is this problem affecting everyone?</div>
+                    <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="switchDefault" name="effect">
+                    <label class="form-check-label" for="switchDefault">Yes</label>
+                </div><hr/>
+            
+
+            
+
+                <div class="mb-3">
+                    <label for="validationTextarea" class="form-label" for="file" style="cursor: pointer;" >Upload photo of the problem</label>
+                    <input type="file" class="form-control" aria-label="file example" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
+                    <div class="invalid-feedback">Example invalid form file feedback</div>
+                    <div id="imgPre" align="center"><img id="output"/></div >
+                </div>
+                  
+                 
+                <div class="mb-3">
+                    <label for="validationTextarea" class="form-label" aria-label="file example">Describe the problem</label>
+                    <textarea class="form-control" id="validationTextarea" placeholder="Write Description here" rows="6"  name="Description" required ></textarea>
+                </div><hr/>
+                   
+
+                      
+                <div class="mb-3" align="center">
+                    <button class="btn btn-primary" type="submit" >Submit form</button> <input class="btn btn-primary" type="reset" value="Reset">
+                </div>
+                    
+                    
+
+</body>
+</html>

@@ -172,6 +172,11 @@ def leafmapTest():
 def submission():
     return render_template('submission.html')
 
+    
+@app.route('/reportm')
+@login_required
+def reportm():
+    return render_template('reportm.html')
 
 @app.route('/jsontest', methods=['POST'])
 @login_required

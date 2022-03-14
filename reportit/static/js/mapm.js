@@ -70,7 +70,7 @@ function error(err) {
 navigator.geolocation.getCurrentPosition(success, error, geoLocationOptions);
 
 // create the map
-var map = L.map("map", {
+var map = L.map("mapm", {
   contextmenu: true,
   contextmenuWidth: 140,
   contextmenuItems: [
@@ -232,9 +232,6 @@ function updateTwo() {
 
     
 }
-
-
-    
 
 addOption = function(option, value) {
     var opt = document.createElement('option');

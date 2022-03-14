@@ -1,8 +1,8 @@
-#map { height: 350px;   }
-.container{
-    width: 300px;
+#mapm { height: 350px;
 }
 
+#map { height: 720px;  
+}
 
 #locationList .card{
     padding: 10px;
@@ -30,16 +30,11 @@
 
 /* ------------------------------------------------------------------------------------------------- */
 
-body{
-    background-color: #0b2849a8;
+button{
+  margin-bottom: 0px;
 }
-
-table{
-    background-color: #24243b;width:100%;height: 100%;
-}
-
 h4{
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 
@@ -47,5 +42,48 @@ h4{
   margin-top: 10px;margin-bottom: 0px;
 }
 #output{
-  width: 400px;box-shadow: #030303;border-style:groove;border-radius: 10px;
+  width: 290px;box-shadow: #030303;border-style:groove;border-radius: 10px;
 }
+
+#demo{
+  font-size: 15px;
+}
+
+/* -------------------------------------------------------------------------------- */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+.btn {
+  padding: 14px 26px;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.btn-danger {
+  background-color: #e34c43;
+  border-color: #e34c43;
+}
+
+.map-box2{
+z-index:9999; right:10px; width:360px;    
+}
+::placeholder{
+font-size:13px;
+font-weight:bold;    
+}
+.form-control {
+  border-color: #ebebeb;
+}
+
+label{
+  font-size: medium;
+}
+
+#scroll {
+    width:400px; 
+    overflow-x:scroll; 
+    position:relative;
+    height: 650px;
+}
+
