@@ -139,7 +139,7 @@
               "lng": "lon",
               "altitude": null
             },
-            "isVisible": false,
+            "isVisible": true,
             "visConfig": {
               "radius": 20,
               "fixedRadius": false,
