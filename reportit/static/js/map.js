@@ -73,6 +73,7 @@ navigator.geolocation.getCurrentPosition(success, error, geoLocationOptions);
 var map = L.map("map", {
   contextmenu: true,
   contextmenuWidth: 140,
+  scrollWheelZoom: false,
   contextmenuItems: [
     {
       text: "Center map here",
