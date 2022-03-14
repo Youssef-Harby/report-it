@@ -125,17 +125,18 @@ def myreports():
 def tools():
     return render_template('tools.html', title='Tools')
     
-
-@app.route('/postgis1')
+@app.route('/analysis1')
 @login_required
 @requires_access_level(ACCESS['waterORG'])
-def postgis1():
+def analysis1():
+    from threading import Timer
     from reportit.analysis.sjoina import sJoinA
     gdf = sJoinA('SELECT * FROM public.utility')
     admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
     m = leafmap.Map()
+    config = "reportit/analysis/config2.json"
     m.add_gdf(gdf, layer_name="layer1")
-    m.add_gdf(admin_poly, layer_name="layer2")
+    m.add_gdf(admin_poly, layer_name="layer2", config=config)
     # m.to_html("reportit/templates/mymap.html")
     return m._repr_html_()
 

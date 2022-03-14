@@ -170,7 +170,8 @@ Base.metadata.create_all(engine, checkfirst=True)
 
 # session.add(Utility(1,30.2,31.1,5,'testoo',False,1))
 # session.commit()
-
+# session.add(Utility(1, float(30.14671), float(31.63642), int(5), 'GGGHHH', False, 1))
+# session.commit()
 # print(session.query(User).all())
 # user = session.query(User).get(1)
 # print(user.reports)
