@@ -131,8 +131,8 @@ def tools():
 def analysis1():
     from threading import Timer
     from reportit.analysis.sjoina import sJoinA
-    gdf = sJoinA()
-    admin_poly = geopandas.read_file("https://raw.githubusercontent.com/Youssef-Harby/report-it/main/Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
+    gdf = sJoinA('SELECT * FROM public.utility')
+    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
     m = leafmap.Map()
     config = "reportit/analysis/config2.json"
     m.add_gdf(gdf, layer_name="layer1")

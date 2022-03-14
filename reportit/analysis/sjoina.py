@@ -2,18 +2,18 @@ import geopandas
 from reportit.postgis import postGIS_GDF
 
 # Spacial Join (Problem Query from DB , Facilities Layer Name/QDB , Service Area Polygon)
-def sJoinA():
+def sJoinA(sqlQ):
     #1 Import Data
     # Import GeoDataFrame from PostGIS
-    Problem_gdf = postGIS_GDF()
+    Problem_gdf = postGIS_GDF(sqlQ)
     Problem_gdf['timestamp'] = Problem_gdf['timestamp'].astype(str)
     Problem_gdf = Problem_gdf.to_crs("EPSG:3857")
 
     #Facilities Layer From GPKG or PostGIS
-    facilities = geopandas.read_file("https://raw.githubusercontent.com/Youssef-Harby/report-it/main/Data/Facilities/DemoCairo.gpkg", layer='facilities').to_crs("EPSG:3857") #Point
+    facilities = geopandas.read_file("Data/Facilities/DemoCairo.gpkg", layer='facilities').to_crs("EPSG:3857") #Point
 
     #Service Area Polygon
-    admin_poly = geopandas.read_file("https://raw.githubusercontent.com/Youssef-Harby/report-it/main/Data/Facilities/DemoCairo.gpkg", layer='NewCairoPolyDemo').to_crs("EPSG:3857") #Polygon
+    admin_poly = geopandas.read_file("Data/Facilities/DemoCairo.gpkg", layer='NewCairoPolyDemo').to_crs("EPSG:3857") #Polygon
 
     #Spatial Join (Facilities and Service Area Polygon)
     fac_And_Admin = geopandas.sjoin(facilities,admin_poly[['adm3_ar', 'geometry']], how='left')
