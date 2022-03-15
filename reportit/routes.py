@@ -56,7 +56,7 @@ def requires_access_level(access_level):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', title='Home')
 
 # @app.route('/')
 # def home():
