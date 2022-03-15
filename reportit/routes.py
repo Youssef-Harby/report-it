@@ -108,10 +108,12 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/account')
+@app.route('/myaccount')
 @login_required
-def account():
-    return render_template('account.html', title='My Account')
+def myaccount():
+    reports = session.query(User).get(current_user.id).reports
+    numreports = len(reports)
+    return render_template('myaccount.html', title='My Account', numreports=numreports)
 
 
 @app.route('/myreports')
@@ -124,6 +126,7 @@ def myreports():
            "id":i.id,
            "lat": i.lat,
            "lon": i.lon,
+           "solved": i.solved
        }
        reportsIDs.append(obj)
     data = json.dumps(reportsIDs)
@@ -207,8 +210,7 @@ def reportm():
 def jsontestpost():
     data = request.get_json()
     # print(data)
-    # session.add(User(data["First Name"], data["Last Name"], data["Email"], data["National Id"], data["phone"]))
-    # session.commit()
-    session.add(Utility(1, float(data['lat']), float(data['lng']), int(5), data['Description'], False, current_user.id))
+    session.add(Utility(1, float(data['lat']), float(data['lng']), int(3), data['Description'], False, current_user.id))
+    # session.add(Utility(1, data["Sub Problem"], float(data["lat"]), float(data["lng"]), int(data["rating"]), data['Description'],data["image"], False, int(current_user.id)))
     session.commit()
     return url_for('submission')

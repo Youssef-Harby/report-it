@@ -1,8 +1,0 @@
-{% extends "layout.html" %}
-{% block content %}
-<div class="container">
-    <h1>Hi,</h1>
-    <h2>{{ current_user.f_Name }}</h2>
-    <a type="button" class="btn btn-primary me-2" href="{{ url_for('myreports') }}">My Reports</a>
-</div>
-{% endblock content %}

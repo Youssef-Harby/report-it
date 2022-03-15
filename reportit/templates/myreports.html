@@ -12,6 +12,7 @@
   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
   crossorigin=""
 ></script>
+{% if reports %}
 {% for report in reports %}
 <div class="container">
   <article class="media content-section">
@@ -52,10 +53,10 @@
     var data = JSON.parse({{ data | tojson | safe }})
     /*from  w ww. ja va2 s.c  o m*/
     data.forEach(element => {
-        let map = L.map("map"+element.id).setView([element.lat, element.lon], 16);
-    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+        const map = L.map("map"+element.id).setView([element.lat, element.lon], 16);
+    L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
       attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        '&copy; <a href="htts://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
     L.marker([element.lat, element.lon])
@@ -65,4 +66,18 @@
   };
 </script>
 {% endblock %}
-{% endfor %} {% endblock content %}
+{% endfor %}
+{% else %}
+<div class="jumbotron text-center">
+  <h1 class="display-3">No Reports Found!</h1>
+  <p class="lead">Report-it Now, Solve-it Now.</p>
+  <hr>
+  <p>
+    Having trouble? <a href="">Contact us</a>
+  </p>
+  <p class="lead">
+    <a class="btn btn-primary btn-sm" href="{{ url_for('report') }}" role="button">Report New One</a>
+  </p>
+</div>
+{% endif %}
+{% endblock content %}

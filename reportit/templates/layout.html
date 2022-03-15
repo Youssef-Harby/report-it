@@ -39,7 +39,7 @@
               <!-- Navbar Right Side -->
               <div class="text-end">
                 {% if current_user.is_authenticated %}
-                <a type="button" class="btn btn-warning me-2" href="{{ url_for('account') }}">Account</a>
+                <a type="button" class="btn btn-warning me-2" href="{{ url_for('myaccount') }}">My Account</a>
                 <a type="button" class="btn btn-outline-light me-2" href="{{ url_for('logout') }}">Logout</a>
                 {% else %}
                 <a type="button" class="btn btn-warning me-2" href="{{ url_for('login') }}">Login</a>

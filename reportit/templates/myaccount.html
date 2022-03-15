@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="jumbotron text-center">
+    <h1>My Account</h1>
+    <br>
+    <h1>Hi, {{ current_user.f_Name }}</h1>
+    <br>
+    <h3>Email: {{ current_user.email }}</h3>
+    <h3>Phone Number : {{ current_user.phone_num }}</h3>
+    <h3>Number of Reports: {{ numreports }}</h3>
+    <br>
+    <a class="btn btn-primary btn-sm" href="{{ url_for('myreports') }}" role="button">Check Your Reports Status</a>
+    <hr>
+    <p>
+      Having trouble? <a href="">Contact us</a>
+    </p>
+    <p class="lead">
+    </p>
+  </div>
+{% endblock content %}
