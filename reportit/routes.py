@@ -1,4 +1,5 @@
 from functools import wraps
+import json
 from flask import abort, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
@@ -116,7 +117,17 @@ def account():
 @app.route('/myreports')
 @login_required
 def myreports():
-    return render_template('myreports.html', reports=myReports, title='My Reports')
+    reports = session.query(User).get(current_user.id).reports
+    reportsIDs=[]
+    for i in reports:
+       obj = {
+           "id":i.id,
+           "lat": i.lat,
+           "lon": i.lon,
+       }
+       reportsIDs.append(obj)
+    data = json.dumps(reportsIDs)
+    return render_template('myreports.html', reports=reports, title='My Reports',data=data)
 
 
 @app.route('/tools')

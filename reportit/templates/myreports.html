@@ -1,18 +1,68 @@
-{% extends "layout.html" %}
-{% block content %}
-    {% for report in reports %}
+{% extends "layout.html" %} {% block content %}
+
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""
+></script>
+{% for report in reports %}
 <div class="container">
-        <article class="media content-section">
-            <div class="media-body">
-            <div class="article-metadata">
-                <a class="mr-2" href="#">{{ report.author }}</a>
-                <small class="text-muted">{{ report.date_reported }}</small>
-            </div>
-                <h2><a class="article-title" href="#">{{ report.problem }}</a></h2>
-                <p class="article-content">{{ report.description }}</p>
-                <p>{{ report.status }} <i class="bi bi-check"> <i class="bi bi-x"></i></i></p>
-            </div>
-        </article>
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#"
+          >{{ current_user.f_Name }} {{ current_user.l_Name }}</a
+        >
+        <small class="text-muted">{{ report.timestamp }}</small>
+      </div>
+      <div class="row align-items-start">
+        <div class="col">
+          <h2>
+            <a class="article-title" href="#"
+              >Category: {{ report.type }} - {{ report.sub_type }}</a
+            >
+          </h2>
+
+          <p class="article-content">Description: {{ report.description }}</p>
+          <p class="article-content">Effect: {{ report.effect }}</p>
+          <!-- <p class="article-content">{{ report.img }}</p> -->
+          <p class="article-content">Status: {{ report.solved }}</p>
+          <p class="article-content">Solved Time: {{ report.solved_time }}</p>
+        </div>
+        <div
+          style="height: 300px;"
+          id="map{{report.id}}"
+          class="col-md-6 float-md-end mb-3 ms-md-3"
+        ></div>
+      </div>
+    </div>
+  </article>
 </div>
-    {% endfor %}
-{% endblock content %}
+{% block javascript %}
+<script type="text/javascript">
+  window.onload = function () {
+
+    var data = JSON.parse({{ data | tojson | safe }})
+    /*from  w ww. ja va2 s.c  o m*/
+    data.forEach(element => {
+        let map = L.map("map"+element.id).setView([element.lat, element.lon], 16);
+    L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    L.marker([element.lat, element.lon])
+      .addTo(map)
+      .bindPopup(data[0].id)
+    });
+  };
+</script>
+{% endblock %}
+{% endfor %} {% endblock content %}
