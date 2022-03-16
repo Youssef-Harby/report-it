@@ -1,6 +1,8 @@
+import os
 from functools import wraps
 import json
-from flask import abort, render_template, request, url_for, flash, redirect
+import secrets
+from flask import abort, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
 import folium
@@ -8,7 +10,8 @@ from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
 from reportit.models import User,Categories,Utility,Pollution,Disaster,Road,Fire
-from reportit.newForm import RegistrationForm, LoginForm, UpdateAccountForm
+from reportit.newForm import RegistrationForm, LoginForm, ReportFo, UpdateAccountForm
+from werkzeug.datastructures import ImmutableMultiDict
 
 ACCESS = {
     'guest': 0,
@@ -18,6 +21,15 @@ ACCESS = {
     'utilityORG': 4,
     'admin': 666,
 }
+all_classes = ["Utility","Pollution","Road","Disaster","Fire"]
+
+Utility_List = ["Water", "Gas", "Sewage", "Electric", "Telecom"];
+Poullution_List = ["Pollution","Noise Pollution", "Air Pollution", "Industrial Pollution", "Soil Pollution", "Water Pollution"];
+Road_List = ["Road","Accidents", "Lamps", "Hales", "Barriers"];
+Disasters_List = ["Disasters","Earthquakes", "Floods", "Landslides", "Torrnados"];
+
+new_list = [Utility_List,Poullution_List,Road_List,Disasters_List]
+
 
 myReports = [
     {
@@ -170,11 +182,68 @@ def analysis1():
     # m.to_html("reportit/templates/mymap.html")
     return m._repr_html_()
 
-@app.route('/report')
+def mkdir_p(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def save_img(form_img):
+    random_hex = secrets.token_hex(8)
+    _, file_ext = os.path.splitext(form_img.filename)
+    img_fn = random_hex + file_ext
+    upload_path = os.path.join(app.root_path, 'static/reports_imgs')
+    mkdir_p(upload_path)
+    img_path = os.path.join(app.root_path, 'static/reports_imgs', img_fn)
+    form_img.save(img_path)
+    return img_fn
+
+@app.route('/report', methods=['GET','POST'])
 @login_required
 def report():
-    return render_template('report.html')
-
+    if request.method == 'GET':
+        form = ReportFo()
+        # if form.validate_on_submit():
+        #     if form.img.data:
+        #         img_file = save_img(form.img.data)
+        return render_template('report.html', form=form)
+    if request.method == 'POST':
+        file = request.files['file']
+        pic_file = save_img(file)
+        # print(pic_file)
+        data = dict(request.form)
+        print(data)
+        for cat in session.query(Categories).all():
+            print(cat)
+            if data["Problem"] == cat.cat_name:
+                cat_id_forIns = cat.id
+        for classname1 in Utility_List:
+            # print(33333,classname1)
+            print("before if 1")
+            if data["Problem"] == classname1:
+                session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                print(1)
+            print("after if 1")
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+        for classname2 in Poullution_List:
+            print("before if 2")
+            if data["Problem"] == classname2:
+                session.add(Pollution(cat_id_forIns, data["Sub Problem"] , float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                print(2)
+            print("after if 2")
+        print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
+        for classname3 in Road_List:
+            if data["Problem"] == classname3:
+                session.add(Road(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                print(3)
+        for classname4 in Disasters_List:
+            if data["Problem"] == classname4:
+                session.add(Disaster(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                print(4)
+        session.commit()
+        print(5)
+        return redirect(url_for('submission'))
+        # return url_for('submission')
+    else:
+        return 404
 
 @app.route('/folium')
 def foliumMap():
@@ -221,12 +290,12 @@ def submission():
 def reportm():
     return render_template('reportm.html')
 
-@app.route('/jsontest', methods=['POST'])
-@login_required
-def jsontestpost():
-    data = request.get_json()
-    # print(data)
-    session.add(Utility(1, float(data['lat']), float(data['lng']), int(3), data['Description'], False, current_user.id))
-    # session.add(Utility(1, data["Sub Problem"], float(data["lat"]), float(data["lng"]), int(data["rating"]), data['Description'],data["image"], False, int(current_user.id)))
-    session.commit()
-    return url_for('submission')
+# @app.route('/jsontest', methods=['POST'])
+# @login_required
+# def jsontestpost():
+#     data = request.get_json()
+#     # print(data)
+#     session.add(Utility(1, float(data['lat']), float(data['lng']), int(3), data['Description'], False, current_user.id))
+#     # session.add(Utility(1, data["Sub Problem"], float(data["lat"]), float(data["lng"]), int(data["rating"]), data['Description'],data["image"], False, int(current_user.id)))
+#     session.commit()
+#     return url_for('submission')

@@ -47,7 +47,7 @@ function success(position) {
     },
   });
 
- 
+
 
   var script = document.createElement("script");
   script.id = "nominatim";
@@ -61,6 +61,9 @@ function success(position) {
   document.body.appendChild(script);
   myMarker = L.marker(latLng);
   document.body.removeChild(script);
+
+  document.getElementById('latlat').value = myLat;
+  document.getElementById('lonlon').value = myLng;
 }
 
 function error(err) {
@@ -109,39 +112,39 @@ function addMarker(e) {
 // --------------------------Get Data Json ------------------------------------
 function submitForm(event) {
   // Prevent the form from submitting.
-  event.preventDefault();
+  // event.preventDefault();
   // Set url for submission and collect data.
-  const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
-  const data = { lat: myLat, lng: myLng };
- 
-  formData.forEach((value, key) => (data[key] = value));
-  // Log the data.
-  console.log(JSON.stringify(data));
-  console.log(data)
+  // const data = { lat: myLat, lng: myLng };
 
+  // formData.forEach((value, key) => (data[key] = value));
+  // Log the data.
+  // console.log(JSON.stringify(data));
+  // console.log(data)
+  // console.log(formData);
   var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "/jsontest", true);
-  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.open("POST", "/report", true);
+  xhttp.setRequestHeader("Content-Type", "multipart/form-data");
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // Response
       var response = this.responseText;
-      console.log(response);
+      // console.log(response);
       // window.location.href = "/submission";
       window.location.href = response;
     }
   };
-  xhttp.send(JSON.stringify(data));
+  // console.log(event.target);
+  // xhttp.send(formData);
 }
 
 
 
 // --------------------------Preview Image-----------------------------
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
+var loadFile = function (event) {
+  var image = document.getElementById('output');
+  image.src = URL.createObjectURL(event.target.files[0]);
 };
 
 
@@ -150,11 +153,11 @@ var loadFile = function(event) {
 var y
 function encodeImageFileAsURL(element) {
   var image = document.getElementById('output');
-	image.src = URL.createObjectURL(event.target.files[0]);
+  image.src = URL.createObjectURL(event.target.files[0]);
   var file = element.files[0];
   var reader = new FileReader();
-  reader.onloadend = function() {
-    console.log(reader.result)
+  reader.onloadend = function () {
+    // console.log(reader.result)
     y = reader.result
   }
   reader.readAsDataURL(file);
@@ -165,87 +168,87 @@ function encodeImageFileAsURL(element) {
 
 
 // <!-- --------------------------------Doamin/Subtype----------------------------------------------- -->
-              
-var Utility = ["Water","Gas","Sewage","Electric","Telecommunication"];
-var Poullution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
-var Road = ["Accidents","Lamps","Hales","Barriers"];
-var Disasters = ["Earthquakes","Flloods","Landslides","Torrnados"];
+
+var Utility = ["Water", "Gas", "Sewage", "Electric", "Telecommunication"];
+var Pollution = ["Noise Pollution", "Air Pollution", "Industrial Pollution", "Soil Pollution", "Water Pollution"];
+var Road = ["Accidents", "Lamps", "Hales", "Barriers"];
+var Disasters = ["Earthquakes", "Floods", "Landslides", "Torrnados"];
 
 // --------------------------Sub subUtility-----------------------------
-    var Water= ["Leakage","Quality","Cut","Explosion","Stealing","Overflow","Failure"];
-    var Sewage = ["Leakage","Quality","Cut","Explosion","Stealing","Overflow","Failure"]; 
-    var Gas =  ["Leakage","Quality","Cut","Explosion","Stealing","Failure"];
-    var Electric= ["Quality","Cut","Explosion","Stealing","Failure"]; 
-    var Telecom = ["Cut","Stealing","Failure"]
+var Water = ["Leakage", "Quality", "Cut", "Explosion", "Stealing", "Overflow", "Failure"];
+var Sewage = ["Leakage", "Quality", "Cut", "Explosion", "Stealing", "Overflow", "Failure"];
+var Gas = ["Leakage", "Quality", "Cut", "Explosion", "Stealing", "Failure"];
+var Electric = ["Quality", "Cut", "Explosion", "Stealing", "Failure"];
+var Telecom = ["Cut", "Stealing", "Failure"]
 // ---------------------------------------------------------------------
 
 function updateTwo() {
-    var  problem = document.getElementById("1");
-    var subProblem = document.getElementById("2");
-    var selected = problem.options[problem.selectedIndex].value;
-    // var SubUtility = document.getElementById("3");
-    var i;
-    for(i = subProblem.options.length - 1 ; i >= 0 ; i--) {
-        subProblem.remove(i);
-        // SubUtility.remove(i);
-    }
-    if(selected=="Water"){
-        for(var i = 0; i < Water.length; i++) {
-            addOption(subProblem,Water[i]);
-        }
-        
-    } else if(selected=="Sewage"){
-      for(var i = 0; i < Sewage.length; i++) {
-          addOption(subProblem,Sewage[i]);
-        } 
-      
-    } else if(selected=="Gas"){
-      for(var i = 0; i < Gas.length; i++) {
-          addOption(subProblem,Gas[i]);
-        } 
-      
-    } else if(selected=="Electric"){
-      for(var i = 0; i < Electric.length; i++) {
-          addOption(subProblem,Electric[i]);
-        } 
-      
-    } else if(selected=="Telecom"){
-      for(var i = 0; i < Telecom.length; i++) {
-          addOption(subProblem,Telecom[i]);
-        } 
-      
-    } 
-    else if(selected=="Poullution") {
-        for(var j = 0; j < Poullution.length; j++) {
-            addOption(subProblem,Poullution[j]);
-        }
-    } else if(selected=="Road") {
-        for(var k = 0; k < Road.length; k++) {
-            addOption(subProblem,Road[k]);
-        }
-
-    } else if(selected=="Disasters") {
-        for(var m = 0; m < Disasters.length; m++) {
-            addOption(subProblem,Disasters[m]);
-        }
+  var problem = document.getElementById("1");
+  var subProblem = document.getElementById("2");
+  var selected = problem.options[problem.selectedIndex].value;
+  // var SubUtility = document.getElementById("3");
+  var i;
+  for (i = subProblem.options.length - 1; i >= 0; i--) {
+    subProblem.remove(i);
+    // SubUtility.remove(i);
+  }
+  if (selected == "Water") {
+    for (var i = 0; i < Water.length; i++) {
+      addOption(subProblem, Water[i]);
     }
 
+  } else if (selected == "Sewage") {
+    for (var i = 0; i < Sewage.length; i++) {
+      addOption(subProblem, Sewage[i]);
+    }
 
-    
+  } else if (selected == "Gas") {
+    for (var i = 0; i < Gas.length; i++) {
+      addOption(subProblem, Gas[i]);
+    }
+
+  } else if (selected == "Electric") {
+    for (var i = 0; i < Electric.length; i++) {
+      addOption(subProblem, Electric[i]);
+    }
+
+  } else if (selected == "Telecom") {
+    for (var i = 0; i < Telecom.length; i++) {
+      addOption(subProblem, Telecom[i]);
+    }
+
+  }
+  else if (selected == "Pollution") {
+    for (var j = 0; j < Pollution.length; j++) {
+      addOption(subProblem, Pollution[j]);
+    }
+  } else if (selected == "Road") {
+    for (var k = 0; k < Road.length; k++) {
+      addOption(subProblem, Road[k]);
+    }
+
+  } else if (selected == "Disasters") {
+    for (var m = 0; m < Disasters.length; m++) {
+      addOption(subProblem, Disasters[m]);
+    }
+  }
+
+
+
 }
 
 
-    
 
-addOption = function(option, value) {
-    var opt = document.createElement('option');
-    opt.innerHTML = value;
-    opt.value = value;
-    option.appendChild(opt);
-    
+
+addOption = function (option, value) {
+  var opt = document.createElement('option');
+  opt.innerHTML = value;
+  opt.value = value;
+  option.appendChild(opt);
+
 }
 
 // <!-- -------------------------------------------------------------------------------------------------- -->
-window.onload = function() {
+window.onload = function () {
   updateTwo()
-  };
+};

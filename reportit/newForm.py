@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
-from wtforms import StringField,PasswordField, SubmitField, BooleanField
+from wtforms import StringField,PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from reportit import session
 from reportit.models import User
@@ -78,3 +79,8 @@ class UpdateAccountForm(FlaskForm):
             user = session.query(User).filter_by(phone_num=phonenumber.data).first()
             if user:
                 raise ValidationError('That Phone Number is taken. Please choose a different one.')
+
+class ReportFo(FlaskForm):
+    # categoryf = SelectField('Category', choices=[('Utility','Polution'), ('Water','Noise')])
+    # sub_cat = SelectField('City',choices=[])
+    img = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png'])])

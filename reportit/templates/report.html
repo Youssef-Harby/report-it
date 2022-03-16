@@ -27,7 +27,7 @@
   <div id="scroll"  class="position-absolute p-5 bg-white m-5 shadow-lg map-box2">
   
 
-  <form method="POST"  onsubmit="submitForm(event)" >
+  <form method="post" enctype="multipart/form-data"  onsubmit="submitForm(event)" >
                     
     <!-- ------------------------------------Location Map---------------------------------------->
     <h3 class="fw-bold mb-0">Hi, {{ current_user.f_Name }}</h3>
@@ -47,7 +47,7 @@
                     <option value="Gas">Gas</option>
                     <option value="Electric">Electric</option>
                     <option value="Telecom">Telecom</option>
-                    <option value="Poullution">Poullution</option>
+                    <option value="Pollution">Pollution</option>
                     <option value="Road">Road</option>
                     <option value="Disasters">Disasters</option>
                 </select>
@@ -73,11 +73,15 @@
       
     <div class="mb-3">
         <label for="validationTextarea" class="form-label" for="file" style="cursor: pointer;" >Upload photo of the problem</label>
-        <input type="file" class="form-control" aria-label="file example" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
+        <input type="file" class="form-control" aria-label="file example" accept="image/*" name="file" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
         <div class="invalid-feedback">Example invalid form file feedback</div>
         <div id="imgPre" align="center"><img id="output"/></div >
     </div>
-      
+      <div>
+          <input type="hidden" name="lat" id="latlat">
+          <input type="hidden" name="long" id="lonlon">
+          
+      </div>
      
     <div class="mb-3">
         <label for="validationTextarea" class="form-label" aria-label="file example">Describe the problem</label>

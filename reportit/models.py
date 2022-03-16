@@ -136,14 +136,15 @@ class MyMixin:
     def get_point(self):
         return to_shape(self.geometry)
 
-    def __init__(self, type, lat, lon, effect, description, solved,cuusid):
+    def __init__(self, type, subType, lat, lon, effect, description, solved,img,cuusid):
         self.type = type
+        self.sub_type=subType
         self.lat = lat
         self.lon = lon
         self.geometry = from_shape(Point(self.lon, self.lat), srid=4326)
         self.effect = effect
         self.description = description
-        # self.img = img
+        self.img = img
         self.solved = solved
         self.userid = cuusid
 
@@ -186,6 +187,15 @@ Base.metadata.create_all(engine, checkfirst=True)
 # user = session.query(User).get(1)
 # print(user.reports)
 # print(session.query(User).get(1).reports)
+
+
+# for cat in session.query(Categories).all():
+    # if "Water" == cat.cat_name:
+        # print(cat.id)
+    # print(cat.cat_name)
+# catlen = len(session.query(Categories).all())
+# print(catlen)
+# print(session.query(Categories).get(1))
 
 
 # This is a query that is looking for the user with the national id of 12345678901111.
