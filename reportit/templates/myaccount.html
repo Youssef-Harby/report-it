@@ -1,16 +1,91 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="jumbotron text-center">
-    <h1>My Account</h1>
-    <br>
-    <h1>Hi, {{ current_user.f_Name }}</h1>
-    <br>
-    <h3>Email: {{ current_user.email }}</h3>
-    <h3>Phone Number : {{ current_user.phone_num }}</h3>
-    <h3>Number of Reports: {{ numreports }}</h3>
-    <br>
-    <a class="btn btn-primary btn-sm" href="{{ url_for('myreports') }}" role="button">Check Your Reports Status</a>
+<div class="container">
+  <form method="POST" action="">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Account Info</legend>
+          <div class="form-group">
+              {{ form.fname.label(class="form-control-label") }}
+
+              {% if form.fname.errors %}
+                  {{ form.fname(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.fname.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.fname(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class="form-group">
+              {{ form.lname.label(class="form-control-label") }}
+
+              {% if form.lname.errors %}
+                  {{ form.lname(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.lname.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.lname(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class="form-group">
+              {{ form.email.label(class="form-control-label") }}
+              {% if form.email.errors %}
+                  {{ form.email(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.email.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.email(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class="form-group">
+              {{ form.nationalid.label(class="form-control-label") }}
+
+              {% if form.nationalid.errors %}
+                  {{ form.nationalid(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.nationalid.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.nationalid(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          <div class="form-group">
+              {{ form.phonenumber.label(class="form-control-label") }}
+
+              {% if form.phonenumber.errors %}
+                  {{ form.phonenumber(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.phonenumber.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.phonenumber(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+          
+      </fieldset>
+      <br>
+      <div class="form-group">
+          {{ form.submit(class="btn btn btn-warning") }}
+      </div>
+      <br>
+  </form>
+    <div align="center">
+      <a class="btn btn-primary btn-sm" href="{{ url_for('myreports') }}" role="button">Check Your Reports Status</a>
+    </div>
     <hr>
     <p>
       Having trouble? <a href="">Contact us</a>
@@ -18,4 +93,10 @@
     <p class="lead">
     </p>
   </div>
+
+</div>
+    
+
+  <!-- Test -->
+  
 {% endblock content %}

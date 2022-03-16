@@ -8,7 +8,7 @@ from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
 from reportit.models import User,Categories,Utility,Pollution,Disaster,Road,Fire
-from reportit.newForm import RegistrationForm, LoginForm
+from reportit.newForm import RegistrationForm, LoginForm, UpdateAccountForm
 
 ACCESS = {
     'guest': 0,
@@ -108,12 +108,28 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/myaccount')
+@app.route('/myaccount',methods=['GET', 'POST'])
 @login_required
 def myaccount():
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        current_user.f_Name = form.fname.data
+        current_user.l_Name = form.lname.data
+        current_user.email = form.email.data
+        current_user.national_id = form.nationalid.data
+        current_user.phone_num = form.phonenumber.data
+        session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('myaccount'))
+    elif request.method =='GET':
+        form.fname.data = current_user.f_Name
+        form.lname.data = current_user.l_Name
+        form.email.data = current_user.email
+        form.nationalid.data = current_user.national_id
+        form.phonenumber.data = current_user.phone_num
     reports = session.query(User).get(current_user.id).reports
     numreports = len(reports)
-    return render_template('myaccount.html', title='My Account', numreports=numreports)
+    return render_template('myaccount.html', title='My Account', numreports=numreports, form=form)
 
 
 @app.route('/myreports')
