@@ -20,6 +20,7 @@ ACCESS = {
 def load_user(user_id):
     return session.query(User).get(int(user_id))
 
+all_classes= ["Utility","Pollution","Road","Disaster","Fire"]
 ##USER TABLE##
 
 class User(Base, UserMixin):
@@ -34,6 +35,10 @@ class User(Base, UserMixin):
     register_time = Column(DateTime, default=datetime.utcnow)
     access = Column(Integer, nullable=False)
     reports= relationship('Utility', backref='reporter', lazy=True)
+    reports_Pollution= relationship('Pollution', backref='reporter', lazy=True)
+    reports_Road= relationship('Road', backref='reporter', lazy=True)
+    reports_Disaster= relationship('Disaster', backref='reporter', lazy=True)
+    reports_Fire= relationship('Fire', backref='reporter', lazy=True)
 
     # initializing
     def __init__(self, f_Name, l_Name, email, national_id, phone_num, password, access=ACCESS['user']):
@@ -83,6 +88,10 @@ class Categories (Base):
     cat_name = Column(String)
     id = Column(Integer, primary_key=True)
     type= relationship('Utility', backref='ptype', lazy=True)
+    type_Pollution= relationship('Pollution', backref='ptype', lazy=True)
+    type_Road= relationship('Road', backref='ptype', lazy=True)
+    type_Disaster= relationship('Disaster', backref='ptype', lazy=True)
+    type_Fire= relationship('Fire', backref='ptype', lazy=True)
 
     def __init__(self, cat_name, cat_id):
         self.cat_name = cat_name
@@ -164,17 +173,19 @@ class Fire(MyMixin, Base):
 # Dropping All Tables
 # Base.metadata.drop_all(engine, checkfirst=True)
 
-admin.add_views(Controller(User,session),Controller(Categories,session),Controller(Utility,session),Controller(Pollution,session))
+admin.add_views(Controller(User,session),Controller(Categories,session),Controller(Utility,session),Controller(Pollution,session),Controller(Road,session),Controller(Disaster,session),Controller(Fire,session))
 # Creating All Tables
 Base.metadata.create_all(engine, checkfirst=True)
 
 # session.add(Utility(1,30.2,31.1,5,'testoo',False,1))
 # session.commit()
-# session.add(Utility(1, float(30.14671), float(31.63642), int(5), 'GGGHHH', False, 1))
+# session.add(Pollution(2, float(30.14671), float(31.63642), int(5), 'GGGHHH', False, 1))
+# session.add(Utility(1, float(30.146), float(31.63), int(3), 'ffff', False, 1))
 # session.commit()
 # print(session.query(User).all())
 # user = session.query(User).get(1)
 # print(user.reports)
+# print(session.query(User).get(1).reports)
 
 
 # This is a query that is looking for the user with the national id of 12345678901111.
