@@ -129,7 +129,7 @@ class MyMixin:
     geometry = Column((Geometry("POINT", srid=4326, spatial_index=True)))
     effect = Column(Integer)
     description = Column(String)
-    img = Column(LargeBinary)
+    img = Column(String)
     solved = Column(Boolean, unique=False, default=False)
     solved_time = Column(DateTime)
 
