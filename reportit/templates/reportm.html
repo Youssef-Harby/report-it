@@ -37,7 +37,7 @@
 
             <div class="modal-body p-5 pt-0">
 
-                <form method="POST"  onsubmit="submitForm(event)" >
+                <form method="POST" enctype="multipart/form-data"  onsubmit="submitForm(event)" >
                     
                 <!-- ------------------------------------Location Map---------------------------------------->
                    <hr/> <h4>Location</h4>
@@ -58,7 +58,7 @@
                             <option value="Gas">Gas</option>
                             <option value="Electric">Electric</option>
                             <option value="Telecom">Telecom</option>
-                            <option value="Poullution">Poullution</option>
+                            <option value="Pollution">Pollution</option>
                             <option value="Road">Road</option>
                             <option value="Disasters">Disasters</option>
                         </select>
@@ -66,7 +66,6 @@
 
                     <p>
                         <select class="form-select" required aria-label="select example" id="2" onchange="javaScript:updateThree();" name="Sub Problem" required>
-                            <option value="0">Sub Problem</option>
                         </select>
                     </p>
 
@@ -85,9 +84,15 @@
       
                 <div class="mb-3">
                     <label for="validationTextarea" class="form-label" for="file" style="cursor: pointer;" >Upload photo of the problem</label>
-                    <input type="file" class="form-control" aria-label="file example" accept="image/*" name="image" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
+                    <input type="file" class="form-control" aria-label="file example" accept="image/*" name="file" id="file" onchange="encodeImageFileAsURL(this)" onchange="loadFile(event)" required >
                     <div class="invalid-feedback">Example invalid form file feedback</div>
                     <div id="imgPre" align="center"><img id="output"/></div >
+                </div>
+
+                <div>
+                    <input type="hidden" name="lat" id="latlat">
+                    <input type="hidden" name="long" id="lonlon">
+                    
                 </div>
                   
                  

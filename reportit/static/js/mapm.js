@@ -61,6 +61,9 @@ function success(position) {
   document.body.appendChild(script);
   myMarker = L.marker(latLng);
   document.body.removeChild(script);
+
+  document.getElementById('latlat').value = myLat;
+  document.getElementById('lonlon').value = myLng;
 }
 
 function error(err) {
@@ -109,33 +112,32 @@ function addMarker(e) {
 // --------------------------Get Data Json ------------------------------------
 function submitForm(event) {
   // Prevent the form from submitting.
-  event.preventDefault();
+  // event.preventDefault();
   // Set url for submission and collect data.
-  const url = "http://localhost:5000/jsontest";
   const formData = new FormData(event.target);
   // Build the data object.
-  const data = { lat: myLat, lng: myLng };
- 
-  formData.forEach((value, key) => (data[key] = value));
-  // Log the data.
-  console.log(JSON.stringify(data));
-  console.log(data)
+  // const data = { lat: myLat, lng: myLng };
 
+  // formData.forEach((value, key) => (data[key] = value));
+  // Log the data.
+  // console.log(JSON.stringify(data));
+  // console.log(data)
+  // console.log(formData);
   var xhttp = new XMLHttpRequest();
-  xhttp.open("POST", "/jsontest", true);
-  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.open("POST", "/report", true);
+  xhttp.setRequestHeader("Content-Type", "multipart/form-data");
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // Response
       var response = this.responseText;
-      console.log(response);
+      // console.log(response);
       // window.location.href = "/submission";
       window.location.href = response;
     }
   };
-  xhttp.send(JSON.stringify(data));
+  // console.log(event.target);
+  // xhttp.send(formData);
 }
-
 
 
 // --------------------------Preview Image-----------------------------
@@ -167,7 +169,7 @@ function encodeImageFileAsURL(element) {
 // <!-- --------------------------------Doamin/Subtype----------------------------------------------- -->
               
 var Utility = ["Water","Gas","Sewage","Electric","Telecommunication"];
-var Poullution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
+var Pollution = ["Noise Pollution","Air Pollution","Industrial Pollution","Soil Pollution","Water Pollution"];
 var Road = ["Accidents","Lamps","Hales","Barriers"];
 var Disasters = ["Earthquakes","Flloods","Landslides","Torrnados"];
 
@@ -215,9 +217,9 @@ function updateTwo() {
         } 
       
     } 
-    else if(selected=="Poullution") {
-        for(var j = 0; j < Poullution.length; j++) {
-            addOption(subProblem,Poullution[j]);
+    else if(selected=="Pollution") {
+        for(var j = 0; j < Pollution.length; j++) {
+            addOption(subProblem,Pollution[j]);
         }
     } else if(selected=="Road") {
         for(var k = 0; k < Road.length; k++) {

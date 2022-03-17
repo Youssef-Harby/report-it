@@ -91,7 +91,7 @@ label{
 /* Rating */
 .rating {
   float:left;
-  padding-left: 40px;
+  padding-left: 49px;
   
 }
 
@@ -100,7 +100,6 @@ label{
   it doesn’t make the test unnecessarily selective */
 .rating:not(:checked) > input {
     position:absolute;
-    top:-9999px;
     clip:rect(0,0,0,0);
 }
 
