@@ -268,14 +268,9 @@ def foliumMap():
 @app.route('/leafmap')
 def leafmapTest():
     from reportit.postgis import df_utility
-    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6,
-                    height=600, widescreen=False)
-    geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
-    geo_df = geopandas.GeoDataFrame(
-        df_utility[['id', 'description', 'lat', 'lon']], geometry=geometry)
-    print(geo_df.head())
-    m.add_gdf(geo_df, layer_name="Points",
-              fill_colors=["red", "green", "blue"])
+    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
+    df_utility['timestamp'] = df_utility['timestamp'].astype(str)
+    m.add_gdf(df_utility, layer_name="Points",fill_colors=["red", "green", "blue"])
     # m.to_html(outfile='./reportit/templates/leafmap.html')
     return m._repr_html_()
 
