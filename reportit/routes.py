@@ -208,38 +208,23 @@ def report():
     if request.method == 'POST':
         file = request.files['file']
         pic_file = save_img(file)
-        # print(pic_file)
         data = dict(request.form)
-        print(data)
         for cat in session.query(Categories).all():
-            print(cat)
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
         for classname1 in Utility_List:
-            # print(33333,classname1)
-            print("before if 1")
             if data["Problem"] == classname1:
                 session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(1)
-            print("after if 1")
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         for classname2 in Poullution_List:
-            print("before if 2")
             if data["Problem"] == classname2:
                 session.add(Pollution(cat_id_forIns, data["Sub Problem"] , float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(2)
-            print("after if 2")
-        print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
         for classname3 in Road_List:
             if data["Problem"] == classname3:
                 session.add(Road(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(3)
         for classname4 in Disasters_List:
             if data["Problem"] == classname4:
                 session.add(Disaster(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(4)
         session.commit()
-        print(5)
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
@@ -252,7 +237,6 @@ def foliumMap():
     geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
     geo_df = geopandas.GeoDataFrame(
         df_utility[['id', 'description', 'lat', 'lon', 'timestamp']], geometry=geometry)
-    print(geo_df.head())
     # Create a geometry list from the GeoDataFrame
     geo_df_list = [[point.xy[1][0], point.xy[0][0]]
                    for point in geo_df.geometry]
@@ -292,38 +276,23 @@ def reportm():
     if request.method == 'POST':
         file = request.files['file']
         pic_file = save_img(file)
-        # print(pic_file)
         data = dict(request.form)
-        print(data)
         for cat in session.query(Categories).all():
-            print(cat)
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
         for classname1 in Utility_List:
-            # print(33333,classname1)
-            print("before if 1")
             if data["Problem"] == classname1:
                 session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(1)
-            print("after if 1")
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
         for classname2 in Poullution_List:
-            print("before if 2")
             if data["Problem"] == classname2:
                 session.add(Pollution(cat_id_forIns, data["Sub Problem"] , float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(2)
-            print("after if 2")
-        print("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB")
         for classname3 in Road_List:
             if data["Problem"] == classname3:
                 session.add(Road(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(3)
         for classname4 in Disasters_List:
             if data["Problem"] == classname4:
                 session.add(Disaster(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
-                print(4)
         session.commit()
-        print(5)
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
