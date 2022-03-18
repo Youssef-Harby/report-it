@@ -2,6 +2,7 @@ import os
 from functools import wraps
 import json
 import secrets
+from PIL import Image
 from flask import abort, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
@@ -201,14 +202,17 @@ def mkdir_p(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-def save_img(form_img):
+def save_img(form_img,cat_path,sub_cat):
     random_hex = secrets.token_hex(8)
     _, file_ext = os.path.splitext(form_img.filename)
     img_fn = random_hex + file_ext
-    upload_path = os.path.join(app.root_path, 'static/reports_imgs')
+    upload_path = os.path.join(app.root_path, 'static/reports_imgs', cat_path, sub_cat)
     mkdir_p(upload_path)
-    img_path = os.path.join(app.root_path, 'static/reports_imgs', img_fn)
-    form_img.save(img_path)
+    img_path = os.path.join(app.root_path, 'static/reports_imgs',cat_path, sub_cat, img_fn)
+    output_size = (1024,1024)
+    i = Image.open(form_img)
+    i.thumbnail(output_size)
+    i.save(img_path)
     return img_fn
 
 @app.route('/report', methods=['GET','POST'])
@@ -222,8 +226,8 @@ def report():
         return render_template('report.html', form=form)
     if request.method == 'POST':
         file = request.files['file']
-        pic_file = save_img(file)
         data = dict(request.form)
+        pic_file = save_img(file,data["Problem"],data["Sub Problem"])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
@@ -291,8 +295,8 @@ def reportm():
         return render_template('reportm.html', form=form)
     if request.method == 'POST':
         file = request.files['file']
-        pic_file = save_img(file)
         data = dict(request.form)
+        pic_file = save_img(file,data["Problem"],data["Sub Problem"])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
