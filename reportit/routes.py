@@ -230,24 +230,26 @@ def report():
     else:
         return 404
 
-@app.route('/folium')
-def foliumMap():
+@app.route('/dash')
+def notdash():
+    import pandas as pd
+    import plotly
+    import plotly.express as px
     from reportit.postgis import df_utility
-    # print(df.info())
-    geometry = geopandas.points_from_xy(df_utility.lon, df_utility.lat)
-    geo_df = geopandas.GeoDataFrame(
-        df_utility[['id', 'description', 'lat', 'lon', 'timestamp']], geometry=geometry)
-    # Create a geometry list from the GeoDataFrame
-    geo_df_list = [[point.xy[1][0], point.xy[0][0]]
-                   for point in geo_df.geometry]
-    # print(geo_df_list)
+    df_utility['timestamp'] = df_utility['timestamp'].astype(str)
 
-    start_coords = (30.0444, 31.2357)
-    folium_map = folium.Map(location=start_coords, zoom_start=6)
-    plugins.HeatMap(geo_df_list).add_to(folium_map)
-    # return df.keys()
-    return folium_map._repr_html_()
-
+    # df = pd.DataFrame({
+    #   'Fruit': ['Apples', 'Oranges', 'Bananas', 'Apples', 'Oranges', 
+    #   'Bananas'],
+    #   'Amount': [4, 1, 2, 2, 4, 5],
+    #   'City': ['SF', 'SF', 'SF', 'Montreal', 'Montreal', 'Montreal']})
+    fig = px.scatter_mapbox(df_utility, lat="lat", lon="lon", color="effect", size="effect",
+                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10,
+                  mapbox_style="carto-positron")
+    # fig = px.bar(df_utility, x='Fruit', y='Amount', color='City', barmode='group')   
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    
+    return render_template('notdash.html', graphJSON=graphJSON)
 
 @app.route('/leafmap')
 def leafmapTest():
