@@ -21,7 +21,7 @@
         <a class="mr-2" href="#"
           >{{ current_user.f_Name }} {{ current_user.l_Name }}</a
         >
-        <small class="text-muted">{{ report.timestamp }}</small>
+        <small class="text-muted">{{ report.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</small>
       </div>
       <div class="row align-items-start">
         <div class="col">

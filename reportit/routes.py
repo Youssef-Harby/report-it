@@ -161,17 +161,16 @@ def myreports():
     data = json.dumps(reportsIDs)
     return render_template('myreports.html', reports=reports, title='My Reports',data=data)
 
-
-@app.route('/tools')
+@app.route('/myanalysis/<int:accessuser_access>')
 @login_required
-@requires_access_level(ACCESS['waterORG'])
-def tools():
-    return render_template('tools.html', title='Tools')
+@requires_access_level(2 or 3 or 4 or 5)
+def myanalysis(accessuser_access):
+    return render_template('myanalysis.html', title='My Analysis')
     
-@app.route('/analysis1')
+@app.route('/analysis1/<int:accessuser_access>')
 @login_required
-@requires_access_level(ACCESS['waterORG'])
-def analysis1():
+@requires_access_level(2 or 3 or 4 or 5)
+def analysis1(accessuser_access):
     from threading import Timer
     from reportit.analysis.sjoina import sJoinA
     gdf = sJoinA('SELECT * FROM public.utility')
@@ -184,14 +183,14 @@ def analysis1():
     return m._repr_html_()
 
 
-@app.route('/analysis2')
+@app.route('/analysis2/<int:accessuser_access>')
 @login_required
-@requires_access_level(ACCESS['waterORG'])
-def analysis2():
+@requires_access_level(2 or 3 or 4 or 5)
+def analysis2(accessuser_access):
     from threading import Timer
     from reportit.analysis.countinpoly import countPinPoly
     gdf = countPinPoly('SELECT * FROM public.utility')
-    m = leafmap.Map()
+    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
     # config = "reportit/analysis/config2.json"
     m.add_gdf(gdf, layer_name="layer1")
     # m.add_gdf(admin_poly, layer_name="layer2")
@@ -269,8 +268,9 @@ def notdash():
     
     return render_template('notdash.html', graphJSON=graphJSON)
 
-@app.route('/leafmap')
-def leafmapTest():
+@app.route('/problemstimeline/<int:accessuser_access>')
+@requires_access_level(2 or 3 or 4 or 5)
+def problemstimeline(accessuser_access):
     from reportit.postgis import df_utility
     m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
     df_utility['timestamp'] = df_utility['timestamp'].astype(str)

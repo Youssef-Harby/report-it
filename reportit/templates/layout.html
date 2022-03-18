@@ -31,7 +31,7 @@
                 </li>
                 <li class="nav-item">
                 {% if current_user.is_authenticated and current_user.access>1 %}
-                <a class="nav-link" href="{{ url_for('tools') }}">Tools</a>
+                <a class="nav-link" href="{{ url_for('myanalysis', accessuser_access=current_user.access) }}">My Analysis</a>
                 {% else %}
                 {% endif %}
                 </li>
