@@ -182,6 +182,21 @@ def analysis1():
     # m.to_html("reportit/templates/mymap.html")
     return m._repr_html_()
 
+
+@app.route('/analysis2')
+@login_required
+@requires_access_level(ACCESS['waterORG'])
+def analysis2():
+    from threading import Timer
+    from reportit.analysis.countinpoly import countPinPoly
+    gdf = countPinPoly('SELECT * FROM public.utility')
+    m = leafmap.Map()
+    # config = "reportit/analysis/config2.json"
+    m.add_gdf(gdf, layer_name="layer1")
+    # m.add_gdf(admin_poly, layer_name="layer2")
+    # m.to_html("reportit/templates/mymap.html")
+    return m._repr_html_()
+
 def mkdir_p(path):
     if not os.path.exists(path):
         os.makedirs(path)
@@ -232,7 +247,6 @@ def report():
 
 @app.route('/dash')
 def notdash():
-    import pandas as pd
     import plotly
     import plotly.express as px
     from reportit.postgis import df_utility
