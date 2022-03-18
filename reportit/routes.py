@@ -2,6 +2,7 @@ import os
 from functools import wraps
 import json
 import secrets
+from PIL import Image
 from flask import abort, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
@@ -9,7 +10,7 @@ import folium
 from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
-from reportit.models import User,Categories,Utility,Pollution,Disaster,Road,Fire
+from reportit.models import User, Categories, Utility, Pollution, Disaster, Road, Fire
 from reportit.newForm import RegistrationForm, LoginForm, ReportFo, UpdateAccountForm
 from werkzeug.datastructures import ImmutableMultiDict
 
@@ -21,34 +22,17 @@ ACCESS = {
     'utilityORG': 4,
     'admin': 666,
 }
-all_classes = ["Utility","Pollution","Road","Disaster","Fire"]
 
-Utility_List = ["Water", "Gas", "Sewage", "Electric", "Telecom"];
-Poullution_List = ["Pollution","Noise Pollution", "Air Pollution", "Industrial Pollution", "Soil Pollution", "Water Pollution"];
-Road_List = ["Road","Accidents", "Lamps", "Hales", "Barriers"];
-Disasters_List = ["Disasters","Earthquakes", "Floods", "Landslides", "Torrnados"];
+all_classes = ["Utility", "Pollution", "Road", "Disaster", "Fire"]
 
-new_list = [Utility_List,Poullution_List,Road_List,Disasters_List]
+Utility_List = ["Water", "Gas", "Sewage", "Electric", "Telecom"]
+Poullution_List = ["Pollution", "Noise Pollution", "Air Pollution",
+                   "Industrial Pollution", "Soil Pollution", "Water Pollution"]
+Road_List = ["Road", "Accidents", "Lamps", "Hales", "Barriers"]
+Disasters_List = ["Disasters", "Earthquakes",
+                  "Floods", "Landslides", "Torrnados"]
 
-
-myReports = [
-    {
-        'author': 'Youssef Harby',
-        'problem': 'Pipeline Break',
-        'description': 'Description Test 1',
-        'date_reported': '11-03-2022',
-        'status': True
-
-    },
-    {
-        'author': 'Khalid',
-        'problem': 'Noise Pollution',
-        'description': 'Description Test 2',
-        'date_reported': '10-03-2022',
-        'status': False
-
-    }
-]
+new_list = [Utility_List, Poullution_List, Road_List, Disasters_List]
 
 
 def requires_access_level(access_level):
@@ -67,13 +51,10 @@ def requires_access_level(access_level):
         return decorated_function
     return decorator
 
+
 @app.route('/')
 def home():
-    return render_template('index.html', title='Home')
-
-# @app.route('/')
-# def home():
-#     return render_template('home.html')
+    return render_template('home.html', title='Home')
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -120,7 +101,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/myaccount',methods=['GET', 'POST'])
+@app.route('/myaccount', methods=['GET', 'POST'])
 @login_required
 def myaccount():
     form = UpdateAccountForm()
@@ -133,7 +114,7 @@ def myaccount():
         session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('myaccount'))
-    elif request.method =='GET':
+    elif request.method == 'GET':
         form.fname.data = current_user.f_Name
         form.lname.data = current_user.l_Name
         form.email.data = current_user.email
@@ -148,70 +129,87 @@ def myaccount():
 @login_required
 def myreports():
     reports = session.query(User).get(current_user.id).reports
-    reportsIDs=[]
+    reportsIDs = []
     for i in reports:
-       obj = {
-           "id":i.id,
-           "lat": i.lat,
-           "lon": i.lon,
-           "solved": i.solved
-       }
-       reportsIDs.append(obj)
+        obj = {
+            "id": i.id,
+            "lat": i.lat,
+            "lon": i.lon,
+            "solved": i.solved
+        }
+        reportsIDs.append(obj)
     data = json.dumps(reportsIDs)
-    return render_template('myreports.html', reports=reports, title='My Reports',data=data)
+    return render_template('myreports.html', reports=reports, title='My Reports', data=data)
 
-
-@app.route('/tools')
+@app.route('/myanalysis/<int:accessuser_access>')
 @login_required
-@requires_access_level(ACCESS['waterORG'])
-def tools():
-    return render_template('tools.html', title='Tools')
-    
-@app.route('/analysis1')
-@login_required
-@requires_access_level(ACCESS['waterORG'])
-def analysis1():
-    from threading import Timer
-    from reportit.analysis.sjoina import sJoinA
-    gdf = sJoinA('SELECT * FROM public.utility')
-    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
-    m = leafmap.Map()
-    config = "reportit/analysis/config2.json"
-    m.add_gdf(gdf, layer_name="layer1")
-    m.add_gdf(admin_poly, layer_name="layer2", config=config)
-    # m.to_html("reportit/templates/mymap.html")
-    return m._repr_html_()
+# @requires_access_level(2 or 3 or 4 or 5)
+def myanalysis(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        return render_template('myanalysis.html', title='My Analysis')
+    else:
+        return redirect(url_for('page404'))
 
 
-@app.route('/analysis2')
+@app.route('/analysis1/<int:accessuser_access>')
 @login_required
-@requires_access_level(ACCESS['waterORG'])
-def analysis2():
-    from threading import Timer
-    from reportit.analysis.countinpoly import countPinPoly
-    gdf = countPinPoly('SELECT * FROM public.utility')
-    m = leafmap.Map()
-    # config = "reportit/analysis/config2.json"
-    m.add_gdf(gdf, layer_name="layer1")
-    # m.add_gdf(admin_poly, layer_name="layer2")
-    # m.to_html("reportit/templates/mymap.html")
-    return m._repr_html_()
+# @requires_access_level(2 or 3 or 4 or 5)
+def analysis1(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        from threading import Timer
+        from reportit.analysis.sjoina import sJoinA
+        gdf = sJoinA('SELECT * FROM public.utility')
+        admin_poly = geopandas.read_file(
+            "Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857")  # Polygon
+        m = leafmap.Map()
+        config = "reportit/analysis/config2.json"
+        m.add_gdf(gdf, layer_name="layer1")
+        m.add_gdf(admin_poly, layer_name="layer2", config=config)
+        # m.to_html("reportit/templates/mymap.html")
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
+
+
+@app.route('/analysis2/<int:accessuser_access>')
+@login_required
+# @requires_access_level(2 or 3 or 4 or 5)
+def analysis2(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        from reportit.analysis.countinpoly import countPinPoly
+        gdf = countPinPoly('SELECT * FROM public.utility')
+        m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
+        # config = "reportit/analysis/config2.json"
+        m.add_gdf(gdf, layer_name="layer1")
+        # m.add_gdf(admin_poly, layer_name="layer2")
+        # m.to_html("reportit/templates/mymap.html")
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
+
 
 def mkdir_p(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
-def save_img(form_img):
+
+def save_img(form_img, cat_path, sub_cat):
     random_hex = secrets.token_hex(8)
     _, file_ext = os.path.splitext(form_img.filename)
     img_fn = random_hex + file_ext
-    upload_path = os.path.join(app.root_path, 'static/reports_imgs')
+    upload_path = os.path.join(
+        app.root_path, 'static/reports_imgs', cat_path, sub_cat)
     mkdir_p(upload_path)
-    img_path = os.path.join(app.root_path, 'static/reports_imgs', img_fn)
-    form_img.save(img_path)
+    img_path = os.path.join(
+        app.root_path, 'static/reports_imgs', cat_path, sub_cat, img_fn)
+    output_size = (1024, 1024)
+    i = Image.open(form_img)
+    i.thumbnail(output_size)
+    i.save(img_path)
     return img_fn
 
-@app.route('/report', methods=['GET','POST'])
+
+@app.route('/report', methods=['GET', 'POST'])
 @login_required
 def report():
     if request.method == 'GET':
@@ -222,28 +220,33 @@ def report():
         return render_template('report.html', form=form)
     if request.method == 'POST':
         file = request.files['file']
-        pic_file = save_img(file)
         data = dict(request.form)
+        pic_file = save_img(file, data["Problem"], data["Sub Problem"])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
         for classname1 in Utility_List:
             if data["Problem"] == classname1:
-                session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname2 in Poullution_List:
             if data["Problem"] == classname2:
-                session.add(Pollution(cat_id_forIns, data["Sub Problem"] , float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Pollution(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname3 in Road_List:
             if data["Problem"] == classname3:
-                session.add(Road(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Road(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname4 in Disasters_List:
             if data["Problem"] == classname4:
-                session.add(Disaster(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Disaster(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         session.commit()
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return 404
+        return redirect(url_for('page404'))
+
 
 @app.route('/dash')
 def notdash():
@@ -253,34 +256,40 @@ def notdash():
     df_utility['timestamp'] = df_utility['timestamp'].astype(str)
 
     # df = pd.DataFrame({
-    #   'Fruit': ['Apples', 'Oranges', 'Bananas', 'Apples', 'Oranges', 
+    #   'Fruit': ['Apples', 'Oranges', 'Bananas', 'Apples', 'Oranges',
     #   'Bananas'],
     #   'Amount': [4, 1, 2, 2, 4, 5],
     #   'City': ['SF', 'SF', 'SF', 'Montreal', 'Montreal', 'Montreal']})
     fig = px.scatter_mapbox(df_utility, lat="lat", lon="lon", color="effect", size="effect",
-                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10,
-                  mapbox_style="carto-positron")
-    # fig = px.bar(df_utility, x='Fruit', y='Amount', color='City', barmode='group')   
+                            color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10,
+                            mapbox_style="carto-positron")
+    # fig = px.bar(df_utility, x='Fruit', y='Amount', color='City', barmode='group')
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    
+
     return render_template('notdash.html', graphJSON=graphJSON)
 
-@app.route('/leafmap')
-def leafmapTest():
-    from reportit.postgis import df_utility
-    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
-    df_utility['timestamp'] = df_utility['timestamp'].astype(str)
-    m.add_gdf(df_utility, layer_name="Points",fill_colors=["red", "green", "blue"])
-    # m.to_html(outfile='./reportit/templates/leafmap.html')
-    return m._repr_html_()
+
+@app.route('/problemstimeline/<int:accessuser_access>')
+# @requires_access_level(2 or 3 or 4 or 5)
+def problemstimeline(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        from reportit.postgis import df_utility
+        m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
+        df_utility['timestamp'] = df_utility['timestamp'].astype(str)
+        m.add_gdf(df_utility, layer_name="Points",
+                  fill_colors=["red", "green", "blue"])
+        # m.to_html(outfile='./reportit/templates/leafmap.html')
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
 
 
 @app.route('/submission')
 def submission():
     return render_template('submission.html')
 
-    
-@app.route('/reportm', methods=['GET','POST'])
+
+@app.route('/reportm', methods=['GET', 'POST'])
 @login_required
 def reportm():
     if request.method == 'GET':
@@ -291,35 +300,33 @@ def reportm():
         return render_template('reportm.html', form=form)
     if request.method == 'POST':
         file = request.files['file']
-        pic_file = save_img(file)
         data = dict(request.form)
+        pic_file = save_img(file, data["Problem"], data["Sub Problem"])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
         for classname1 in Utility_List:
             if data["Problem"] == classname1:
-                session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Utility(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname2 in Poullution_List:
             if data["Problem"] == classname2:
-                session.add(Pollution(cat_id_forIns, data["Sub Problem"] , float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Pollution(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname3 in Road_List:
             if data["Problem"] == classname3:
-                session.add(Road(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Road(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         for classname4 in Disasters_List:
             if data["Problem"] == classname4:
-                session.add(Disaster(cat_id_forIns, data["Sub Problem"] ,float(data['lat']), float(data['long']), int(data['rating']), data['Description'], False, pic_file , current_user.id))
+                session.add(Disaster(cat_id_forIns, data["Sub Problem"], float(data['lat']), float(
+                    data['long']), int(data['rating']), data['Description'], False, pic_file, current_user.id))
         session.commit()
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return 404
+        return redirect(url_for('page404'))
 
-# @app.route('/jsontest', methods=['POST'])
-# @login_required
-# def jsontestpost():
-#     data = request.get_json()
-#     # print(data)
-#     session.add(Utility(1, float(data['lat']), float(data['lng']), int(3), data['Description'], False, current_user.id))
-#     # session.add(Utility(1, data["Sub Problem"], float(data["lat"]), float(data["lng"]), int(data["rating"]), data['Description'],data["image"], False, int(current_user.id)))
-#     session.commit()
-#     return url_for('submission')
+@app.errorhandler(404)
+def page404(e):
+    return render_template('404.html'), 404

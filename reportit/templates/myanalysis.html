@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1 align="center">Organization Analysis</h1><br/>
+<div align="center" class="container">
+<div class="row align-items-start">
+    <div class="col">
+        <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+            <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-warning">Display Problems</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=current_user.access) }}" class="btn btn-warning">Display Problems</a></div>
+            </div>
+          </div>
+    </div>
+    <div class="col">
+        <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+            <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title text-warning">Spacial Join</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <div align="center"><a href="{{ url_for('analysis1', accessuser_access=current_user.access) }}" class="btn btn-warning">Analysis1</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+                <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title text-warning">Count Problems on Admin Area</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <div align="center"><a href="{{ url_for('analysis2', accessuser_access=current_user.access) }}" class="btn btn-warning">Analysis2</a></div>
+                </div>
+              </div>
+            </div>
+        </div>
+  </div>
+
+{% endblock content %}

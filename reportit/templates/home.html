@@ -1,20 +1,106 @@
 {% extends "layout.html" %}
 {% block content %}
-        <!-- Page content-->
-        <div class="container">
-            <div class="text-center mt-5">
-                <h1>Report it</h1>
-                <p class="lead">Project Description</p>
-                <a class="btn btn-primary" href="{{ url_for('report') }}" role="button">Report</a>
-                <br>
-                <br>
-                <a class="btn btn-primary" href="{{ url_for('myreports') }}" role="button">My Reports</a>
-                <br>
-                <br>
-                <a class="btn btn-danger" href="{{ url_for('foliumMap') }}" role="button">Folium</a>
-                <br>
-                <br>
-                <a class="btn btn-danger" href="{{ url_for('leafmapTest') }}" role="button">Leafmap Kepler</a>
-            </div>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/carousel.css') }}">
+      <div class="container-fluid p-5 bg-image text-white text-center" id="bgmain">
+        <div id="tex-cover">
+        <h1 style="color: white;">Report-it Now, Solve-it Now</h1>
+        <p>Enriching entities with Egypt’s infrastructure shortage data, giving the public a service to precisely report shortages and empowering entities with geospatial capabilities to analyze and solve.</p>
+        <p><a class="btn btn-lg btn-warning" href="{{ url_for('report') }}" role="button">Report it now!</a></p>
+      </div>
+      </div>
+
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+
+      <div class="container marketing">
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="https://media.istockphoto.com/photos/pipeline-and-valve-of-chemical-plant-picture-id1312743082?b=1&k=20&m=1312743082&s=170667a&w=0&h=cg2MwrkfswHaWSd8O60FZjCg7I2XoB6-LPq_7bh9Uag=" alt="Generic placeholder image" width="140" height="140">
+            <h2>Utility</h2>
+            <p>Report-it give you a chance to report failure in utilites inculding water, sewage, gas, electric, and telecommunication for different types of failures as leakage, cut, explosion, quality, overflow, stealing, and other multiple problems.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">Report Failure &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="https://images.unsplash.com/photo-1531804055935-76f44d7c3621?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGhvdG98ZW58MHx8MHx8&w=1000&q=80" alt="Generic placeholder image" width="140" height="140">
+            <h2>Road</h2>
+            <p>If your property or vehicle has been damaged, or you’ve suffered a personal injury, due to a problem with a road or street and you believe that the governmental authorities is responsible, you can make a report here.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">Report Failure &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="https://images.unsplash.com/photo-1564608938148-e3c5325907ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cG9sbHV0aW9ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Generic placeholder image" width="140" height="140">
+            <h2>Pollution</h2>
+            <p>If you observe a major pollution incident that presents an immediate threat to human health or property, such as toxic fumes, a large chemical spill or a noise pollution, report it so the emergency services can take action.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">Report Pollution &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="row justify-content-md-center">
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="https://media.istockphoto.com/photos/apocalyptic-wild-fires-burn-grasslands-superior-homes-in-marshall-picture-id1362017486?b=1&k=20&m=1362017486&s=170667a&w=0&h=I-GqKmCBFF1qwPD8NvrOWUrX2ysfunFjemIYOl-3kow=" alt="Generic placeholder image" width="140" height="140">
+            <h2>Fire</h2>
+            <p>
+              The Fire Department wants to hear your concerns so that we can provide the clearance necessary for our firefighters to protect your property and your neighborhood. Now you can report the hazard to your local Fire Station.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">Report Fire &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4">
+            <img class="rounded-circle" src="https://images.unsplash.com/photo-1528351989970-f723d029cfc9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fGZsb29kaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="Generic placeholder image" width="140" height="140">
+            <h2>Disaster</h2>
+            <p>Through disaters you will have a chance to provide the responsible authorities with the information they need for risk management and falire maintenance. Your conribution will expedite the process to save you and your family after the disaster. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">Report Disaster &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
         </div>
+        </div><!-- /.row -->
+
+
+        <!-- START THE FEATURETTES -->
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">See how easy to submit a report <span class="text-muted">The options will blow your mind.</span></h2>
+            <p class="lead">Sign up to see how easy it is to submit a report, we give you multipe options so you do not waste your time finding the right words. In addition, we provide an access to your reports reciept, so you can see your previous submissions.</p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" src="https://media.istockphoto.com/photos/online-form-to-register-personal-info-and-data-to-web-site-with-picture-id1287186666?b=1&k=20&m=1287186666&s=170667a&w=0&h=0AdIWk0Ws2bGaZowV7uL5mOIVTpvfZoQVL7vaM76yv0=" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+            <p class="lead">Report-it give you as an organization access to all the submitted reports so you can manage to take action according the report location, type, time, and seriousness. The analysis we provide give you more insights that you think!</p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" src="https://media.istockphoto.com/photos/network-gps-navigation-modern-city-future-technology-picture-id922762614?b=1&k=20&m=922762614&s=170667a&w=0&h=Xp5f_DdRsLJovwBC4URmMisyDh2Y17uxOqqhkpJgjCo=" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading">And lastly, we apply spatial analysis tools. <span class="text-muted">Check it out</span></h2>
+            <p class="lead">By the end, we aim to provide the governmental authorities with the information they need to manage and maintain risks around the country such as routing, closest facilities, and hot spot analysis. Therefore, we provide information for future prediction to be taken into consideration while planning for better future! </p>
+          </div>
+          <div class="col-md-5">
+            <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" src="https://media.istockphoto.com/photos/city-map-with-pin-pointers-3d-rendering-image-picture-id1189064346?k=20&m=1189064346&s=612x612&w=0&h=JJMeyYXoqAonE7iikqpyVvoftUJodINOlaULT_U5WXg=" alt="Generic placeholder image">
+          </div>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- /END THE FEATURETTES -->
+
+      </div><!-- /.container -->
+
+
+      <!-- FOOTER -->
+      <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2022 Report-it, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
 {% endblock content %}

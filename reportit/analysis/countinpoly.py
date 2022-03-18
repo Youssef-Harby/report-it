@@ -15,7 +15,7 @@ def countPinPoly(sqlQ):
     Problem_And_Admin = geopandas.sjoin(Problem_gdf,admin_poly, how='inner',op='intersects',)
 
     com_dist_count_problem_locs = Problem_And_Admin.groupby(
-    ['idforcount'], 
+    ['idforcount'],
     as_index=False,
     )['id'].count()
     # groupby to count the wifi locations in each community district
@@ -24,9 +24,9 @@ def countPinPoly(sqlQ):
     # rename the column
 
     com_dists_problem_counts = admin_poly.merge(
-    com_dist_count_problem_locs, 
-    on='idforcount', 
-    how='left', 
+    com_dist_count_problem_locs,
+    on='idforcount',
+    how='left',
     )
 
     com_dists_problem_counts.isnull().sum()
