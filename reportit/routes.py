@@ -163,18 +163,18 @@ def myreports():
 
 @app.route('/myanalysis/<int:accessuser_access>')
 @login_required
-@requires_access_level(2 or 3 or 4 or 5)
+# @requires_access_level(2 or 3 or 4 or 5)
 def myanalysis(accessuser_access):
-    if accessuser_access == current_user.access:
+    if current_user.access == accessuser_access or current_user.is_admin():
         return render_template('myanalysis.html', title='My Analysis')
     else:
         return redirect(url_for('page404'))
     
 @app.route('/analysis1/<int:accessuser_access>')
 @login_required
-@requires_access_level(2 or 3 or 4 or 5)
+# @requires_access_level(2 or 3 or 4 or 5)
 def analysis1(accessuser_access):
-    if accessuser_access == current_user.access:
+    if current_user.access == accessuser_access or current_user.is_admin():
         from threading import Timer
         from reportit.analysis.sjoina import sJoinA
         gdf = sJoinA('SELECT * FROM public.utility')
@@ -191,10 +191,9 @@ def analysis1(accessuser_access):
 
 @app.route('/analysis2/<int:accessuser_access>')
 @login_required
-@requires_access_level(2 or 3 or 4 or 5)
+# @requires_access_level(2 or 3 or 4 or 5)
 def analysis2(accessuser_access):
-    if accessuser_access == current_user.access:
-        from threading import Timer
+    if current_user.access == accessuser_access or current_user.is_admin():
         from reportit.analysis.countinpoly import countPinPoly
         gdf = countPinPoly('SELECT * FROM public.utility')
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
@@ -278,9 +277,9 @@ def notdash():
     return render_template('notdash.html', graphJSON=graphJSON)
 
 @app.route('/problemstimeline/<int:accessuser_access>')
-@requires_access_level(2 or 3 or 4 or 5)
+# @requires_access_level(2 or 3 or 4 or 5)
 def problemstimeline(accessuser_access):
-    if accessuser_access == current_user.access:
+    if current_user.access == accessuser_access or current_user.is_admin():
         from reportit.postgis import df_utility
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
         df_utility['timestamp'] = df_utility['timestamp'].astype(str)
@@ -342,4 +341,9 @@ def reportm():
 
 @app.route('/404')
 def page404():
-    return render_template('404.html')
+    return render_template('404.html'), 404
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
