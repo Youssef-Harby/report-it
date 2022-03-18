@@ -165,37 +165,46 @@ def myreports():
 @login_required
 @requires_access_level(2 or 3 or 4 or 5)
 def myanalysis(accessuser_access):
-    return render_template('myanalysis.html', title='My Analysis')
+    if accessuser_access == current_user.access:
+        return render_template('myanalysis.html', title='My Analysis')
+    else:
+        return redirect(url_for('page404'))
     
 @app.route('/analysis1/<int:accessuser_access>')
 @login_required
 @requires_access_level(2 or 3 or 4 or 5)
 def analysis1(accessuser_access):
-    from threading import Timer
-    from reportit.analysis.sjoina import sJoinA
-    gdf = sJoinA('SELECT * FROM public.utility')
-    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
-    m = leafmap.Map()
-    config = "reportit/analysis/config2.json"
-    m.add_gdf(gdf, layer_name="layer1")
-    m.add_gdf(admin_poly, layer_name="layer2", config=config)
-    # m.to_html("reportit/templates/mymap.html")
-    return m._repr_html_()
+    if accessuser_access == current_user.access:
+        from threading import Timer
+        from reportit.analysis.sjoina import sJoinA
+        gdf = sJoinA('SELECT * FROM public.utility')
+        admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
+        m = leafmap.Map()
+        config = "reportit/analysis/config2.json"
+        m.add_gdf(gdf, layer_name="layer1")
+        m.add_gdf(admin_poly, layer_name="layer2", config=config)
+        # m.to_html("reportit/templates/mymap.html")
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
 
 
 @app.route('/analysis2/<int:accessuser_access>')
 @login_required
 @requires_access_level(2 or 3 or 4 or 5)
 def analysis2(accessuser_access):
-    from threading import Timer
-    from reportit.analysis.countinpoly import countPinPoly
-    gdf = countPinPoly('SELECT * FROM public.utility')
-    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
-    # config = "reportit/analysis/config2.json"
-    m.add_gdf(gdf, layer_name="layer1")
-    # m.add_gdf(admin_poly, layer_name="layer2")
-    # m.to_html("reportit/templates/mymap.html")
-    return m._repr_html_()
+    if accessuser_access == current_user.access:
+        from threading import Timer
+        from reportit.analysis.countinpoly import countPinPoly
+        gdf = countPinPoly('SELECT * FROM public.utility')
+        m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
+        # config = "reportit/analysis/config2.json"
+        m.add_gdf(gdf, layer_name="layer1")
+        # m.add_gdf(admin_poly, layer_name="layer2")
+        # m.to_html("reportit/templates/mymap.html")
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
 
 def mkdir_p(path):
     if not os.path.exists(path):
@@ -246,7 +255,7 @@ def report():
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return 404
+        return redirect(url_for('page404'))
 
 @app.route('/dash')
 def notdash():
@@ -271,12 +280,15 @@ def notdash():
 @app.route('/problemstimeline/<int:accessuser_access>')
 @requires_access_level(2 or 3 or 4 or 5)
 def problemstimeline(accessuser_access):
-    from reportit.postgis import df_utility
-    m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
-    df_utility['timestamp'] = df_utility['timestamp'].astype(str)
-    m.add_gdf(df_utility, layer_name="Points",fill_colors=["red", "green", "blue"])
-    # m.to_html(outfile='./reportit/templates/leafmap.html')
-    return m._repr_html_()
+    if accessuser_access == current_user.access:
+        from reportit.postgis import df_utility
+        m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
+        df_utility['timestamp'] = df_utility['timestamp'].astype(str)
+        m.add_gdf(df_utility, layer_name="Points",fill_colors=["red", "green", "blue"])
+        # m.to_html(outfile='./reportit/templates/leafmap.html')
+        return m._repr_html_()
+    else:
+        return redirect(url_for('page404'))
 
 
 @app.route('/submission')
@@ -316,7 +328,7 @@ def reportm():
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return 404
+        return redirect(url_for('page404'))
 
 # @app.route('/jsontest', methods=['POST'])
 # @login_required
@@ -327,3 +339,7 @@ def reportm():
 #     # session.add(Utility(1, data["Sub Problem"], float(data["lat"]), float(data["lng"]), int(data["rating"]), data['Description'],data["image"], False, int(current_user.id)))
 #     session.commit()
 #     return url_for('submission')
+
+@app.route('/404')
+def page404():
+    return render_template('404.html')

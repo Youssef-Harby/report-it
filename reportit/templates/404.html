@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-3">404!</h1>
+    <p class="lead">Sorry This Page Not Found.</p>
+    <hr>
+    <p>
+      Having trouble? <a href="">Contact us</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="{{ url_for('home') }}" role="button">Home Page</a>
+    </p>
+  </div>
+{% endblock content %}
