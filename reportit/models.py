@@ -74,6 +74,8 @@ class AnonymousUser(AnonymousUserMixin):
     def is_admin(self):
             return False
 
+    def __init__(self):
+        self.access = 0
 
 login_manager.anonymous_user = AnonymousUser
 
@@ -208,3 +210,4 @@ Base.metadata.create_all(engine, checkfirst=True)
 # print(userr.id)
 
 # print(userByGet.reports)
+# print(session.query(Categories).get(3).type)

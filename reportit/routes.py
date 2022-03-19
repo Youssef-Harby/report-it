@@ -14,15 +14,6 @@ from reportit.models import User, Categories, Utility, Pollution, Disaster, Road
 from reportit.newForm import RegistrationForm, LoginForm, ReportFo, UpdateAccountForm
 from werkzeug.datastructures import ImmutableMultiDict
 
-ACCESS = {
-    'guest': 0,
-    'user': 1,
-    'waterORG': 2,
-    'gasORG': 3,
-    'utilityORG': 4,
-    'admin': 666,
-}
-
 all_classes = ["Utility", "Pollution", "Road", "Disaster", "Fire"]
 
 Utility_List = ["Water", "Gas", "Sewage", "Electric", "Telecom"]
@@ -148,7 +139,7 @@ def myanalysis(accessuser_access):
     if current_user.access == accessuser_access or current_user.is_admin():
         return render_template('myanalysis.html', title='My Analysis')
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 
 @app.route('/analysis1/<int:accessuser_access>')
@@ -156,9 +147,10 @@ def myanalysis(accessuser_access):
 # @requires_access_level(2 or 3 or 4 or 5)
 def analysis1(accessuser_access):
     if current_user.access == accessuser_access or current_user.is_admin():
-        from threading import Timer
         from reportit.analysis.sjoina import sJoinA
-        gdf = sJoinA('SELECT * FROM public.utility')
+        from reportit.postgis import current_qry_url
+        current_qry = current_qry_url(accessuser_access)
+        gdf = sJoinA(current_qry)
         admin_poly = geopandas.read_file(
             "Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857")  # Polygon
         m = leafmap.Map()
@@ -168,7 +160,7 @@ def analysis1(accessuser_access):
         # m.to_html("reportit/templates/mymap.html")
         return m._repr_html_()
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 
 @app.route('/analysis2/<int:accessuser_access>')
@@ -177,7 +169,9 @@ def analysis1(accessuser_access):
 def analysis2(accessuser_access):
     if current_user.access == accessuser_access or current_user.is_admin():
         from reportit.analysis.countinpoly import countPinPoly
-        gdf = countPinPoly('SELECT * FROM public.utility')
+        from reportit.postgis import current_qry_url
+        current_qry = current_qry_url(accessuser_access)
+        gdf = countPinPoly(current_qry)
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
         # config = "reportit/analysis/config2.json"
         m.add_gdf(gdf, layer_name="layer1")
@@ -185,7 +179,7 @@ def analysis2(accessuser_access):
         # m.to_html("reportit/templates/mymap.html")
         return m._repr_html_()
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 
 def mkdir_p(path):
@@ -245,7 +239,7 @@ def report():
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 
 @app.route('/dash')
@@ -273,15 +267,17 @@ def notdash():
 # @requires_access_level(2 or 3 or 4 or 5)
 def problemstimeline(accessuser_access):
     if current_user.access == accessuser_access or current_user.is_admin():
-        from reportit.postgis import df_utility
+        from reportit.postgis import readpostpandas,current_qry_url
+        current_qry = current_qry_url(accessuser_access)
+        df_current = readpostpandas(current_qry)
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
-        df_utility['timestamp'] = df_utility['timestamp'].astype(str)
-        m.add_gdf(df_utility, layer_name="Points",
+        df_current['timestamp'] = df_current['timestamp'].astype(str)
+        m.add_gdf(df_current, layer_name="Points",
                   fill_colors=["red", "green", "blue"])
         # m.to_html(outfile='./reportit/templates/leafmap.html')
         return m._repr_html_()
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 
 @app.route('/submission')
@@ -325,7 +321,7 @@ def reportm():
         return redirect(url_for('submission'))
         # return url_for('submission')
     else:
-        return redirect(url_for('page404'))
+        abort(404, description="Resource not found")
 
 @app.errorhandler(404)
 def page404(e):
