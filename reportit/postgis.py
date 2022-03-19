@@ -47,7 +47,7 @@ def current_qry_url(accessuser_access):
         sql_Q = "SELECT * FROM public.road"
         # rel_type = session.query(Categories).filter_by(cat_name="Gas").first().type_Road
     if accessuser_access == ACCESS['disasterORG']:
-        sql_Q = "SELECT * FROM public.road"
+        sql_Q = "SELECT * FROM public.disaster"
         # rel_type = session.query(Categories).filter_by(cat_name="Disasters").first().type_Disaster
     if accessuser_access == ACCESS['utilityORG']:
         sql_Q = "SELECT * FROM public.utility"

@@ -1,5 +1,12 @@
 {% extends "layout.html" %} {% block content %}
-
+<div class="pb-5 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 10 %}">Utility</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 7 %}">Pollution</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 8 %}">Road</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 9 %}">Disaster</a>
+  </div>
+</div>
 <link
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"

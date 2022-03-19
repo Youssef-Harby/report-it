@@ -1,6 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1 align="center">Organization Analysis</h1><br/>
+{% if current_user.is_authenticated and current_user.is_admin() %}
+<div class="pb-2 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 2 %}">Water</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 3 %}">Sewage</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 4 %}">Gas</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 5 %}">Electric</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 6 %}">Telecom</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 10 %}">Utility</a>
+  </div>
+</div>
+<div class="pb-5 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 7 %}">Pollution</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 8 %}">Road</a>
+    <a type="button" class="btn btn-outline-dark" href="{% set currentAna_access = 9 %}">Disaster</a>
+  </div>
+</div>
+    {% else %}
+    {% endif %}
 <div align="center" class="container">
 <div class="row align-items-start">
     <div class="col">
@@ -9,7 +29,7 @@
             <div class="card-body">
               <h5 class="card-title text-warning">Display Problems</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=current_user.access) }}" class="btn btn-warning">Display Problems</a></div>
+              <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=currentAna_access) }}" class="btn btn-warning">Display Problems</a></div>
             </div>
           </div>
     </div>
@@ -35,5 +55,4 @@
             </div>
         </div>
   </div>
-
 {% endblock content %}
