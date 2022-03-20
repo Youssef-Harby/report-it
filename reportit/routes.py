@@ -6,8 +6,6 @@ from PIL import Image
 from flask import abort, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from reportit import app, session, bcrypt
-import folium
-from folium import plugins
 import geopandas
 import leafmap.kepler as leafmap
 from reportit.models import User, Categories, Utility, Pollution, Disaster, Road, Fire
@@ -61,7 +59,7 @@ def register():
         session.add(user)
         session.commit()
         flash(f'Account created for {form.fname.data}!', 'success')
-        return redirect(url_for('myreports'))
+        return redirect(url_for('myreports', curr_cat=1))
     return render_template('register.html', title='Register', form=form)
     # 29912345678912
     # 01212345678911
@@ -116,10 +114,18 @@ def myaccount():
     return render_template('myaccount.html', title='My Account', numreports=numreports, form=form)
 
 
-@app.route('/myreports')
+@app.route('/myreports/<int:curr_cat>')
 @login_required
-def myreports():
-    reports = session.query(User).get(current_user.id).reports
+def myreports(curr_cat):
+    print(curr_cat)
+    if curr_cat == 1:
+        reports = session.query(User).get(current_user.id).reports
+    elif curr_cat == 2:
+        reports = session.query(User).get(current_user.id).reports_Pollution
+    elif curr_cat == 3:
+        reports = session.query(User).get(current_user.id).reports_Road
+    elif curr_cat == 4:
+        reports = session.query(User).get(current_user.id).reports_Disaster
     reportsIDs = []
     for i in reports:
         obj = {
