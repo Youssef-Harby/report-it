@@ -1,6 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
 <h1 align="center">Organization Analysis</h1><br/>
+{% if current_user.is_authenticated and current_user.is_admin() %}
+{% if curr_ana == 666 %}
+{% set curr_ana=2 %}
+{% else %}
+{% endif %}
+<div class="pb-2 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=2) }}">Water</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=3) }}">Sewage</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=4) }}">Gas</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=5) }}">Electric</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=6) }}">Telecom</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=10) }}">Utility</a>
+  </div>
+</div>
+<div class="pb-5 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=7) }}">Pollution</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=8) }}">Road</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myanalysis', accessuser_access=9) }}">Disaster</a>
+  </div>
+</div>
+    {% else %}
+    {% endif %}
 <div align="center" class="container">
 <div class="row align-items-start">
     <div class="col">
@@ -9,7 +33,7 @@
             <div class="card-body">
               <h5 class="card-title text-warning">Display Problems</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=current_user.access) }}" class="btn btn-warning">Display Problems</a></div>
+              <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=curr_ana) }}" class="btn btn-warning">Display Problems</a></div>
             </div>
           </div>
     </div>
@@ -19,7 +43,7 @@
             <div class="card-body">
               <h5 class="card-title text-warning">Spacial Join</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div align="center"><a href="{{ url_for('analysis1', accessuser_access=current_user.access) }}" class="btn btn-warning">Analysis1</a></div>
+              <div align="center"><a href="{{ url_for('analysis1', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis1</a></div>
             </div>
           </div>
         </div>
@@ -29,11 +53,10 @@
                 <div class="card-body">
                   <h5 class="card-title text-warning">Count Problems on Admin Area</h5>
                   <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <div align="center"><a href="{{ url_for('analysis2', accessuser_access=current_user.access) }}" class="btn btn-warning">Analysis2</a></div>
+                  <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis2</a></div>
                 </div>
               </div>
             </div>
         </div>
   </div>
-
 {% endblock content %}
