@@ -137,7 +137,7 @@ def myreports():
 # @requires_access_level(2 or 3 or 4 or 5)
 def myanalysis(accessuser_access):
     if current_user.access == accessuser_access or current_user.is_admin():
-        return render_template('myanalysis.html', title='My Analysis')
+        return render_template('myanalysis.html', title='My Analysis',curr_ana=accessuser_access)
     else:
         abort(404, description="Resource not found")
 
