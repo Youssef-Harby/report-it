@@ -11,6 +11,7 @@ import leafmap.kepler as leafmap
 from reportit.models import User, Categories, Utility, Pollution, Disaster, Road, Fire
 from reportit.newForm import RegistrationForm, LoginForm, ReportFo, UpdateAccountForm
 from werkzeug.datastructures import ImmutableMultiDict
+import concurrent.futures
 
 all_classes = ["Utility", "Pollution", "Road", "Disaster", "Fire"]
 
@@ -156,7 +157,10 @@ def analysis1(accessuser_access):
         from reportit.analysis.sjoina import sJoinA
         from reportit.postgis import current_qry_url
         current_qry = current_qry_url(accessuser_access)
-        gdf = sJoinA(current_qry)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            f1 = executor.submit(sJoinA, current_qry)
+            gdf = f1.result()
+        # gdf = sJoinA(current_qry)
         admin_poly = geopandas.read_file(
             "Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857")  # Polygon
         m = leafmap.Map()
@@ -177,7 +181,9 @@ def analysis2(accessuser_access):
         from reportit.analysis.countinpoly import countPinPoly
         from reportit.postgis import current_qry_url,postGIS_GDF
         current_qry = current_qry_url(accessuser_access)
-        gdf = countPinPoly(current_qry)
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            f1 = executor.submit(countPinPoly, current_qry)
+            gdf = f1.result()
         Problem_gdf = postGIS_GDF(current_qry)
         Problem_gdf['timestamp'] = Problem_gdf['timestamp'].astype(str)
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
