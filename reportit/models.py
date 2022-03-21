@@ -211,3 +211,6 @@ Base.metadata.create_all(engine, checkfirst=True)
 
 # print(userByGet.reports)
 # print(session.query(Categories).get(3).type)
+
+# session.add(Utility(1, "Water", float(31.627722), float(30.132701), int(1), 'Description', False, '1234', 1))
+# session.commit()

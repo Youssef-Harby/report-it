@@ -29,33 +29,64 @@
 <div class="row align-items-start">
     <div class="col">
         <div class="card text-white bg-dark mb-3" style="width: 20rem;">
-            <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ url_for('static', filename = 'DispProblems.png') }}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title text-warning">Display Problems</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <p class="card-text">View the local issues in their specific geolocation with detailed information and data.</p>
               <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=curr_ana) }}" class="btn btn-warning">Display Problems</a></div>
             </div>
           </div>
     </div>
     <div class="col">
         <div class="card text-white bg-dark mb-3" style="width: 20rem;">
-            <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+            <img class="card-img-top" src="{{ url_for('static', filename = 'FacNearSJ.png') }}" alt="Card image cap">
             <div class="card-body">
-              <h5 class="card-title text-warning">Spacial Join</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <div align="center"><a href="{{ url_for('analysis1', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis1</a></div>
+              <h5 class="card-title text-warning">Facility Service Nearby</h5>
+              <p class="card-text">Know the facility that can serve and solve issues nearby. The analysis works on local districts and regions level.</p>
+              <div align="center"><a href="{{ url_for('analysis1', accessuser_access=curr_ana) }}" class="btn btn-warning">Facility Nearby</a></div>
             </div>
           </div>
         </div>
         <div class="col">
             <div class="card text-white bg-dark mb-3" style="width: 20rem;">
-                <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+                <img class="card-img-top" src="{{ url_for('static', filename = 'Count2.png') }}" alt="Card image cap">
                 <div class="card-body">
                   <h5 class="card-title text-warning">Count Problems on Admin Area</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis2</a></div>
+                  <p class="card-text">Check the count of problems in each local district for statistical purposes and inform your organizations.</p>
+                  <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Problems Count</a></div>
                 </div>
               </div>
+          </div>
+         <div class="col">
+            <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+                <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title text-warning">Hot Spot Analysis</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <div align="center"><a href="{{ url_for('analysis3', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis 3</a></div>      
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+                  <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title text-warning">Hot Spot Analysis</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Check Analysis</a></div>      
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+                    <img class="card-img-top" src="{{ url_for('static', filename = 'analysis.jpg') }}" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title text-warning">Hot Spot Analysis</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Analysis2</a></div>      
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
   </div>
