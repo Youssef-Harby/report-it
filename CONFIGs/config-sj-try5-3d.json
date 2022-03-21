@@ -2,7 +2,27 @@
   "version": "v1",
   "config": {
     "visState": {
-      "filters": [],
+      "filters": [
+        {
+          "dataId": [
+            "Final Result"
+          ],
+          "id": "65tlkme8k",
+          "name": [
+            "timestamp"
+          ],
+          "type": "timeRange",
+          "value": [
+            1647287422320,
+            1647638299613
+          ],
+          "enlarged": true,
+          "plotType": "histogram",
+          "animationWindow": "free",
+          "yAxis": null,
+          "speed": 1
+        }
+      ],
       "layers": [
         {
           "id": "wuvk7n",
@@ -26,7 +46,7 @@
               "lng": "fac_lon",
               "altitude": null
             },
-            "isVisible": true,
+            "isVisible": false,
             "visConfig": {
               "radius": 10,
               "fixedRadius": false,
@@ -191,9 +211,9 @@
             "dataId": "Final Result",
             "label": "fac ->  arc",
             "color": [
-              146,
-              38,
-              198
+              105,
+              79,
+              214
             ],
             "highlightColor": [
               252,
@@ -207,10 +227,10 @@
               "lat1": "lat",
               "lng1": "lon"
             },
-            "isVisible": false,
+            "isVisible": true,
             "visConfig": {
               "opacity": 0.8,
-              "thickness": 2,
+              "thickness": 1,
               "colorRange": {
                 "name": "Global Warming",
                 "type": "sequential",
@@ -225,10 +245,14 @@
                 ]
               },
               "sizeRange": [
-                0,
-                10
+                1,
+                3
               ],
-              "targetColor": null
+              "targetColor": [
+                165,
+                16,
+                55
+              ]
             },
             "hidden": false,
             "textLabel": [
@@ -252,7 +276,10 @@
           "visualChannels": {
             "colorField": null,
             "colorScale": "quantile",
-            "sizeField": null,
+            "sizeField": {
+              "name": "effect",
+              "type": "integer"
+            },
             "sizeScale": "linear"
           }
         },
@@ -393,6 +420,24 @@
             },
             "hidden": false,
             "textLabel": [
+              {
+                "field": {
+                  "name": "sub_type",
+                  "type": "string"
+                },
+                "color": [
+                  77,
+                  77,
+                  77
+                ],
+                "size": 15,
+                "offset": [
+                  0,
+                  0
+                ],
+                "anchor": "end",
+                "alignment": "bottom"
+              },
               {
                 "field": null,
                 "color": [
@@ -552,29 +597,21 @@
                 "format": null
               },
               {
-                "name": "img",
+                "name": "sub_type",
                 "format": null
               }
             ],
             "Admin Area": [
               {
-                "name": "adm0_ar",
+                "name": "adm3_ar",
                 "format": null
               },
               {
-                "name": "adm0_en",
+                "name": "adm3_en",
                 "format": null
               },
               {
-                "name": "adm0_pcode",
-                "format": null
-              },
-              {
-                "name": "adm1_ar",
-                "format": null
-              },
-              {
-                "name": "adm1_en",
+                "name": "adm3_pcode",
                 "format": null
               }
             ]
@@ -602,12 +639,12 @@
       }
     },
     "mapState": {
-      "bearing": 0,
-      "dragRotate": false,
-      "latitude": 27.20888168843825,
-      "longitude": 31.494078024378055,
-      "pitch": 0,
-      "zoom": 9.108433017214933,
+      "bearing": -22.29761586349074,
+      "dragRotate": true,
+      "latitude": 29.94804085337023,
+      "longitude": 31.35396448012357,
+      "pitch": 60,
+      "zoom": 10.972370188480113,
       "isSplit": false
     },
     "mapStyle": {

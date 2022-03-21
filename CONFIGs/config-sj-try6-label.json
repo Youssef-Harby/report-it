@@ -2,7 +2,27 @@
   "version": "v1",
   "config": {
     "visState": {
-      "filters": [],
+      "filters": [
+        {
+          "dataId": [
+            "Final Result"
+          ],
+          "id": "65tlkme8k",
+          "name": [
+            "timestamp"
+          ],
+          "type": "timeRange",
+          "value": [
+            1647287422320,
+            1647638299613
+          ],
+          "enlarged": true,
+          "plotType": "histogram",
+          "animationWindow": "free",
+          "yAxis": null,
+          "speed": 1
+        }
+      ],
       "layers": [
         {
           "id": "wuvk7n",
@@ -26,7 +46,7 @@
               "lng": "fac_lon",
               "altitude": null
             },
-            "isVisible": true,
+            "isVisible": false,
             "visConfig": {
               "radius": 10,
               "fixedRadius": false,
@@ -394,19 +414,22 @@
             "hidden": false,
             "textLabel": [
               {
-                "field": null,
+                "field": {
+                  "name": "sub_type",
+                  "type": "string"
+                },
                 "color": [
-                  255,
-                  255,
-                  255
+                  40,
+                  38,
+                  35
                 ],
-                "size": 18,
+                "size": 14,
                 "offset": [
                   0,
                   0
                 ],
-                "anchor": "start",
-                "alignment": "center"
+                "anchor": "end",
+                "alignment": "bottom"
               }
             ]
           },
@@ -552,29 +575,21 @@
                 "format": null
               },
               {
-                "name": "img",
+                "name": "sub_type",
                 "format": null
               }
             ],
             "Admin Area": [
               {
-                "name": "adm0_ar",
+                "name": "adm3_ar",
                 "format": null
               },
               {
-                "name": "adm0_en",
+                "name": "adm3_en",
                 "format": null
               },
               {
-                "name": "adm0_pcode",
-                "format": null
-              },
-              {
-                "name": "adm1_ar",
-                "format": null
-              },
-              {
-                "name": "adm1_en",
+                "name": "adm3_pcode",
                 "format": null
               }
             ]
@@ -604,10 +619,10 @@
     "mapState": {
       "bearing": 0,
       "dragRotate": false,
-      "latitude": 27.20888168843825,
-      "longitude": 31.494078024378055,
+      "latitude": 29.4395907813724,
+      "longitude": 30.463499017530435,
       "pitch": 0,
-      "zoom": 9.108433017214933,
+      "zoom": 6.309795218225851,
       "isSplit": false
     },
     "mapStyle": {
