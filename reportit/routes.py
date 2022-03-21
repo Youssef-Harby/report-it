@@ -164,7 +164,7 @@ def analysis1(accessuser_access):
         admin_poly = geopandas.read_file(
             "Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857")  # Polygon
         m = leafmap.Map()
-        config = "reportit/analysis/kepler-configs/sj/config-sj-try6-label.json"
+        config = "reportit/analysis/kepler-configs/sj/config-sj-try10-label.json"
         m.add_gdf(gdf, layer_name="Final Result")
         m.add_gdf(admin_poly, layer_name="Admin Area", config=config)
         # m.to_html("reportit/templates/mymap.html")
@@ -187,7 +187,7 @@ def analysis2(accessuser_access):
         Problem_gdf = postGIS_GDF(current_qry)
         Problem_gdf['timestamp'] = Problem_gdf['timestamp'].astype(str)
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
-        config = "reportit/analysis/kepler-configs/count/config-count-try3.json"
+        config = "reportit/analysis/kepler-configs/count/config-count-try6.json"
         m.add_gdf(Problem_gdf, layer_name="Final Result")
         m.add_gdf(gdf, layer_name="Admin Area", config=config)
         # m.add_gdf(admin_poly, layer_name="layer2")
