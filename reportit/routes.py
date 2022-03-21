@@ -196,6 +196,24 @@ def analysis2(accessuser_access):
     else:
         abort(404, description="Resource not found")
 
+@app.route('/analysis3/<int:accessuser_access>')
+@login_required
+# @requires_access_level(2 or 3 or 4 or 5)
+def analysis3(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        from reportit.analysis.timeseriesA import timeSeriesA
+        from reportit.postgis import current_qry_url,postGIS_GDF
+        current_qry = current_qry_url(accessuser_access)
+        # with concurrent.futures.ThreadPoolExecutor() as executor:
+            # f1 = executor.submit(timeSeriesA, current_qry)
+        m6 = timeSeriesA(current_qry)
+        # m6.save('reportit/templates/analysis3.html')
+            # f1.result()
+        return m6._repr_html_()
+        # return render_template('analysis3.html')
+    else:
+        abort(404, description="Resource not found")
+
 
 def mkdir_p(path):
     if not os.path.exists(path):

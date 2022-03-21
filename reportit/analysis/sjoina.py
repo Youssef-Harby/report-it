@@ -1,6 +1,9 @@
 import geopandas
 from reportit.postgis import postGIS_GDF
+import concurrent.futures
 
+def saveToGPKGforme(gdf,Result):
+    gdf.to_file('Data/Facilities/DemoCairoResults.gpkg', driver='GPKG', layer=Result)
 # Spacial Join (Problem Query from DB , Facilities Layer Name/QDB , Service Area Polygon)
 def sJoinA(sqlQ):
     #1 Import Data
@@ -34,5 +37,7 @@ def sJoinA(sqlQ):
     final_result['lat'] = final_result['geometry'].y
     final_result['lon'] = final_result['geometry'].x
 
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+            f1 = executor.submit(saveToGPKGforme, final_result,'Result5')
     return final_result
 
