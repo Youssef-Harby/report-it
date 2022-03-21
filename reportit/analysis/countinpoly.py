@@ -1,5 +1,6 @@
 import geopandas
-from reportit.postgis import postGIS_GDF
+from reportit.postgis import postGIS_GDF,saveToGPKGforme
+import concurrent.futures
 
 def countPinPoly(sqlQ):
     #1 Import Data
@@ -37,4 +38,7 @@ def countPinPoly(sqlQ):
         0, 
         inplace=True,
     )
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+            f1 = executor.submit(saveToGPKGforme, com_dists_problem_counts,'count1')
     return com_dists_problem_counts

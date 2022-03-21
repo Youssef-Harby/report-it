@@ -1,9 +1,7 @@
 import geopandas
-from reportit.postgis import postGIS_GDF
+from reportit.postgis import postGIS_GDF, saveToGPKGforme
 import concurrent.futures
 
-def saveToGPKGforme(gdf,Result):
-    gdf.to_file('Data/Facilities/DemoCairoResults.gpkg', driver='GPKG', layer=Result)
 # Spacial Join (Problem Query from DB , Facilities Layer Name/QDB , Service Area Polygon)
 def sJoinA(sqlQ):
     #1 Import Data

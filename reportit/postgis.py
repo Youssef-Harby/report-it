@@ -69,3 +69,7 @@ con = leafmap.connect_postgis(database=os.getenv('DATABASE'), host=os.getenv(
 def postGIS_GDF(sqlQ):
     gdf = leafmap.read_postgis(sqlQ, con, geom_col='geometry')
     return gdf
+
+
+def saveToGPKGforme(gdf,Result):
+    gdf.to_file('Data/Facilities/DemoCairoResults.gpkg', driver='GPKG', layer=Result)
