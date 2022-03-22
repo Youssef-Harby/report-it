@@ -6,7 +6,6 @@ from PIL import Image
 from flask import abort, jsonify, render_template, request, url_for, flash, redirect
 from flask_login import login_required, login_user, current_user, logout_user
 from matplotlib.pyplot import title
-from zmq import Message
 from reportit import app, session, bcrypt,mail
 import geopandas
 import leafmap.kepler as leafmap
@@ -121,7 +120,6 @@ def myaccount():
 @app.route('/myreports/<int:curr_cat>')
 @login_required
 def myreports(curr_cat):
-    print(curr_cat)
     if curr_cat == 1:
         reports = session.query(User).get(current_user.id).reports
     elif curr_cat == 2:
@@ -347,19 +345,14 @@ def page404(e):
 
 def send_reset_email(user):
     token = user.get_reset_token()
-    print(token)
-    msg = Message('password reset request',
-    sender='noreply@demo.com',
-    recipients=[user.email])
-    
-    msg.body=f''' To reset your password visit the following link:
-    {url_for(reset_token, token= token, _external= True)}
-
-    If u didnt make this request , simply ignore it 
-    
-    '''
-    print(msg)
-    # mail.send(msg)
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
 
 
 @app.route("/reset_password", methods=['GET','POST'])
@@ -390,7 +383,7 @@ def reset_token(token):
         form.password.data).decode('utf-8')
         user.password=hashed_password
         session.commit()
-        flash(f'Password was changed for {form.fname.data}!', 'success')
+        flash(f'Password was changed !', 'success')
         return redirect(url_for('login'))
 
     return render_template('reset_token.html',title='Reset password',form=form )

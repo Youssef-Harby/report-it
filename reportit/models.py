@@ -69,13 +69,10 @@ class User(Base, UserMixin):
     @staticmethod
     def verify_reset_token(token):
         s = Serializer(app.config['SECRET_KEY'])
-        print(s)
         try:
             user_id = s.loads(token)['user_id']
-            print(user_id)
         except:
             return None
-            print("kjhsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddkjd;l")
         return session.query(User).get(user_id)
 
 class Controller(ModelView):

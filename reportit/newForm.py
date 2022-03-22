@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
                         validators=[DataRequired(), Length(min=14,max=14)])
     phonenumber = StringField('Phone Number',
                         validators=[DataRequired(), Length(min=11, max=14)])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=8, max=20)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
 
     submit = SubmitField('Sign Up')
@@ -96,6 +96,6 @@ class RequestResetForm(FlaskForm):
             raise ValidationError('There is no registered account with this email.')
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=8, max=20)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
