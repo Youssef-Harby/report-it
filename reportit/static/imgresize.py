@@ -6,4 +6,4 @@ def resizeIMG(imgpath,outputpath):
     i.thumbnail(output_size)
     i.save(outputpath)
     
-resizeIMG("FacNearSJ.png","001-FacNearSJ.png")
+resizeIMG("HS3.png","001-HS3.png")
