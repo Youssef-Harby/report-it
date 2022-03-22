@@ -208,10 +208,10 @@ def analysis3(accessuser_access):
         # with concurrent.futures.ThreadPoolExecutor() as executor:
             # f1 = executor.submit(timeSeriesA, current_qry)
         m6 = timeSeriesA(current_qry)
-        # m6.save('reportit/templates/analysis3.html')
+        m6.save('reportit/templates/analysis3.html')
             # f1.result()
-        return m6._repr_html_()
-        # return render_template('analysis3.html')
+        # return m6._repr_html_()
+        return render_template('analysis3.html')
     else:
         abort(404, description="Resource not found")
 

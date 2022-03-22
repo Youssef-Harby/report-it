@@ -16,7 +16,7 @@ def timeSeriesA(sqlQ):
     # Problem_gdf['adm3_ar'] = Problem_gdf['adm3_ar']
     #Service Area Polygon
     # admin_poly = geopandas.read_file("Data/Facilities/NewCairoPoly.gpkg", layer='NewCairoPoly').to_crs("EPSG:3857") #Polygon
-    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt').to_crs("EPSG:3857") #Polygon
+    admin_poly = geopandas.read_file("Data/Facilities/Admin3Poly.gpkg", layer='All-Admin-Area-Egypt') #Polygon
     # convert datetime to date
     Problem_gdf['timestamp'] = pd.to_datetime(Problem_gdf['timestamp'],format='%Y.%m.%d')
     Problem_gdf['timestamp'] = pd.to_datetime(Problem_gdf['timestamp']).dt.date
