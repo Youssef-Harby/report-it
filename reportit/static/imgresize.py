@@ -6,4 +6,4 @@ def resizeIMG(imgpath,outputpath):
     i.thumbnail(output_size)
     i.save(outputpath)
     
-resizeIMG("Hexa.gif","001-Hexa.gif")
+resizeIMG("trial01.gif","001-trial01.gif")
