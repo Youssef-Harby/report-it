@@ -240,6 +240,8 @@ def save_img(form_img, cat_path, sub_cat):
 @app.route('/report', methods=['GET', 'POST'])
 @login_required
 def report():
+    from reportit.analysis.bestroutetofac import bestrouteFac
+    bestrouteFac()
     if request.method == 'GET':
         form = ReportFo()
         # if form.validate_on_submit():
