@@ -1,4 +1,5 @@
-from reportit import Base, engine, session, login_manager, admin, ModelView
+from itsdangerous import TimedSerializer as Serializer
+from reportit import Base, engine, session, login_manager, admin, ModelView, app
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Float, DateTime, LargeBinary
 from geoalchemy2.shape import to_shape, from_shape
 from geoalchemy2 import Geometry
@@ -59,7 +60,23 @@ class User(Base, UserMixin):
     def allowed(self, access_level):
         return self.access == access_level or self.access == ACCESS['admin']
 
-    
+
+
+    def get_reset_token(self):
+        s = Serializer(app.config['SECRET_KEY'])
+        return s.dumps({'user_id': self.id})
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        print(s)
+        try:
+            user_id = s.loads(token)['user_id']
+            print(user_id)
+        except:
+            return None
+            print("kjhsdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddkjd;l")
+        return session.query(User).get(user_id)
 
 class Controller(ModelView):
     def is_accessible(self):
