@@ -1,3 +1,4 @@
+from distutils.command.config import config
 import os
 from functools import wraps
 import json
@@ -306,10 +307,10 @@ def problemstimeline(accessuser_access):
         from reportit.postgis import readpostpandas,current_qry_url
         current_qry = current_qry_url(accessuser_access)
         df_current = readpostpandas(current_qry)
+        config = "reportit/analysis/kepler-configs/display/config-display-try3.json"
         m = leafmap.Map(center=[30.0444, 31.2357], zoom=6)
         df_current['timestamp'] = df_current['timestamp'].astype(str)
-        m.add_gdf(df_current, layer_name="Points",
-                  fill_colors=["red", "green", "blue"])
+        m.add_gdf(df_current, layer_name="Problems",config=config)
         # m.to_html(outfile='./reportit/templates/leafmap.html')
         return m._repr_html_()
     else:
