@@ -5,6 +5,7 @@ import numpy as np
 from reportit.postgis import postGIS_GDF
 import folium
 from folium.plugins import TimeSliderChoropleth
+import branca.colormap as cm
 
 def timeSeriesA(sqlQ):
     #1 Import Data
@@ -40,19 +41,20 @@ def timeSeriesA(sqlQ):
         for j in Problem_gdf[Problem_gdf['Admin_id']==i].set_index(['Admin_id']).values:
             poll_dict[i][j[0]]={'color':j[1],'opacity':0.7}
 
-    bins=np.linspace(min(Problem_gdf['effect']),max(Problem_gdf['effect']),5)
+    bins=np.linspace(min(Problem_gdf['effect']),max(Problem_gdf['effect']),4)
 
     # Coloring Admin with pollution
-    Problem_gdf['color']=pd.cut(Problem_gdf['effect'],bins,labels=['#EBA1A8','#DE6F7C','#D13E50','#C50D24'],include_lowest=False)
+    Problem_gdf['color']=pd.cut(Problem_gdf['effect'],bins,labels=['#32CD32','#F5B22D','#C50D24'],include_lowest=True)
+    # Problem_gdf['color']=pd.cut(Problem_gdf['effect'],bins,labels=['#EBA1A8','#DE6F7C','#D13E50','#C50D24'],include_lowest=False)
     # Coloring Admin without pollution
-    Problem_gdf['color'].replace(np.nan,'#32CD32',inplace=True)
+    # Problem_gdf['color'].replace(np.nan,'#32CD32',inplace=True)
 
     Problem_gdf=Problem_gdf[['timestamp','Admin_id','color']]
 
     
 
     for date in Problem_gdf['timestamp'].unique():
-        diff=set([str(i) for i in range(18)])-set(Problem_gdf[Problem_gdf['timestamp']==date]['Admin_id'])
+        diff=set([str(i) for i in range(0)])-set(Problem_gdf[Problem_gdf['timestamp']==date]['Admin_id'])
         for i in diff:
             Problem_gdf=pd.concat([Problem_gdf,pd.DataFrame([[date,'#0073CF',i]],columns=['timestamp','color','Admin_id'])],ignore_index=True)
     Problem_gdf.sort_values('timestamp',inplace=True)
@@ -77,5 +79,8 @@ def timeSeriesA(sqlQ):
         admin_poly.set_index('Admin_id').to_json(),
         styledict=poll_dict
     ).add_to(m6)
+    step = cm.StepColormap(['#32CD32','#F5B22D','#C50D24'], vmin=1, vmax=5, index=bins, caption="step")
+    step.caption = "Effect"
+    m6.add_child(step)
     return m6
 
