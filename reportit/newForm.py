@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
                         validators=[DataRequired(), Length(min=14,max=14)])
     phonenumber = StringField('Phone Number',
                         validators=[DataRequired(), Length(min=11, max=14)])
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=8, max=20)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
 
     submit = SubmitField('Sign Up')
@@ -84,3 +84,18 @@ class ReportFo(FlaskForm):
     # categoryf = SelectField('Category', choices=[('Utility','Polution'), ('Water','Noise')])
     # sub_cat = SelectField('City',choices=[])
     img = FileField('Upload Image', validators=[FileAllowed(['jpg', 'png'])])
+
+class RequestResetForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Request new password')
+
+    def validate_email(self, email):
+        user = session.query(User).filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('There is no registered account with this email.')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired(),Length(min=8, max=20)])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Password')

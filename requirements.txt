@@ -19,3 +19,5 @@ plotly-express
 Pillow
 python-dotenv
 gunicorn
+flask-mail
+itsdangerous

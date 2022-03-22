@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 reportit/dp.ipynb
+reportit/templates/analysis3.html
+gg.ipynb
