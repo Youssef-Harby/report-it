@@ -1,0 +1,27 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: georeportit.me
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to dokku
+        uses: dokku/github-action@main
+        with:
+          # specify the `main` branch as the remote branch to push to
+          branch: 'master'
+          git_remote_url: 'ssh://dokku@georeportit.me:22/app1'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
