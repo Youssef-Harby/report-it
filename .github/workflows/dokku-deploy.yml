@@ -22,7 +22,7 @@ jobs:
         uses: dokku/github-action@master
         with:
           # specify the `main` branch as the remote branch to push to
-          branch: 'master'
+          branch: 'main'
           git_push_flags: '--force'
           git_remote_url: 'ssh://dokku@georeportit.me:22/app1'
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
