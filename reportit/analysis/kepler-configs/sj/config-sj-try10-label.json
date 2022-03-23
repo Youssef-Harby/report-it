@@ -12,11 +12,7 @@
             "timestamp"
           ],
           "type": "timeRange",
-          "value": [
-            1647287422320,
-            1647821328888
-          ],
-          "enlarged": false,
+          "enlarged": true,
           "plotType": "histogram",
           "animationWindow": "free",
           "yAxis": null,
