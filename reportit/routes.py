@@ -216,6 +216,21 @@ def analysis3(accessuser_access):
     else:
         abort(404, description="Resource not found")
 
+@app.route('/analysis4/<int:accessuser_access>')
+@login_required
+# @requires_access_level(2 or 3 or 4 or 5)
+def analysis4(accessuser_access):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        from reportit.analysis.area_interpolation_h3 import area_interpolation_h3
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            f1 = executor.submit(area_interpolation_h3)
+        m = leafmap.Map()
+        m.add_gdf(f1)
+        # return m6._repr_html_()
+        return m._repr_html_()
+    else:
+        abort(404, description="Resource not found")
+
 
 def mkdir_p(path):
     if not os.path.exists(path):
