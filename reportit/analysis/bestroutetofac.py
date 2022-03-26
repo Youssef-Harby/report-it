@@ -17,6 +17,7 @@ If you did not make this request then simply ignore this email and no changes wi
 
 def bestrouteFac(lat,long):
     load_dotenv(find_dotenv())
+    ors_api_key = os.environ.get('ORS_API_KEY1')
     admin_poly = geopandas.read_file("Data/Facilities/DemoCairo.gpkg", layer='NewCairoPolyDemo').to_crs("EPSG:3857")
     Egy_fac= geopandas.read_file("Data/Facilities/EgyptFacilities.gpkg", layer='facilities').to_crs("EPSG:3857") #Point
 
@@ -40,7 +41,7 @@ def bestrouteFac(lat,long):
 
     from openrouteservice.distance_matrix import distance_matrix
     coords = geo_df_list
-    client = openrouteservice.Client(key='5b3ce3597851110001cf624837171f649f514342afd86d5ca248cfd0') # Specify your personal API key
+    client = openrouteservice.Client(key=ors_api_key) # Specify your personal API key
     routes = client.distance_matrix(coords,profile='driving-car',sources=z,destinations=[0],metrics=None,resolve_locations=None,units=None,optimized=None,validate=True,dry_run=None)
 
     # print(routes)
