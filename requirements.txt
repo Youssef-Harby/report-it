@@ -21,3 +21,5 @@ python-dotenv
 gunicorn
 flask-mail
 itsdangerous
+tobler
+pysal==2.0.0
