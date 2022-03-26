@@ -24,3 +24,4 @@ itsdangerous
 h3
 tobler
 pysal==2.0.0
+openrouteservice

@@ -257,17 +257,13 @@ def save_img(form_img, cat_path, sub_cat):
 @login_required
 def report():
     from reportit.analysis.bestroutetofac import bestrouteFac
-    bestrouteFac()
     if request.method == 'GET':
-        form = ReportFo()
-        # if form.validate_on_submit():
-        #     if form.img.data:
-        #         img_file = save_img(form.img.data)
-        return render_template('report.html', form=form)
+        return render_template('report.html')
     if request.method == 'POST':
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
+        bestrouteFac(data['long'],data['lat'])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
