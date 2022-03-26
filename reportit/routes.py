@@ -226,7 +226,8 @@ def analysis4(accessuser_access):
             f1 = executor.submit(area_interpolation_h3)
         gdf = f1.result()
         m = leafmap.Map()
-        m.add_gdf(gdf,layer_name="Final Result")
+        config = "reportit/analysis/kepler-configs/interpolationhex/config-try1.json"
+        m.add_gdf(gdf,layer_name="Final Result", config=config)
         return m._repr_html_()
     else:
         abort(404, description="Resource not found")
