@@ -226,7 +226,8 @@ def analysis4(accessuser_access):
             f1 = executor.submit(area_interpolation_h3)
         gdf = f1.result()
         m = leafmap.Map()
-        m.add_gdf(gdf,layer_name="Final Result")
+        config = "reportit/analysis/kepler-configs/interpolationhex/config-try1.json"
+        m.add_gdf(gdf,layer_name="Final Result", config=config)
         return m._repr_html_()
     else:
         abort(404, description="Resource not found")
@@ -257,17 +258,13 @@ def save_img(form_img, cat_path, sub_cat):
 @login_required
 def report():
     from reportit.analysis.bestroutetofac import bestrouteFac
-    bestrouteFac()
     if request.method == 'GET':
-        form = ReportFo()
-        # if form.validate_on_submit():
-        #     if form.img.data:
-        #         img_file = save_img(form.img.data)
-        return render_template('report.html', form=form)
+        return render_template('report.html')
     if request.method == 'POST':
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
+        bestrouteFac(data['long'],data['lat'])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
@@ -382,7 +379,7 @@ def page404(e):
 def send_reset_email(user):
     token = user.get_reset_token()
     msg = Message('Password Reset Request',
-                  sender='noreply@demo.com',
+                  sender='noreply@mail.georeportit.me',
                   recipients=[user.email])
     msg.body = f'''To reset your password, visit the following link:
 {url_for('reset_token', token=token, _external=True)}
