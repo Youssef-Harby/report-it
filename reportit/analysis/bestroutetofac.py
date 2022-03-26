@@ -7,8 +7,8 @@ from dotenv import load_dotenv,find_dotenv
 
 def send_reset_email(osm_url):
     msg = Message('New Report for You',
-                  sender='noreply@demo.com',
-                  recipients=['me@youssefharby.com'])
+                  sender='noreply@mail.georeportit.me',
+                  recipients=['org1@mail.georeportit.me'])
     msg.body = f'''To go to the problem, visit the following link:
 {osm_url}
 If you did not make this request then simply ignore this email and no changes will be made.
