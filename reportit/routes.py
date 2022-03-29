@@ -1,4 +1,3 @@
-from distutils.command.config import config
 import os
 from functools import wraps
 import json
@@ -11,7 +10,7 @@ from reportit import app, session, bcrypt,mail
 import geopandas
 import leafmap.kepler as leafmap
 from reportit.models import User, Categories, Utility, Pollution, Disaster, Road, Fire
-from reportit.newForm import RegistrationForm, LoginForm, ReportFo, UpdateAccountForm,ResetPasswordForm, RequestResetForm
+from reportit.newForm import RegistrationForm, LoginForm, ReportFo, SolvedReport, UpdateAccountForm,ResetPasswordForm, RequestResetForm
 from werkzeug.datastructures import ImmutableMultiDict
 import concurrent.futures
 from flask_mail import Message
@@ -421,3 +420,34 @@ def reset_token(token):
 
     return render_template('reset_token.html',title='Reset password',form=form )
 
+@app.route('/orgreports/<int:accessuser_access>/<int:curr_cat>', methods=['GET', 'POST'])
+# @requires_access_level(2 or 3 or 4 or 5)
+def orgreports(accessuser_access,curr_cat):
+    if current_user.access == accessuser_access or current_user.is_admin():
+        import datetime
+        form = SolvedReport()
+        if curr_cat == 1:
+            reports = session.query(Categories).get(8).type_Pollution
+            print(reports[0].solved)
+            if form.validate_on_submit():
+                reports[0].solved = form.solvedornot.data
+                reports[0].solved_time = datetime.datetime.utcnow()
+                # reports[0].solved = True
+                session.commit()
+                flash('The report has been updated!', 'success')
+                return redirect(url_for('orgreports',accessuser_access=current_user.access,curr_cat=1))
+            elif request.method == 'GET':
+                form.solvedornot.data = reports[0].solved
+        reportsIDs = []
+        for i in reports:
+            obj = {
+                "id": i.id,
+                "lat": i.lat,
+                "lon": i.lon,
+                "solved": i.solved
+            }
+            reportsIDs.append(obj)
+        data = json.dumps(reportsIDs)
+        return render_template('orgreports.html', reports=reports, title='Org Reports', data=data,curr_cat=1, form=form)
+    else:
+        abort(404, description="Resource not found")

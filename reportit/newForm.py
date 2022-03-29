@@ -99,3 +99,7 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(),Length(min=8, max=20)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class SolvedReport(FlaskForm):
+    solvedornot = BooleanField('Solved')
+    submit = SubmitField('Solved')

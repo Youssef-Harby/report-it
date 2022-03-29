@@ -1,0 +1,99 @@
+{% extends "layout.html" %} {% block content %}
+<div class="pb-5 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Large button group">
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myreports', curr_cat=1) }}">Utility</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myreports', curr_cat=2) }}">Pollution</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myreports', curr_cat=3) }}">Road</a>
+    <a type="button" class="btn btn-outline-dark" href="{{ url_for('myreports', curr_cat=4) }}">Disaster</a>
+  </div>
+</div>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+  integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+  crossorigin=""
+></script>
+{% if reports %}
+{% for report in reports %}
+<div class="container">
+  <article class="media content-section">
+    <div class="media-body">
+      <div class="article-metadata">
+        <small class="text-muted">{{ report.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</small>
+      </div>
+      <div class="row align-items-start">
+        <div class="col">
+          <h2>
+            <a class="article-title" href="#"
+              >Category: {{ report.type }} - {{ report.sub_type }}</a
+            >
+          </h2>
+
+          <p class="article-content">Description: {{ report.description }}</p>
+          <p class="article-content">Effect: {{ report.effect }}</p>
+          <!-- <p class="article-content">{{ report.img }}</p> -->
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+            <div class="form-check">
+                {{ form.solvedornot(class="form-check-input") }}
+                {{ form.solvedornot.label(class="form-check-label") }}
+            </div>
+          <p class="article-content">Status: {{ report.solved }}</p>
+          <p class="article-content">Solved Time: {{ report.solved_time }}</p>
+          <div class="form-group">
+            {{ form.submit(class="btn btn btn-warning") }}
+        </div>
+          </fieldset>
+        </form>
+        </div>
+        <div
+          style="height: 300px;"
+          id="map{{report.id}}"
+          class="col-md-6 float-md-end mb-3 ms-md-3"
+        ></div>
+      </div>
+    </div>
+  </article>
+</div>
+{% block javascript %}
+<script type="text/javascript">
+  window.onload = function () {
+
+    var data = JSON.parse({{ data | tojson | safe }})
+    /*from  w ww. ja va2 s.c  o m*/
+    data.forEach(element => {
+        const map = L.map("map"+element.id).setView([element.lat, element.lon], 16);
+    L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="htts://osm.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    L.marker([element.lat, element.lon])
+      .addTo(map)
+      .bindPopup(data[0].id)
+    });
+  };
+</script>
+{% endblock %}
+{% endfor %}
+{% else %}
+<div class="jumbotron text-center">
+  <h1 class="display-3">No Reports Found!</h1>
+  <p class="lead">Report-it Now, Solve-it Now.</p>
+  <hr>
+  <p>
+    Having trouble? <a href="">Contact us</a>
+  </p>
+  <p class="lead">
+    <a class="btn btn-primary btn-sm" href="{{ url_for('report') }}" role="button">Report New One</a>
+  </p>
+</div>
+{% endif %}
+{% endblock content %}

@@ -76,7 +76,7 @@ class User(Base, UserMixin):
         return session.query(User).get(user_id)
 
 class Controller(ModelView):
-    def is_accessible(self):
+    def is_accessible(self): 
             return current_user.is_admin()
     def not_auth(self):
         return "Not Admin"
@@ -165,7 +165,7 @@ class MyMixin:
         self.userid = cuusid
 
     def __repr__(self):
-        return f"Report('{self.type}', '{self.lat}'), '{self.lon}'), '{self.effect}'), '{self.description}')"
+        return f"Report('{self.type}', '{self.lat}', '{self.lon}', '{self.effect}', '{self.description}', '{self.solved}', '{self.img}')"
 
 
 class Utility(MyMixin, Base):
