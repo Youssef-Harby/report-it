@@ -264,7 +264,10 @@ def report():
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
-        bestrouteFac(data['long'],data['lat'])
+        try:
+            bestrouteFac(data['long'],data['lat'])
+        except:
+            print("No route")
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
