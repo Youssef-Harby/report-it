@@ -337,16 +337,14 @@ def submission():
 @app.route('/reportm', methods=['GET', 'POST'])
 @login_required
 def reportm():
+    from reportit.analysis.bestroutetofac import bestrouteFac
     if request.method == 'GET':
-        form = ReportFo()
-        # if form.validate_on_submit():
-        #     if form.img.data:
-        #         img_file = save_img(form.img.data)
-        return render_template('reportm.html', form=form)
+        return render_template('reportm.html')
     if request.method == 'POST':
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
+        bestrouteFac(data['long'],data['lat'])
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id

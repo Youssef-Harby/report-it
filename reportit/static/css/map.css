@@ -90,9 +90,10 @@ label{
 
 /* Rating */
 .rating {
-  float:left;
-  padding-left: 49px;
-  
+  position: relative;
+  left: 31%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* :not(:checked) is a filter, so that browsers that don’t support :checked don’t 
