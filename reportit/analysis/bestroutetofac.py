@@ -72,4 +72,7 @@ def bestrouteFac(lat,long):
 
     call = 'http://www.openstreetmap.org/directions?route={}%2C{}%3B{}%2C{}'.format(q,w,r,t)
     # print(call)
-    send_reset_email(call)
+    try:
+        send_reset_email(call)
+    except:
+        print("Error Sending Email")
