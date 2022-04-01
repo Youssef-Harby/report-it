@@ -1,4 +1,3 @@
-from distutils.command.config import config
 import os
 from functools import wraps
 import json
@@ -264,7 +263,10 @@ def report():
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
-        bestrouteFac(data['long'],data['lat'])
+        try: 
+            bestrouteFac(data['long'],data['lat'])
+        except:
+            print("no route")
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
@@ -344,7 +346,10 @@ def reportm():
         file = request.files['file']
         data = dict(request.form)
         pic_file = save_img(file, data["Problem"], data["Sub Problem"])
-        bestrouteFac(data['long'],data['lat'])
+        try: 
+            bestrouteFac(data['long'],data['lat'])
+        except:
+            print("no route")
         for cat in session.query(Categories).all():
             if data["Problem"] == cat.cat_name:
                 cat_id_forIns = cat.id
