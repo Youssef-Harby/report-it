@@ -52,11 +52,13 @@
                 <img class="card-img-top" src="{{ url_for('static', filename = '001-Count2.png') }}" alt="Card image cap">
                 <div class="card-body">
                   <h5 class="card-title text-warning">Count Problems on Admin Area</h5>
-                  <p class="card-text">Check the count of problems in each local district for statistical purposes and inform your organizations.</p>
+                  <p class="card-text">Check the count of problems in each local district for statistical purposes.</p>
                   <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Problems Count</a></div>
                 </div>
               </div>
           </div>
+          </div>
+            <div class="row align-items-start">
          <div class="col">
             <div class="card text-white bg-dark mb-3" style="width: 20rem;">
                 <img class="card-img-top" src="{{ url_for('static', filename = 'hs-gif.gif') }}" alt="Card image cap">
@@ -67,27 +69,17 @@
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="card text-white bg-dark mb-3" style="width: 20rem;">
+            <div class="col" >
+              <div class="card text-white bg-dark mb-3" style="width: 20rem;" >
                   <img class="card-img-top" src="{{ url_for('static', filename = '001-HexaGrid2.png') }}" alt="Card image cap">
                   <div class="card-body">
-                    <h5 class="card-title text-warning">Interpolation</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title text-warning">Aggregation</h5>
+                    <p class="card-text">Relies on the idea of clustering the input polygon into groups based on the measured values.</p>
                     <div align="center"><a href="{{ url_for('analysis4', accessuser_access=curr_ana) }}" class="btn btn-warning">Check Analysis</a></div>      
                   </div>
                 </div>
               </div>
-              <div class="col">
-                <div class="card text-white bg-dark mb-3" style="width: 20rem;">
-                    <img class="card-img-top" src="{{ url_for('static', filename = '001-analysis.jpg') }}" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title text-warning">Facilities Routing</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <div align="center"><a href="{{ url_for('problemstimeline', accessuser_access=curr_ana) }}" class="btn btn-warning">Check Routing</a></div>      
-                    </div>
-                  </div>
-                </div>
             </div>
-        </div>
-  </div>
+          </div>
+            
 {% endblock content %}
