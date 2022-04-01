@@ -1,4 +1,3 @@
-from distutils.command.config import config
 import os
 from functools import wraps
 import json
