@@ -51,7 +51,7 @@
             <div class="card text-white bg-dark mb-3" style="width: 20rem;">
                 <img class="card-img-top" src="{{ url_for('static', filename = '001-Count2.png') }}" alt="Card image cap">
                 <div class="card-body">
-                  <h5 class="card-title text-warning">Count Problems on Admin Area</h5>
+                  <h5 class="card-title text-warning">Count Problems on Areas</h5>
                   <p class="card-text">Check the count of problems in each local district for statistical purposes and inform your organizations.</p>
                   <div align="center"><a href="{{ url_for('analysis2', accessuser_access=curr_ana) }}" class="btn btn-warning">Problems Count</a></div>
                 </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="col" >
               <div class="card text-white bg-dark mb-3" style="width: 20rem;" >
-                  <img class="card-img-top" src="{{ url_for('static', filename = '001-HexaGrid2.png') }}" alt="Card image cap">
+                  <img class="card-img-top" src="{{ url_for('static', filename = 'hexa.png') }}" alt="Card image cap">
                   <div class="card-body">
                     <h5 class="card-title text-warning">Aggregation</h5>
                     <p class="card-text">Relies on the idea of clustering the input polygon into groups based on the measured values.</p>
@@ -81,10 +81,10 @@
               </div>
               <div class="col">
                 <div class="card text-white bg-dark mb-3" style="width: 20rem;">
-                    <img class="card-img-top" src="{{ url_for('static', filename = '001-analysis.jpg') }}" alt="Card image cap">
+                    <img class="card-img-top" src="{{ url_for('static', filename = 'Routing.png') }}" alt="Card image cap">
                     <div class="card-body">
-                      <h5 class="card-title text-warning">Email</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <h5 class="card-title text-warning">Routing Mail</h5>
+                      <p class="card-text">Generate route from the closest facility to the problem and send email of the route to the facility.</p>
                       <div align="center"><a target="_blank" href="https://mail.georeportit.me/webmail/" class="btn btn-warning">Check Routing</a></div>      
                     </div>
                   </div>
